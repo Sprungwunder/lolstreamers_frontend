@@ -1,5 +1,22 @@
-<section class="listing">
-    <h2>{{ video.id }}</h2>
-    <p>{{ video.url}}</p>
-    <a [routerLink]="['/admin/edit', video.id]">EDIT</a>
-</section>
+<div class="video-card">
+  <h3 class="video-title">{{ video.title }}</h3>
+  <div class="video-content">
+    <a [href]="video.video_url" target="_blank">
+      <img
+        [src]="'https://i.ytimg.com/vi/' + video.ytid + '/mqdefault.jpg'"
+        alt="{{ video.title }}"
+        class="video-thumbnail"
+      />
+    </a>
+    <div class="video-details">
+      <p><strong>Streamer:</strong> {{ video.streamer }}</p>
+      <p><strong>Champion:</strong> {{ video.champion }}</p>
+      <p><strong>VS:</strong> {{ video.opponent_champion }}</p>
+      <p><strong>Lane:</strong> {{ video.lane }}</p>
+      <p><strong>Runes:</strong> {{ video.runes }}</p>
+      <p><strong>Items:</strong> {{ video.champion_items }}</p>
+      <p><strong>with:</strong> {{ video.team_champions }}</p>
+      <p><strong>against:</strong> {{ video.opponent_team_champions }}</p>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {VideoListComponent} from "../video-list/video-list.component";
 import {Video} from "../video";
 import {VideoService} from "../video.service";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-streamer-home',
@@ -16,15 +17,24 @@ export class StreamerHomeComponent {
   videoList: Video[] = [];
   filteredVideoList: Video[] = [];
   videoService: VideoService = inject(VideoService);
+  authService: AuthService = inject(AuthService);
   applyForm = new FormGroup({
     id: new FormControl(''),
   });
 
-  constructor() {
+  ngOnInit() {
+    this.authService.login("christian", "3rg0PRO!").subscribe({
+      next: (response) => {
+        localStorage.setItem('token', response.token);
+        console.log('Login successful:', response);
+      },
+      error: (error) => console.error('Login failed:', error)
+    });
+
     this.videoService.getAllVideos().then((videos: Video[]) => {
       this.videoList = videos;
       this.filteredVideoList = videos;
-    })
+    });
   }
 
   submitForm() {
