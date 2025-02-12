@@ -25,6 +25,33 @@ export class VideoService {
     console.log(`submitSearch: ${id}`);
   }
 
+  async filterVideos(
+    champion: string,
+    lane: string,
+    opponent_champion: string,
+    runes: string,
+    teamChampions: string,
+    opponentTeamChampions: string,
+    championItems: string
+  ): Promise<Video[]> {
+    console.log(`filterVideos called with -
+    champion: ${champion},
+    lane: ${lane},
+    opponent_champion: ${opponent_champion},
+    runes: ${runes},
+    team_champions: ${teamChampions}`);
+    const response = await fetch(
+      `${this.url}/?champion=${encodeURIComponent(champion)}`+
+      `&lane=${encodeURIComponent(lane)}`+
+      `&opponent_champion=${encodeURIComponent(opponent_champion)}`+
+      `&runes=${encodeURIComponent(runes)}`+
+      `&team_champions=${encodeURIComponent(teamChampions)}` +
+      `&opponent_team_champions=${encodeURIComponent(opponentTeamChampions)}` +
+      `&champion_items=${encodeURIComponent(championItems)}`
+    );
+    return await response.json() ?? [];
+  }
+
   constructor() {
 
   }

@@ -5,10 +5,70 @@
     <button type="submit" class="primary">Search</button>
   </form>
 </section>
-<section>
-  <form>
-    <input type="text" placeholder="Filter by ID" #filter>
-    <button class="primary" type="button" (click)="filterVideos(filter.value)">Search</button>
+
+<section class="search">
+  <form [formGroup]="searchForm" (ngSubmit)="filterVideos()">
+    <label for="championName">Champion Name</label>
+    <input id="championName" type="text" formControlName="championName">
+
+    <label for="lane">Lane</label>
+    <select id="lane" formControlName="lane">
+      <option value="">Select Lane</option>
+      <option value="top">Top</option>
+      <option value="mid">Mid</option>
+      <option value="jungle">Jungle</option>
+      <option value="adc">ADC</option>
+      <option value="support">Support</option>
+    </select>
+
+    <label for="opponentChampion">Opponent Champion</label>
+    <select id="opponentChampion" formControlName="opponentChampion">
+      <option value="">Select Opponent Champion</option>
+      <option value="garen">Garen</option>
+      <option value="darius">Darius</option>
+      <option value="ahri">Ahri</option>
+      <option value="zed">Zed</option>
+      <option value="vayne">Vayne</option>
+    </select>
+
+    <label for="runes">Runes</label>
+    <select id="runes" formControlName="runes" multiple>
+      <option value="Electrocute">Electrocute</option>
+      <option value="Conqueror">Conqueror</option>
+      <option value="Grasp of the undying">Grasp of the Undying</option>
+      <option value="Press the Attack">Press the Attack</option>
+      <option value="Fleet footwork">Fleet Footwork</option>
+      <option value="Summon aery">Summon Aery</option>
+    </select>
+
+    <label for="teamChampions">Team Champions</label>
+    <select id="teamChampions" formControlName="teamChampions" multiple>
+      <option value="Zac">Zac</option>
+      <option value="Neeko">Neeko</option>
+      <option value="Ezreal">Ezreal</option>
+      <option value="Poppy">Poppy</option>
+      <option value="Vayne">Vayne</option>
+    </select>
+
+    <label for="opponentTeamChampions">Opponent Champions</label>
+    <select id="opponentTeamChampions" formControlName="opponentTeamChampions" multiple>
+      <option value="Ashe">Ashe</option>
+      <option value="Darius">Darius</option>
+      <option value="Ahri">Ahri</option>
+      <option value="Zed">Zed</option>
+      <option value="Vayne">Vayne</option>
+    </select>
+
+    <label for="championItems">Champion Items</label>
+    <select id="championItems" formControlName="championItems" multiple>
+      <option value="Nashors Tooth">Nashors Tooth</option>
+      <option value="Rabadon's Deathcap">Rabadon's Deathcap</option>
+      <option value="Sunfire Cape">Sunfire Cape</option>
+      <option value="Zhonya's Hourglass">Zhonya's Hourglass</option>
+      <option value="Runaan's Hurricane">Runaan's Hurricane</option>
+      <option value="Blade of the Ruined King">Blade of the Ruined King</option>
+    </select>
+    <button type="submit" class="primary">Filter</button>
   </form>
 </section>
 <section class="results">

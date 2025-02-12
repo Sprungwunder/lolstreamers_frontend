@@ -21,6 +21,16 @@ export class StreamerHomeComponent {
   applyForm = new FormGroup({
     id: new FormControl(''),
   });
+  searchForm = new FormGroup({
+    championName: new FormControl(''),
+    lane: new FormControl(''),
+    opponentChampion: new FormControl(''),
+    runes: new FormControl(''),
+    teamChampions: new FormControl(''),
+    opponentTeamChampions: new FormControl(''),
+    championItems: new FormControl(''),
+  });
+
 
   ngOnInit() {
     this.authService.login("christian", "3rg0PRO!").subscribe({
@@ -41,11 +51,21 @@ export class StreamerHomeComponent {
     this.videoService.submitSearch(this.applyForm.value.id ?? '');
   }
 
-  filterVideos(id:string) {
-    if (!id) {
-      this.filteredVideoList = this.videoList;
-      return;
-    }
-    this.filteredVideoList = this.videoList.filter(video => video.id === id);
+  filterVideos() {
+    console.log("Submitted champion:", this.searchForm.value.championName ?? '');
+    console.log("Submitted lane:", this.searchForm.value.lane ?? '');
+    console.log("Submitted lane:", this.searchForm.value.opponentChampion ?? '');
+    console.log("Submitted lane:", this.searchForm.value.runes ?? '');
+    this.videoService.filterVideos(
+      this.searchForm.value.championName ?? '',
+      this.searchForm.value.lane ?? '',
+      this.searchForm.value.opponentChampion ?? '',
+      this.searchForm.value.runes ?? '',
+      this.searchForm.value.teamChampions ?? '',
+      this.searchForm.value.opponentTeamChampions ?? '',
+      this.searchForm.value.championItems ?? '',
+    ).then((videos: Video[]) => {
+      this.filteredVideoList = videos
+    });
   }
 }
