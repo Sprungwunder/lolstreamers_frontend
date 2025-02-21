@@ -32,6 +32,8 @@ export class StreamerHomeComponent {
   });
 
 
+  championsList: string[] = [];
+
   ngOnInit() {
     this.authService.login("christian", "3rg0PRO!").subscribe({
       next: (response) => {
@@ -44,6 +46,12 @@ export class StreamerHomeComponent {
     this.videoService.getAllVideos().then((videos: Video[]) => {
       this.videoList = videos;
       this.filteredVideoList = videos;
+    });
+
+    this.videoService.getAllChampions().then((champions: string[]) => {
+      this.championsList = champions;
+    }).catch((error) => {
+      console.error('Failed to fetch champions list:', error);
     });
   }
 

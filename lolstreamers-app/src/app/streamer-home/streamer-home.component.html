@@ -8,8 +8,10 @@
 
 <section class="search">
   <form [formGroup]="searchForm" (ngSubmit)="filterVideos()">
-    <label for="championName">Champion Name</label>
-    <input id="championName" type="text" formControlName="championName">
+    <label for="championName">Champion Name</label><label for="championName">Champion Name</label>
+    <select id="championName" formControlName="championName">
+      <option *ngFor="let champion of championsList" [value]="champion">{{ champion }}</option>
+    </select>
 
     <label for="lane">Lane</label>
     <select id="lane" formControlName="lane">

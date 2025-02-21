@@ -6,18 +6,23 @@ import {Video} from "./video";
   providedIn: 'root'
 })
 export class VideoService {
-  url = 'http://localhost:8000/streamers/ytvideos';
+  url = 'http://localhost:8000/streamers';
+
+  async getAllChampions(): Promise<string[]> {
+    const data = await fetch(`${this.url}/champions/`);
+    return await (await data.json()).champions ?? [];
+  };
 
 
   async getAllVideos(): Promise<Video[]> {
     console.log(`getAllVideos`);
-    const data = await fetch(this.url);
+    const data = await fetch(this.url+'/ytvideos/');
     return await data.json() ?? [];
   }
 
   async getVideoById(id: string): Promise<Video | undefined> {
     console.log(`getVideoById: ${id}`);
-    const data = await fetch(`${this.url}/${id}`);
+    const data = await fetch(`${this.url}/ytvideos/${id}`);
     return await data.json() ?? {};
   }
 
@@ -41,7 +46,7 @@ export class VideoService {
     runes: ${runes},
     team_champions: ${teamChampions}`);
     const response = await fetch(
-      `${this.url}/?champion=${encodeURIComponent(champion)}`+
+      `${this.url}/ytvideos/?champion=${encodeURIComponent(champion)}`+
       `&lane=${encodeURIComponent(lane)}`+
       `&opponent_champion=${encodeURIComponent(opponent_champion)}`+
       `&runes=${encodeURIComponent(runes)}`+
