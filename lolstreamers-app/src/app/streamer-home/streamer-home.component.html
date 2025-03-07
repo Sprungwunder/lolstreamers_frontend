@@ -14,15 +14,19 @@
     </datalist>
 
 
+    <!-- Lane Search -->
     <label for="lane">Lane</label>
-    <select id="lane" formControlName="lane">
-      <option value="">Select Lane</option>
-      <option value="top">Top</option>
-      <option value="mid">Mid</option>
-      <option value="jungle">Jungle</option>
-      <option value="adc">ADC</option>
-      <option value="support">Support</option>
-    </select>
+    <input
+      id="lane"
+      type="text"
+      formControlName="lane"
+      placeholder="Type to search for a lane..."
+      list="lane-suggestions"
+    />
+    <datalist id="lane-suggestions">
+      <option *ngFor="let lane of filteredLanesList" [value]="lane"></option>
+    </datalist>
+
 
     <label for="opponentChampion">Opponent Champion</label>
     <select id="opponentChampion" formControlName="opponentChampion">

@@ -20,8 +20,14 @@ export class StreamerHomeComponent {
   videoService: VideoService = inject(VideoService);
   authService: AuthService = inject(AuthService);
 
+  // champions
   championsList: string[] = [];
   filteredChampionsList: string[] = [];
+
+  // Lanes
+  lanesList: string[] = ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
+  filteredLanesList: string[] = [...this.lanesList]; // Initially show all lanes
+
 
   // Search form controls
   searchForm = new FormGroup({
@@ -67,6 +73,14 @@ export class StreamerHomeComponent {
       .subscribe((value: string | null) => {
         this.filterChampionList(value);
       });
+
+    // Search-as-you-type for lanes
+    this.searchForm.controls.lane?.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((value: string | null) => {
+        this.filterLaneList(value);
+      });
+
   }
 
   // Filter champion list based on the user input
@@ -79,6 +93,16 @@ export class StreamerHomeComponent {
       );
     }
   }
+
+  // Filter lanes
+  filterLaneList(input: string | null) {
+    this.filteredLanesList = !input
+      ? this.lanesList
+      : this.lanesList.filter((lane) =>
+        lane.toLowerCase().includes(input.toLowerCase())
+      );
+  }
+
 
   // Filter videos based on the selected champion and other filters
   filterVideos() {
