@@ -20,13 +20,14 @@ export class StreamerHomeComponent {
   videoService: VideoService = inject(VideoService);
   authService: AuthService = inject(AuthService);
 
-  // champions
   championsList: string[] = [];
   filteredChampionsList: string[] = [];
 
-  // Lanes
   lanesList: string[] = ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
   filteredLanesList: string[] = [...this.lanesList]; // Initially show all lanes
+
+  opponentChampionsList: string[] = [];
+  filteredOpponentChampionsList: string[] = [];
 
 
   // Search form controls
@@ -64,7 +65,18 @@ export class StreamerHomeComponent {
       console.error('Failed to fetch champions list:', error);
     });
 
-    // Search-as-you-type functionality for champions
+    // Fetch opponent champions
+    this.videoService
+      .getAllOpponentChampions()
+      .then((opponentChampions: string[]) => {
+        this.opponentChampionsList = opponentChampions;
+        this.filteredOpponentChampionsList = opponentChampions;
+      })
+      .catch((error) =>
+        console.error('Failed to fetch opponent champions list:', error)
+      );
+
+    // Search-as-you-type functionalities
     this.searchForm.controls.championName?.valueChanges
       .pipe(
         debounceTime(300), // Add a debounce to reduce API calls
@@ -74,16 +86,20 @@ export class StreamerHomeComponent {
         this.filterChampionList(value);
       });
 
-    // Search-as-you-type for lanes
     this.searchForm.controls.lane?.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value: string | null) => {
         this.filterLaneList(value);
       });
 
+    this.searchForm.controls.opponentChampion?.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((value: string | null) => {
+        this.filterOpponentChampionList(value);
+      });
   }
 
-  // Filter champion list based on the user input
+  // Filter lists based on input
   filterChampionList(input: string | null) {
     if (!input) {
       this.filteredChampionsList = this.championsList; // Reset to all champions if input is empty
@@ -94,19 +110,34 @@ export class StreamerHomeComponent {
     }
   }
 
-  // Filter lanes
   filterLaneList(input: string | null) {
     this.filteredLanesList = !input
       ? this.lanesList
       : this.lanesList.filter((lane) =>
-        lane.toLowerCase().includes(input.toLowerCase())
+        lane.toLowerCase().includes(input)
+      );
+  }
+
+  filterOpponentChampionList(input: string | null) {
+    this.filteredOpponentChampionsList = !input
+      ? this.opponentChampionsList
+      : this.opponentChampionsList.filter((opponentChampion) =>
+        opponentChampion.toLowerCase().includes(input.toLowerCase())
       );
   }
 
 
   // Filter videos based on the selected champion and other filters
   filterVideos() {
-    const {championName, lane, opponentChampion, runes, teamChampions, opponentTeamChampions, championItems} = this.searchForm.value;
+    const {
+      championName,
+      lane,
+      opponentChampion,
+      runes,
+      teamChampions,
+      opponentTeamChampions,
+      championItems
+    } = this.searchForm.value;
     this.videoService.filterVideos(
       championName ?? '',
       lane ?? '',

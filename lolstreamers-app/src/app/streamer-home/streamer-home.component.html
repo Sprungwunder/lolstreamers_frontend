@@ -28,15 +28,22 @@
     </datalist>
 
 
+    <!-- Opponent Champion Search -->
     <label for="opponentChampion">Opponent Champion</label>
-    <select id="opponentChampion" formControlName="opponentChampion">
-      <option value="">Select Opponent Champion</option>
-      <option value="garen">Garen</option>
-      <option value="darius">Darius</option>
-      <option value="ahri">Ahri</option>
-      <option value="zed">Zed</option>
-      <option value="vayne">Vayne</option>
-    </select>
+    <input
+      id="opponentChampion"
+      type="text"
+      formControlName="opponentChampion"
+      placeholder="Type to search..."
+      list="opponent-champion-suggestions"
+    />
+    <datalist id="opponent-champion-suggestions">
+      <option
+        *ngFor="let opponentChampion of filteredOpponentChampionsList"
+        [value]="opponentChampion"
+      ></option>
+    </datalist>
+
 
     <label for="runes">Runes</label>
     <select id="runes" formControlName="runes" multiple>
@@ -48,6 +55,7 @@
       <option value="Summon aery">Summon Aery</option>
     </select>
 
+    <!-- Team Champions Multi-Select -->
     <label for="teamChampions">Team Champions</label>
     <select id="teamChampions" formControlName="teamChampions" multiple>
       <option value="Zac">Zac</option>
