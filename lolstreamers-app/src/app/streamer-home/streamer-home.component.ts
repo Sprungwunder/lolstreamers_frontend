@@ -160,9 +160,10 @@ export class StreamerHomeComponent {
 
 
   // Method to add a champion to the selected list
-  addChampion(champion: string) {
+  addChampion(champion: string, inputValue?: string) {
     if (champion && !this.selectedTeamChampions.includes(champion)) {
       this.selectedTeamChampions.push(champion); // Add champion to the selected list
+      this.filterChampions(inputValue || ''); // Update the dropdown list to remove the added champion
     }
   }
 
@@ -172,16 +173,16 @@ export class StreamerHomeComponent {
 
     if (champion) {
       this.addChampion(champion); // Call the addChampion method
+      inputElement.value = ''; // Clear the input field after adding the champion
     }
-
-    inputElement.value = ''; // Clear the input field after adding the champion
   }
 
   // Method to remove a champion from the selected list
-  removeChampion(champion: string) {
+  removeChampion(champion: string, inputValue?: string) {
     this.selectedTeamChampions = this.selectedTeamChampions.filter(
       (c) => c !== champion
     );
+    this.filterChampions(inputValue || '');
   }
 
   // Method to pass the selected champions as a comma-separated string

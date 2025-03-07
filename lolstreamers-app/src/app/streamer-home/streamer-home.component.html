@@ -62,7 +62,7 @@
       *ngFor="let selectedChampion of selectedTeamChampions"
     >
       {{ selectedChampion }}
-      <button type="button" (click)="removeChampion(selectedChampion)">
+      <button type="button" (click)="removeChampion(selectedChampion, championInput.value)">
         &times;
       </button>
     </span>
@@ -70,6 +70,7 @@
 
     <!-- Input -->
     <input
+      #championInput
       type="text"
       placeholder="Type to search champions..."
       (input)="filterChampionsFromEvent($event)"
@@ -82,7 +83,7 @@
     <ul class="suggestions">
       <li
         *ngFor="let champion of filteredTeamChampionsList"
-        (click)="addChampion(champion)"
+        (click)="addChampion(champion, championInput.value)"
       >
         {{ champion }}
       </li>
