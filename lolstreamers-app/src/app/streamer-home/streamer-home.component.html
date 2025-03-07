@@ -1,17 +1,18 @@
-<section>
-  <form [formGroup]="applyForm" (submit)="submitForm()">
-    <label for="id">ID</label>
-    <input id="id" type="text" formControlName="id">
-    <button type="submit" class="primary">Search</button>
-  </form>
-</section>
-
 <section class="search">
   <form [formGroup]="searchForm" (ngSubmit)="filterVideos()">
-    <label for="championName">Champion Name</label><label for="championName">Champion Name</label>
-    <select id="championName" formControlName="championName">
-      <option *ngFor="let champion of championsList" [value]="champion">{{ champion }}</option>
-    </select>
+    <!-- Champion Search -->
+    <label for="championName">Champion Name</label>
+    <input
+      id="championName"
+      type="text"
+      formControlName="championName"
+      placeholder="Type to search..."
+      list="champion-suggestions"
+    />
+    <datalist id="champion-suggestions">
+      <option *ngFor="let champion of filteredChampionsList" [value]="champion"></option>
+    </datalist>
+
 
     <label for="lane">Lane</label>
     <select id="lane" formControlName="lane">
