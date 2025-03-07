@@ -1,114 +1,127 @@
 <section class="search">
   <form [formGroup]="searchForm" (ngSubmit)="filterVideos()">
     <!-- Champion Search -->
-    <label for="championName">Champion Name</label>
-    <input
-      id="championName"
-      type="text"
-      formControlName="championName"
-      placeholder="Type to search..."
-      list="champion-suggestions"
-    />
-    <datalist id="champion-suggestions">
-      <option *ngFor="let champion of filteredChampionsList" [value]="champion"></option>
-    </datalist>
-
-
-    <!-- Lane Search -->
-    <label for="lane">Lane</label>
-    <input
-      id="lane"
-      type="text"
-      formControlName="lane"
-      placeholder="Type to search for a lane..."
-      list="lane-suggestions"
-    />
-    <datalist id="lane-suggestions">
-      <option *ngFor="let lane of filteredLanesList" [value]="lane"></option>
-    </datalist>
-
-
-    <!-- Opponent Champion Search -->
-    <label for="opponentChampion">Opponent Champion</label>
-    <input
-      id="opponentChampion"
-      type="text"
-      formControlName="opponentChampion"
-      placeholder="Type to search..."
-      list="opponent-champion-suggestions"
-    />
-    <datalist id="opponent-champion-suggestions">
-      <option
-        *ngFor="let opponentChampion of filteredOpponentChampionsList"
-        [value]="opponentChampion"
-      ></option>
-    </datalist>
-
-
-    <label for="runes">Runes</label>
-    <select id="runes" formControlName="runes" multiple>
-      <option value="Electrocute">Electrocute</option>
-      <option value="Conqueror">Conqueror</option>
-      <option value="Grasp of the undying">Grasp of the Undying</option>
-      <option value="Press the Attack">Press the Attack</option>
-      <option value="Fleet footwork">Fleet Footwork</option>
-      <option value="Summon aery">Summon Aery</option>
-    </select>
-
-    <!-- Selected Champions as Tags -->
-    <div class="selected-champions">
-    <span
-      class="champion-tag"
-      *ngFor="let selectedChampion of selectedTeamChampions"
-    >
-      {{ selectedChampion }}
-      <button type="button" (click)="removeChampion(selectedChampion, championInput.value)">
-        &times;
-      </button>
-    </span>
+    <div>
+      <label for="championName">Champion Name</label>
+      <input
+        id="championName"
+        type="text"
+        formControlName="championName"
+        placeholder="Type to search..."
+        list="champion-suggestions"
+      />
+      <datalist id="champion-suggestions">
+        <option *ngFor="let champion of filteredChampionsList" [value]="champion"></option>
+      </datalist>
     </div>
 
-    <!-- Input -->
-    <input
-      #championInput
-      type="text"
-      placeholder="Type to search champions..."
-      (input)="filterChampionsFromEvent($event)"
-      (keydown.enter)="addChampionAndClearInput($event)"
-    />
+    <!-- Lane Search -->
+    <div>
+      <label for="lane">Lane</label>
+      <input
+        id="lane"
+        type="text"
+        formControlName="lane"
+        placeholder="Type to search for a lane..."
+        list="lane-suggestions"
+      />
+      <datalist id="lane-suggestions">
+        <option *ngFor="let lane of filteredLanesList" [value]="lane"></option>
+      </datalist>
+    </div>
+
+    <!-- Opponent Champion Search -->
+    <div>
+      <label for="opponentChampion">Opponent Champion</label>
+      <input
+        id="opponentChampion"
+        type="text"
+        formControlName="opponentChampion"
+        placeholder="Type to search..."
+        list="opponent-champion-suggestions"
+      />
+      <datalist id="opponent-champion-suggestions">
+        <option
+          *ngFor="let opponentChampion of filteredOpponentChampionsList"
+          [value]="opponentChampion"
+        ></option>
+      </datalist>
+    </div>
+
+    <div>
+      <label for="runes">Runes</label>
+      <select id="runes" formControlName="runes" multiple>
+        <option value="Electrocute">Electrocute</option>
+        <option value="Conqueror">Conqueror</option>
+        <option value="Grasp of the undying">Grasp of the Undying</option>
+        <option value="Press the Attack">Press the Attack</option>
+        <option value="Fleet footwork">Fleet Footwork</option>
+        <option value="Summon aery">Summon Aery</option>
+      </select>
+    </div>
+
+    <!-- Selected Champions as Tags -->
+    <div>
+      <label for="championItems">Team Champions</label>
+      <div class="selected-champions">
+        <span
+          class="champion-tag"
+          *ngFor="let selectedChampion of selectedTeamChampions"
+        >
+          {{ selectedChampion }}
+          <button type="button" (click)="removeChampion(selectedChampion, championInput.value)">
+            &times;
+          </button>
+        </span>
+      </div>
+
+      <!-- Input -->
+      <input
+        #championInput
+        type="text"
+        placeholder="Type to search champions..."
+        (input)="filterChampionsFromEvent($event)"
+        (keydown.enter)="addChampionAndClearInput($event)"
+      />
 
 
+      <!-- Filtered Suggestions -->
+      <ul class="suggestions">
+        <li
+          *ngFor="let champion of filteredTeamChampionsList"
+          (click)="addChampion(champion, championInput.value)"
+        >
+          {{ champion }}
+        </li>
+      </ul>
+    </div>
 
-    <!-- Filtered Suggestions -->
-    <ul class="suggestions">
-      <li
-        *ngFor="let champion of filteredTeamChampionsList"
-        (click)="addChampion(champion, championInput.value)"
-      >
-        {{ champion }}
-      </li>
-    </ul>
+    <div>
+      <label for="opponentTeamChampions">Opponent Champions</label>
+      <select id="opponentTeamChampions" formControlName="opponentTeamChampions" multiple>
+        <option value="Ashe">Ashe</option>
+        <option value="Darius">Darius</option>
+        <option value="Ahri">Ahri</option>
+        <option value="Zed">Zed</option>
+        <option value="Vayne">Vayne</option>
+      </select>
+    </div>
 
-
-    <label for="opponentTeamChampions">Opponent Champions</label>
-    <select id="opponentTeamChampions" formControlName="opponentTeamChampions" multiple>
-      <option value="Ashe">Ashe</option>
-      <option value="Darius">Darius</option>
-      <option value="Ahri">Ahri</option>
-      <option value="Zed">Zed</option>
-      <option value="Vayne">Vayne</option>
-    </select>
-
-    <label for="championItems">Champion Items</label>
-    <select id="championItems" formControlName="championItems" multiple>
-      <option value="Nashors Tooth">Nashors Tooth</option>
-      <option value="Rabadon's Deathcap">Rabadon's Deathcap</option>
-      <option value="Sunfire Cape">Sunfire Cape</option>
-      <option value="Zhonya's Hourglass">Zhonya's Hourglass</option>
-      <option value="Runaan's Hurricane">Runaan's Hurricane</option>
-      <option value="Blade of the Ruined King">Blade of the Ruined King</option>
-    </select>
+    <div>
+      <label for="championItems">Champion Items</label>
+      <select id="championItems" formControlName="championItems" multiple>
+        <option value="Nashors Tooth">Nashors Tooth</option>
+        <option value="Rabadon's Deathcap">Rabadon's Deathcap</option>
+        <option value="Sunfire Cape">Sunfire Cape</option>
+        <option value="Zhonya's Hourglass">Zhonya's Hourglass</option>
+        <option value="Runaan's Hurricane">Runaan's Hurricane</option>
+        <option value="Blade of the Ruined King">Blade of the Ruined King</option>
+      </select>
+    </div>
+    <br/>
     <button type="submit" class="primary">Filter</button>
+
+
   </form>
 </section>
 <section class="results">

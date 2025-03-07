@@ -1,43 +1,113 @@
+/* General Styling */
+section.search {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Layout */
+form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Labels and Inputs Styling */
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input,
+select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input:focus,
+select:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* DataLists and Suggestions */
+datalist {
+  margin-top: 0;
+}
+
+/* Selected Tags */
 .selected-champions {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .champion-tag {
+  background: #e0e0e0;
+  padding: 5px 10px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
-  background-color: #e0e0e0;
-  border-radius: 16px;
-  padding: 5px 10px;
-  margin-right: 8px;
-  margin-bottom: 5px;
+  font-size: 0.9rem;
 }
 
 .champion-tag button {
   background: none;
   border: none;
-  color: red;
-  font-size: 14px;
+  color: #888;
+  font-size: 1.2rem;
   margin-left: 8px;
   cursor: pointer;
 }
 
-.suggestions {
+.champion-tag button:hover {
+  color: #333;
+}
+
+/* Suggestions */
+ul.suggestions {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   max-height: 150px;
   overflow-y: auto;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-top: 5px;
-  padding: 0;
-  list-style: none;
 }
 
-.suggestions li {
-  padding: 5px 10px;
+ul.suggestions li {
+  padding: 10px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.suggestions li:hover {
+ul.suggestions li:hover {
   background-color: #f0f0f0;
+}
+
+/* Buttons */
+button.primary {
+  padding: 10px 20px;
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.primary:hover {
+  background: #45a049;
 }
