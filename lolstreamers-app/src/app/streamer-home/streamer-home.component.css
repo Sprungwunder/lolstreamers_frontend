@@ -1,0 +1,43 @@
+.selected-champions {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.champion-tag {
+  display: flex;
+  align-items: center;
+  background-color: #e0e0e0;
+  border-radius: 16px;
+  padding: 5px 10px;
+  margin-right: 8px;
+  margin-bottom: 5px;
+}
+
+.champion-tag button {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 14px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.suggestions {
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+  padding: 0;
+  list-style: none;
+}
+
+.suggestions li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  background-color: #f0f0f0;
+}

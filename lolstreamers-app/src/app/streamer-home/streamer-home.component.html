@@ -55,15 +55,39 @@
       <option value="Summon aery">Summon Aery</option>
     </select>
 
-    <!-- Team Champions Multi-Select -->
-    <label for="teamChampions">Team Champions</label>
-    <select id="teamChampions" formControlName="teamChampions" multiple>
-      <option value="Zac">Zac</option>
-      <option value="Neeko">Neeko</option>
-      <option value="Ezreal">Ezreal</option>
-      <option value="Poppy">Poppy</option>
-      <option value="Vayne">Vayne</option>
-    </select>
+    <!-- Selected Champions as Tags -->
+    <div class="selected-champions">
+    <span
+      class="champion-tag"
+      *ngFor="let selectedChampion of selectedTeamChampions"
+    >
+      {{ selectedChampion }}
+      <button type="button" (click)="removeChampion(selectedChampion)">
+        &times;
+      </button>
+    </span>
+    </div>
+
+    <!-- Input -->
+    <input
+      type="text"
+      placeholder="Type to search champions..."
+      (input)="filterChampionsFromEvent($event)"
+      (keydown.enter)="addChampionAndClearInput($event)"
+    />
+
+
+
+    <!-- Filtered Suggestions -->
+    <ul class="suggestions">
+      <li
+        *ngFor="let champion of filteredTeamChampionsList"
+        (click)="addChampion(champion)"
+      >
+        {{ champion }}
+      </li>
+    </ul>
+
 
     <label for="opponentTeamChampions">Opponent Champions</label>
     <select id="opponentTeamChampions" formControlName="opponentTeamChampions" multiple>

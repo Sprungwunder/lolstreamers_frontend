@@ -29,6 +29,10 @@ export class StreamerHomeComponent {
   opponentChampionsList: string[] = [];
   filteredOpponentChampionsList: string[] = [];
 
+  teamChampionsList: string[] = []; // Holds the fetched list of team champions
+  filteredTeamChampionsList: string[] = []; // Holds the filtered list (for search)
+  selectedTeamChampions: string[] = []; // Holds the selected team champions
+
 
   // Search form controls
   searchForm = new FormGroup({
@@ -75,6 +79,12 @@ export class StreamerHomeComponent {
       .catch((error) =>
         console.error('Failed to fetch opponent champions list:', error)
       );
+
+    this.videoService.getAllTeamChampions().then((champions: string[]) => {
+      this.teamChampionsList = champions;
+      this.filteredTeamChampionsList = champions; // Initially, all champions are in the filtered list
+    });
+
 
     // Search-as-you-type functionalities
     this.searchForm.controls.championName?.valueChanges
@@ -126,15 +136,72 @@ export class StreamerHomeComponent {
       );
   }
 
+  // Method to filter champions as user types in the input field
+  filterChampions(searchTerm: string): void {
+    // Filter champions based on search term
+    let filtered = !searchTerm
+      ? this.teamChampionsList
+      : this.teamChampionsList.filter((champion) =>
+        champion.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+    // Further filter out already selected champions
+    this.filteredTeamChampionsList = filtered.filter(
+      (champion) => !this.selectedTeamChampions.includes(champion)
+    );
+  }
+
+
+  filterChampionsFromEvent(event: Event): void {
+    const inputElement = event.target as HTMLInputElement; // Cast here
+    const searchTerm = inputElement.value; // Get the value of the input
+    this.filterChampions(searchTerm); // Call the existing filterChampions method
+  }
+
+
+  // Method to add a champion to the selected list
+  addChampion(champion: string) {
+    if (champion && !this.selectedTeamChampions.includes(champion)) {
+      this.selectedTeamChampions.push(champion); // Add champion to the selected list
+    }
+  }
+
+  addChampionAndClearInput(event: Event) {
+    const inputElement = event.target as HTMLInputElement; // Cast the event target to HTMLInputElement
+    const champion = inputElement.value.trim(); // Get and trim the input value
+
+    if (champion) {
+      this.addChampion(champion); // Call the addChampion method
+    }
+
+    inputElement.value = ''; // Clear the input field after adding the champion
+  }
+
+  // Method to remove a champion from the selected list
+  removeChampion(champion: string) {
+    this.selectedTeamChampions = this.selectedTeamChampions.filter(
+      (c) => c !== champion
+    );
+  }
+
+  // Method to pass the selected champions as a comma-separated string
+  getCommaSeparatedChampions(): string {
+    return this.selectedTeamChampions.join(',');
+  }
+
+
+
+
 
   // Filter videos based on the selected champion and other filters
   filterVideos() {
+    const selectedChampionsString = this.getCommaSeparatedChampions();
+
     const {
       championName,
       lane,
       opponentChampion,
       runes,
-      teamChampions,
       opponentTeamChampions,
       championItems
     } = this.searchForm.value;
@@ -143,7 +210,7 @@ export class StreamerHomeComponent {
       lane ?? '',
       opponentChampion ?? '',
       runes ?? '',
-      teamChampions ?? '',
+      selectedChampionsString ?? '',
       opponentTeamChampions ?? '',
       championItems ?? ''
     ).then((videos: Video[]) => {
