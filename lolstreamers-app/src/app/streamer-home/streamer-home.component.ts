@@ -33,6 +33,10 @@ export class StreamerHomeComponent {
   filteredTeamChampionsList: string[] = []; // Holds the filtered list (for search)
   selectedTeamChampions: string[] = []; // Holds the selected team champions
 
+  opponentTeamChampionsList: string[] = []; // Holds the fetched list of opponent team champions
+  filteredOpponentTeamChampionsList: string[] = []; // Holds the filtered list (for search)
+  selectedOpponentTeamChampions: string[] = []; // Holds the selected opponent team champions
+
 
   // Search form controls
   searchForm = new FormGroup({
@@ -74,7 +78,7 @@ export class StreamerHomeComponent {
       .getAllOpponentChampions()
       .then((opponentChampions: string[]) => {
         this.opponentChampionsList = opponentChampions;
-        this.filteredOpponentChampionsList = opponentChampions;
+        this.filteredOpponentTeamChampionsList = opponentChampions;
       })
       .catch((error) =>
         console.error('Failed to fetch opponent champions list:', error)
@@ -83,6 +87,11 @@ export class StreamerHomeComponent {
     this.videoService.getAllTeamChampions().then((champions: string[]) => {
       this.teamChampionsList = champions;
       this.filteredTeamChampionsList = champions; // Initially, all champions are in the filtered list
+    });
+
+    this.videoService.getAllOpponentTeamChampions().then((champions: string[]) => {
+      this.opponentTeamChampionsList = champions;
+      this.filteredOpponentTeamChampionsList = champions; // Initially, all champions are in the filtered list
     });
 
 
@@ -137,7 +146,7 @@ export class StreamerHomeComponent {
   }
 
   // Method to filter champions as user types in the input field
-  filterChampions(searchTerm: string): void {
+  filterTeamChampions(searchTerm: string): void {
     // Filter champions based on search term
     let filtered = !searchTerm
       ? this.teamChampionsList
@@ -152,42 +161,93 @@ export class StreamerHomeComponent {
   }
 
 
-  filterChampionsFromEvent(event: Event): void {
+  filterTeamChampionsFromEvent(event: Event): void {
     const inputElement = event.target as HTMLInputElement; // Cast here
     const searchTerm = inputElement.value; // Get the value of the input
-    this.filterChampions(searchTerm); // Call the existing filterChampions method
+    this.filterTeamChampions(searchTerm); // Call the existing filterChampions method
   }
 
 
   // Method to add a champion to the selected list
-  addChampion(champion: string, inputValue?: string) {
+  addTeamChampion(champion: string, inputValue?: string) {
     if (champion && !this.selectedTeamChampions.includes(champion)) {
       this.selectedTeamChampions.push(champion); // Add champion to the selected list
-      this.filterChampions(inputValue || ''); // Update the dropdown list to remove the added champion
+      this.filterTeamChampions(inputValue || ''); // Update the dropdown list to remove the added champion
     }
   }
 
-  addChampionAndClearInput(event: Event) {
+  addTeamChampionAndClearInput(event: Event) {
     const inputElement = event.target as HTMLInputElement; // Cast the event target to HTMLInputElement
     const champion = inputElement.value.trim(); // Get and trim the input value
 
     if (champion) {
-      this.addChampion(champion); // Call the addChampion method
+      this.addTeamChampion(champion); // Call the addChampion method
       inputElement.value = ''; // Clear the input field after adding the champion
     }
   }
 
   // Method to remove a champion from the selected list
-  removeChampion(champion: string, inputValue?: string) {
+  removeTeamChampion(champion: string, inputValue?: string) {
     this.selectedTeamChampions = this.selectedTeamChampions.filter(
       (c) => c !== champion
     );
-    this.filterChampions(inputValue || '');
+    this.filterTeamChampions(inputValue || '');
   }
 
   // Method to pass the selected champions as a comma-separated string
-  getCommaSeparatedChampions(): string {
+  getCommaSeparatedTeamChampions(): string {
     return this.selectedTeamChampions.join(',');
+  }
+
+  filterOpponentTeamChampions(searchTerm: string): void {
+    // Filter champions based on search term
+    let filtered = !searchTerm
+      ? this.opponentTeamChampionsList
+      : this.opponentTeamChampionsList.filter((champion) =>
+        champion.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+    // Further filter out already selected champions
+    this.filteredOpponentTeamChampionsList = filtered.filter(
+      (champion) => !this.selectedOpponentTeamChampions.includes(champion)
+    );
+  }
+  filterOpponentTeamChampionsFromEvent(event: Event): void {
+    const inputElement = event.target as HTMLInputElement; // Cast here
+    const searchTerm = inputElement.value; // Get the value of the input
+    this.filterOpponentTeamChampions(searchTerm); // Call the existing filterChampions method
+  }
+
+
+  // Method to add a champion to the selected list
+  addOpponentTeamChampion(champion: string, inputValue?: string) {
+    if (champion && !this.selectedOpponentTeamChampions.includes(champion)) {
+      this.selectedOpponentTeamChampions.push(champion); // Add champion to the selected list
+      this.filterOpponentTeamChampions(inputValue || ''); // Update the dropdown list to remove the added champion
+    }
+  }
+
+  addOpponentTeamChampionAndClearInput(event: Event) {
+    const inputElement = event.target as HTMLInputElement; // Cast the event target to HTMLInputElement
+    const champion = inputElement.value.trim(); // Get and trim the input value
+
+    if (champion) {
+      this.addOpponentTeamChampion(champion); // Call the addChampion method
+      inputElement.value = ''; // Clear the input field after adding the champion
+    }
+  }
+
+  // Method to remove a champion from the selected list
+  removeOpponentTeamChampion(champion: string, inputValue?: string) {
+    this.selectedOpponentTeamChampions = this.selectedOpponentTeamChampions.filter(
+      (c) => c !== champion
+    );
+    this.filterOpponentTeamChampions(inputValue || '');
+  }
+
+  // Method to pass the selected champions as a comma-separated string
+  getCommaSeparatedOpponentTeamChampions(): string {
+    return this.selectedOpponentTeamChampions.join(',');
   }
 
 
@@ -196,7 +256,7 @@ export class StreamerHomeComponent {
 
   // Filter videos based on the selected champion and other filters
   filterVideos() {
-    const selectedChampionsString = this.getCommaSeparatedChampions();
+    const selectedChampionsString = this.getCommaSeparatedTeamChampions();
 
     const {
       championName,

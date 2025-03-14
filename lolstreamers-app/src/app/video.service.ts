@@ -23,8 +23,10 @@ export class VideoService {
     return await (await data.json()).team_champions ?? [];
   }
 
-
-
+  async getAllOpponentTeamChampions(): Promise<string[]> {
+    const data = await fetch(`${this.url}/opponent-team-champions/`);
+    return await (await data.json()).opponent_team_champions ?? [];
+  }
 
   async getAllVideos(): Promise<Video[]> {
     console.log(`getAllVideos`);
