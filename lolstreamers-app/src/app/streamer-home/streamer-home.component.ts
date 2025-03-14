@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {VideoListComponent} from "../video-list/video-list.component";
+import {VideoCardComponent} from "../video-card/video-card.component";
 import {Video} from "../video";
 import {VideoService} from "../video.service";
 import {AuthService} from "../auth.service";
@@ -10,7 +10,7 @@ import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 @Component({
   selector: 'app-streamer-home',
   standalone: true,
-  imports: [CommonModule, VideoListComponent, ReactiveFormsModule],
+  imports: [CommonModule, VideoCardComponent, ReactiveFormsModule],
   templateUrl: './streamer-home.component.html',
   styleUrl: './streamer-home.component.css'
 })
@@ -61,45 +61,37 @@ export class StreamerHomeComponent {
       },
       error: (error) => console.error('Login failed:', error)
     });
-    // Fetch all videos
-    this.videoService.getAllVideos().then((videos: Video[]) => {
-      this.videoList = videos;
-      this.filteredVideoList = videos;
-    }).catch((error) => {
-      console.error('Failed to fetch video list:', error);
-    });
+    this.initializeData();
+    this.initSearchAsYouType();
 
-    // Fetch all champions
-    this.videoService.getAllChampions().then((champions: string[]) => {
-      this.championsList = champions;
-      this.filteredChampionsList = champions; // Initially, all champions are displayed
-    }).catch((error) => {
-      console.error('Failed to fetch champions list:', error);
-    });
+  }
 
-    // Fetch opponent champions
-    this.videoService
-      .getAllOpponentChampions()
-      .then((opponentChampions: string[]) => {
-        this.opponentChampionsList = opponentChampions;
-        this.filteredOpponentTeamChampionsList = opponentChampions;
-      })
-      .catch((error) =>
-        console.error('Failed to fetch opponent champions list:', error)
-      );
+  async initializeData() {
+    try {
+      const [
+        championsList,
+        opponentChampionsList,
+        teamChampionsList,
+        opponentTeamChampionsList,
+        videoList,
+      ] = await this.videoService.fetchInitialData();
 
-    this.videoService.getAllTeamChampions().then((champions: string[]) => {
-      this.teamChampionsList = champions;
-      this.filteredTeamChampionsList = champions; // Initially, all champions are in the filtered list
-    });
+      this.championsList = championsList;
+      this.filteredChampionsList = championsList;
+      this.opponentChampionsList = opponentChampionsList;
+      this.filteredOpponentChampionsList = opponentChampionsList;
+      this.teamChampionsList = teamChampionsList;
+      this.filteredTeamChampionsList = teamChampionsList;
+      this.opponentTeamChampionsList = opponentTeamChampionsList;
+      this.filteredOpponentTeamChampionsList = opponentTeamChampionsList;
+      this.videoList = videoList;
+      this.filteredVideoList = [...videoList];
+    } catch (error) {
+      console.error('Failed to initialize data:', error);
+    }
+  }
 
-    this.videoService.getAllOpponentTeamChampions().then((champions: string[]) => {
-      this.opponentTeamChampionsList = champions;
-      this.filteredOpponentTeamChampionsList = champions; // Initially, all champions are in the filtered list
-    });
-
-
-    // Search-as-you-type functionalities
+  async initSearchAsYouType() {
     this.searchForm.controls.championName?.valueChanges
       .pipe(
         debounceTime(300), // Add a debounce to reduce API calls

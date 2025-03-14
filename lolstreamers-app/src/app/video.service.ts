@@ -40,8 +40,15 @@ export class VideoService {
     return await data.json() ?? {};
   }
 
-  submitSearch(id: string) {
-    console.log(`submitSearch: ${id}`);
+  // Centralized method to fetch and manage all initialization data
+  async fetchInitialData() {
+    return Promise.all([
+      this.getAllChampions(),
+      this.getAllOpponentChampions(),
+      this.getAllTeamChampions(),
+      this.getAllOpponentTeamChampions(),
+      this.getAllVideos(),
+    ]);
   }
 
   async filterVideos(
