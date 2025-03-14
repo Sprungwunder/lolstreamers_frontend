@@ -58,7 +58,8 @@ export class VideoService {
     lane: ${lane},
     opponent_champion: ${opponent_champion},
     runes: ${runes},
-    team_champions: ${teamChampions}`);
+    team_champions: ${teamChampions},
+    opponent_team_champions: ${opponentTeamChampions}`);
     const response = await fetch(
       `${this.url}/ytvideos/?champion=${encodeURIComponent(champion)}`+
       `&lane=${encodeURIComponent(lane)}`+
