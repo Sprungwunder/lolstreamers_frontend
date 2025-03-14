@@ -37,14 +37,10 @@ export class StreamerHomeComponent {
   teamChampionsList: string[] = []; // Holds the fetched list of team champions
   teamChampionsSuggestionList: string[] = []; // Holds the filtered list (for search suggestion)
   selectedTeamChampions: string[] = []; // Holds the selected team champions
-  // Restrict the max count for selected champions
-
 
   opponentTeamChampionsList: string[] = []; // Holds the fetched list of opponent team champions
   opponentTeamChampionsSuggestionList: string[] = []; // Holds the filtered list (for search suggestion)
   selectedOpponentTeamChampions: string[] = []; // Holds the selected opponent team champions
-
-
 
   // Search form controls
   searchForm = new FormGroup({
