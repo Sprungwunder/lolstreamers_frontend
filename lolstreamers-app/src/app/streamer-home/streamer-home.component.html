@@ -80,15 +80,14 @@
         #championInput
         type="text"
         placeholder="Type to search champions..."
-        (input)="filterTeamChampionsFromEvent($event)"
-        (keydown.enter)="addTeamChampionAndClearInput($event)"
+        (input)="updateFilterTeamChampions($event)"
       />
 
 
       <!-- Filtered Suggestions -->
       <ul class="suggestions">
         <li
-          *ngFor="let champion of filteredTeamChampionsList"
+          *ngFor="let champion of teamChampionsSuggestionList"
           (click)="addTeamChampion(champion, championInput.value)"
         >
           {{ champion }}
@@ -115,15 +114,14 @@
         #opponentChampionInput
         type="text"
         placeholder="Type to search champions..."
-        (input)="filterOpponentTeamChampionsFromEvent($event)"
-        (keydown.enter)="addOpponentTeamChampionAndClearInput($event)"
+        (input)="updateOpponentTeamChampions($event)"
       />
 
 
       <!-- Filtered Suggestions -->
       <ul class="suggestions">
         <li
-          *ngFor="let champion of filteredOpponentTeamChampionsList"
+          *ngFor="let champion of opponentTeamChampionsSuggestionList"
           (click)="addOpponentTeamChampion(champion, opponentChampionInput.value)"
         >
           {{ champion }}

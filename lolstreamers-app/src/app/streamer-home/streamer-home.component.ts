@@ -30,14 +30,14 @@ export class StreamerHomeComponent {
   filteredOpponentChampionsList: string[] = [];
 
   teamChampionsList: string[] = []; // Holds the fetched list of team champions
-  filteredTeamChampionsList: string[] = []; // Holds the filtered list (for search)
+  teamChampionsSuggestionList: string[] = []; // Holds the filtered list (for search suggestion)
   selectedTeamChampions: string[] = []; // Holds the selected team champions
   // Restrict the max count for selected champions
   private readonly maxTeamChampions = 4;
 
 
   opponentTeamChampionsList: string[] = []; // Holds the fetched list of opponent team champions
-  filteredOpponentTeamChampionsList: string[] = []; // Holds the filtered list (for search)
+  opponentTeamChampionsSuggestionList: string[] = []; // Holds the filtered list (for search suggestion)
   selectedOpponentTeamChampions: string[] = []; // Holds the selected opponent team champions
   private readonly maxOpponentChampions = 4;
 
@@ -63,7 +63,6 @@ export class StreamerHomeComponent {
     });
     this.initializeData();
     this.initSearchAsYouType();
-
   }
 
   async initializeData() {
@@ -81,9 +80,9 @@ export class StreamerHomeComponent {
       this.opponentChampionsList = opponentChampionsList;
       this.filteredOpponentChampionsList = opponentChampionsList;
       this.teamChampionsList = teamChampionsList;
-      this.filteredTeamChampionsList = teamChampionsList;
+      this.teamChampionsSuggestionList = teamChampionsList;
       this.opponentTeamChampionsList = opponentTeamChampionsList;
-      this.filteredOpponentTeamChampionsList = opponentTeamChampionsList;
+      this.opponentTeamChampionsSuggestionList = opponentTeamChampionsList;
       this.videoList = videoList;
       this.filteredVideoList = [...videoList];
     } catch (error) {
@@ -151,13 +150,16 @@ export class StreamerHomeComponent {
       );
 
     // Further filter out already selected champions
-    this.filteredTeamChampionsList = filtered.filter(
+    this.teamChampionsSuggestionList = filtered.filter(
       (champion) => !this.selectedTeamChampions.includes(champion)
     );
   }
 
-
-  filterTeamChampionsFromEvent(event: Event): void {
+  /**
+   * updates the champion list that the user can pick from while typing in the input box
+   * @param event
+   */
+  updateFilterTeamChampions(event: Event): void {
     const inputElement = event.target as HTMLInputElement; // Cast here
     const searchTerm = inputElement.value; // Get the value of the input
     this.filterTeamChampions(searchTerm); // Call the existing filterChampions method
@@ -171,17 +173,6 @@ export class StreamerHomeComponent {
       this.clearSuggestions(inputValue, 'team');
     } else {
       alert(`You can only select up to ${this.maxTeamChampions} team champions.`);
-    }
-  }
-
-
-  addTeamChampionAndClearInput(event: Event) {
-    const inputElement = event.target as HTMLInputElement; // Cast the event target to HTMLInputElement
-    const champion = inputElement.value.trim(); // Get and trim the input value
-
-    if (champion) {
-      this.addTeamChampion(champion, champion); // Call the addChampion method
-      inputElement.value = ''; // Clear the input field after adding the champion
     }
   }
 
@@ -207,11 +198,16 @@ export class StreamerHomeComponent {
       );
 
     // Further filter out already selected champions
-    this.filteredOpponentTeamChampionsList = filtered.filter(
+    this.opponentTeamChampionsSuggestionList = filtered.filter(
       (champion) => !this.selectedOpponentTeamChampions.includes(champion)
     );
   }
-  filterOpponentTeamChampionsFromEvent(event: Event): void {
+
+  /**
+   * updates the champion list that the user can pick from while typing in the input box
+   * @param event
+   */
+  updateOpponentTeamChampions(event: Event): void {
     const inputElement = event.target as HTMLInputElement; // Cast here
     const searchTerm = inputElement.value; // Get the value of the input
     this.filterOpponentTeamChampions(searchTerm); // Call the existing filterChampions method
@@ -229,16 +225,6 @@ export class StreamerHomeComponent {
   }
 
 
-  addOpponentTeamChampionAndClearInput(event: Event) {
-    const inputElement = event.target as HTMLInputElement; // Cast the event target to HTMLInputElement
-    const champion = inputElement.value.trim(); // Get and trim the input value
-
-    if (champion) {
-      this.addOpponentTeamChampion(champion, champion); // Call the addChampion method
-      inputElement.value = ''; // Clear the input field after adding the champion
-    }
-  }
-
   // Method to remove a champion from the selected list
   removeOpponentTeamChampion(champion: string, inputValue?: string) {
     this.selectedOpponentTeamChampions = this.selectedOpponentTeamChampions.filter(
@@ -254,12 +240,12 @@ export class StreamerHomeComponent {
 
   private clearSuggestions(inputValue: string, type: 'team' | 'opponent'): void {
     if (type === 'team') {
-      this.filteredTeamChampionsList = this.teamChampionsList.filter(
+      this.teamChampionsSuggestionList = this.teamChampionsList.filter(
         champion => champion.toLowerCase().includes(inputValue.toLowerCase()) &&
           !this.selectedTeamChampions.includes(champion)
       );
     } else if (type === 'opponent') {
-      this.filteredOpponentTeamChampionsList = this.opponentTeamChampionsList.filter(
+      this.opponentTeamChampionsSuggestionList = this.opponentTeamChampionsList.filter(
         champion => champion.toLowerCase().includes(inputValue.toLowerCase()) &&
           !this.selectedOpponentTeamChampions.includes(champion)
       );
