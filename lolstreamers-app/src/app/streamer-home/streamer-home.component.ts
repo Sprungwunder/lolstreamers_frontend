@@ -24,8 +24,8 @@ export class StreamerHomeComponent {
   championsList: string[] = [];
   filteredChampionsList: string[] = [];
 
-  lanesList: string[] = ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
-  filteredLanesList: string[] = [...this.lanesList]; // Initially show all lanes
+  lanesList: string[] = [];
+  filteredLanesList: string[] = []; // Initially show all lanes
 
   opponentChampionsList: string[] = [];
   filteredOpponentChampionsList: string[] = [];
@@ -92,9 +92,11 @@ export class StreamerHomeComponent {
         opponentTeamChampionsList,
         videoList,
       ] = await this.videoService.fetchInitialData();
-
+      console.log('Fetched initial data:', {championsList, opponentChampionsList, runesList, championItemsList, teamChampionsList, opponentTeamChampionsList, videoList});
       this.championsList = championsList;
       this.filteredChampionsList = championsList;
+      this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
+      this.filteredLanesList = this.lanesList;
       this.opponentChampionsList = opponentChampionsList;
       this.filteredOpponentChampionsList = opponentChampionsList;
       this.runesListManager = new ListManager(runesList, this.maxRunes);
@@ -141,6 +143,8 @@ export class StreamerHomeComponent {
 
   // Filter lists based on input
   filterChampionList(input: string | null) {
+    console.log('filterChampionList', this.filteredChampionsList);
+    console.log('filterChampionList', input);
     if (!input) {
       this.filteredChampionsList = this.championsList; // Reset to all champions if input is empty
     } else {
@@ -148,14 +152,17 @@ export class StreamerHomeComponent {
         champion.toLowerCase().includes(input.toLowerCase())
       );
     }
+    console.log('filterChampionList', this.filteredChampionsList);
   }
 
   filterLaneList(input: string | null) {
-    this.filteredLanesList = !input
-      ? this.lanesList
-      : this.lanesList.filter((lane) =>
-        lane.toLowerCase().includes(input)
+    if (!input) {
+      this.filteredLanesList = this.lanesList; // Reset to all lanes if input is empty
+    } else {
+      this.filteredLanesList = this.lanesList.filter(lane =>
+        lane.toLowerCase().includes(input.toLowerCase())
       );
+    }
   }
 
   filterOpponentChampionList(input: string | null) {

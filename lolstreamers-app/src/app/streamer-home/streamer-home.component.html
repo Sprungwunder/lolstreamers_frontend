@@ -47,7 +47,7 @@
         ></option>
       </datalist>
     </div>
-
+    <br/>
     <!-- Runes search -->
     <div>
       <label for="runes">Runes</label>
@@ -163,7 +163,8 @@
           *ngFor="let selectedOpponentChampion of selectedOpponentTeamChampions"
         >
           {{ selectedOpponentChampion }}
-          <button type="button" (click)="removeOpponentTeamChampion(selectedOpponentChampion, opponentChampionInput.value)">
+          <button type="button"
+                  (click)="removeOpponentTeamChampion(selectedOpponentChampion, opponentChampionInput.value)">
             &times;
           </button>
         </span>
@@ -190,10 +191,7 @@
       </ul>
     </div>
 
-    <br/>
-    <button type="submit" class="primary">Filter</button>
-
-
+    <button type="submit" class="primary">Search</button>
   </form>
 </section>
 <section class="results">
