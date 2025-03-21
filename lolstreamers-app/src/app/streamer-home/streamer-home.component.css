@@ -76,6 +76,36 @@ datalist {
   color: #333;
 }
 
+.selected-runes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.rune-tag {
+  background: #e0e0e0;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.rune-tag button {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 1.2rem;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.rune-tag button:hover {
+  color: #333;
+}
+
+
 /* Suggestions */
 ul.suggestions {
   list-style: none;

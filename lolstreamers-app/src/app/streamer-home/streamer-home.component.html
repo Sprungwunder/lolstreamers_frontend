@@ -50,19 +50,42 @@
 
     <div>
       <label for="runes">Runes</label>
-      <select id="runes" formControlName="runes" multiple>
-        <option value="Electrocute">Electrocute</option>
-        <option value="Conqueror">Conqueror</option>
-        <option value="Grasp of the undying">Grasp of the Undying</option>
-        <option value="Press the Attack">Press the Attack</option>
-        <option value="Fleet footwork">Fleet Footwork</option>
-        <option value="Summon aery">Summon Aery</option>
-      </select>
+      <div class="selected-runes">
+    <span
+      class="rune-tag"
+      *ngFor="let selectedRune of selectedRunes"
+    >
+      {{ selectedRune }}
+      <button type="button" (click)="removeRune(selectedRune, runeInput.value)">
+        &times;
+      </button>
+    </span>
+      </div>
+
+      <!-- Input -->
+      <input
+        id="runes"
+        #runeInput
+        type="text"
+        placeholder="Type to search runes..."
+        (input)="updateRunesSuggestion($event)"
+      />
+
+      <!-- Filtered Suggestions -->
+      <ul class="suggestions">
+        <li
+          *ngFor="let rune of runesSuggestionList"
+          (click)="addRune(rune, runeInput.value)"
+        >
+          {{ rune }}
+        </li>
+      </ul>
     </div>
+
 
     <!-- Selected Champions as Tags -->
     <div>
-      <label>Team Champions</label>
+      <label for="teamChampions">Team Champions</label>
       <div class="selected-team-champions">
         <span
           class="champion-tag"
@@ -77,10 +100,11 @@
 
       <!-- Input -->
       <input
+        id="teamChampions"
         #championInput
         type="text"
         placeholder="Type to search champions..."
-        (input)="updateFilterTeamChampions($event)"
+        (input)="updateTeamChampionsSuggestionList($event)"
       />
 
 
@@ -96,7 +120,7 @@
     </div>
 
     <div>
-      <label>Opponent Team Champions</label>
+      <label for="opponentChampions">Opponent Team Champions</label>
       <div class="selected-opponent-team-champions">
         <span
           class="champion-tag"
@@ -111,6 +135,7 @@
 
       <!-- Input -->
       <input
+        id="opponentChampions"
         #opponentChampionInput
         type="text"
         placeholder="Type to search champions..."

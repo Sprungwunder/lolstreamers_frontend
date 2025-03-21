@@ -34,6 +34,12 @@ export class StreamerHomeComponent {
   opponentTeamChampionsListManager!: ChampionListManager;
   private readonly maxTeamChampions = 4;
 
+  // Runes Management
+  runesList: string[] = [];
+  runesSuggestionList: string[] = [];
+  selectedRunes: string[] = [];
+
+
   teamChampionsList: string[] = []; // Holds the fetched list of team champions
   teamChampionsSuggestionList: string[] = []; // Holds the filtered list (for search suggestion)
   selectedTeamChampions: string[] = []; // Holds the selected team champions
@@ -70,6 +76,7 @@ export class StreamerHomeComponent {
       const [
         championsList,
         opponentChampionsList,
+        runesList,
         teamChampionsList,
         opponentTeamChampionsList,
         videoList,
@@ -81,6 +88,8 @@ export class StreamerHomeComponent {
       this.filteredOpponentChampionsList = opponentChampionsList;
       this.teamChampionsListManager = new ChampionListManager(teamChampionsList, this.maxTeamChampions);
       this.opponentTeamChampionsListManager = new ChampionListManager(opponentTeamChampionsList, this.maxTeamChampions);
+      this.runesList = runesList;
+      this.runesSuggestionList = [...runesList]; // Initialize filtered list
       this.teamChampionsList = teamChampionsList;
       this.teamChampionsSuggestionList = teamChampionsList;
       this.opponentTeamChampionsList = opponentTeamChampionsList;
@@ -142,11 +151,42 @@ export class StreamerHomeComponent {
       );
   }
 
+  updateRunesSuggestion(event: Event): void {
+    const input = (event.target as HTMLInputElement).value.toLowerCase();
+    this.runesSuggestionList = this.runesList.filter((rune) =>
+      rune.toLowerCase().includes(input)
+    );
+  }
+
+  addRune(rune: string, inputValue: string): void {
+    if (!this.selectedRunes.includes(rune)) {
+      this.selectedRunes.push(rune);
+    }
+    this.runesSuggestionList = this.runesList.filter(
+      rune => rune.toLowerCase().includes(inputValue.toLowerCase()) &&
+        !this.selectedRunes.includes(rune)
+    );
+  }
+
+  removeRune(rune: string, inputValue?: string): void {
+    this.selectedRunes = this.selectedRunes.filter(
+      (selectedRune) => selectedRune !== rune
+    );
+    let filtered = !inputValue
+      ? this.runesList
+      : this.runesList.filter((rune) =>
+        rune.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    this.runesSuggestionList = filtered.filter(
+      (rune) => !this.selectedRunes.includes(rune)
+    );
+  }
+
   /**
    * updates the champion list that the user can pick from while typing in the input box
    * @param event
    */
-  updateFilterTeamChampions(event: Event): void {
+  updateTeamChampionsSuggestionList(event: Event): void {
     const inputElement = event.target as HTMLInputElement; // Cast here
     const searchTerm = inputElement.value; // Get the value of the input
     this.teamChampionsListManager.filterTeamChampions(searchTerm);
@@ -200,19 +240,19 @@ export class StreamerHomeComponent {
   filterVideos() {
     const selectedChampionsString = this.teamChampionsListManager.getCommaSeparatedChampions();
     const selectedOpponentChampionsString = this.opponentTeamChampionsListManager.getCommaSeparatedChampions();
+    const selectedRunesString = this.selectedRunes.join(',');
 
     const {
       championName,
       lane,
       opponentChampion,
-      runes,
       championItems
     } = this.searchForm.value;
     this.videoService.filterVideos(
       championName ?? '',
       lane ?? '',
       opponentChampion ?? '',
-      runes ?? '',
+      selectedRunesString ?? '',
       selectedChampionsString ?? '',
       selectedOpponentChampionsString ?? '',
       championItems ?? ''
