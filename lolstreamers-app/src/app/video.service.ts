@@ -18,6 +18,10 @@ export class VideoService {
     return await (await data.json()).runes ?? [];
   };
 
+  async getAllChampionItems(): Promise<string[]> {
+    const data = await fetch(`${this.url}/champion-items/`);
+    return await (await data.json()).champion_items ?? [];
+  };
 
   async getAllOpponentChampions(): Promise<string[]> {
     const data = await fetch(`${this.url}/opponent-champions/`);
@@ -52,6 +56,7 @@ export class VideoService {
       this.getAllChampions(),
       this.getAllOpponentChampions(),
       this.getAllRunes(),
+      this.getAllChampionItems(),
       this.getAllTeamChampions(),
       this.getAllOpponentTeamChampions(),
       this.getAllVideos(),
@@ -63,14 +68,15 @@ export class VideoService {
     lane: string,
     opponent_champion: string,
     runes: string,
+    championItems: string,
     teamChampions: string,
     opponentTeamChampions: string,
-    championItems: string
   ): Promise<Video[]> {
     console.log(`filterVideos called with -
     champion: ${champion},
     lane: ${lane},
     opponent_champion: ${opponent_champion},
+    items: ${championItems},
     runes: ${runes},
     team_champions: ${teamChampions},
     opponent_team_champions: ${opponentTeamChampions}`);

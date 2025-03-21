@@ -48,6 +48,7 @@
       </datalist>
     </div>
 
+    <!-- Runes search -->
     <div>
       <label for="runes">Runes</label>
       <div class="selected-runes">
@@ -78,6 +79,41 @@
           (click)="addRune(rune, runeInput.value)"
         >
           {{ rune }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Champion Items -->
+    <div>
+      <label for="championItems">Champion Items</label>
+      <div class="selected-items">
+    <span
+      class="item-tag"
+      *ngFor="let selectedItem of selectedItems"
+    >
+      {{ selectedItem }}
+      <button type="button" (click)="removeItem(selectedItem, itemInput.value)">
+        &times;
+      </button>
+    </span>
+      </div>
+
+      <!-- Input -->
+      <input
+        id="championItems"
+        #itemInput
+        type="text"
+        placeholder="Type to search items..."
+        (input)="updateItemssSuggestionList($event)"
+      />
+
+      <!-- Filtered Suggestions -->
+      <ul class="suggestions">
+        <li
+          *ngFor="let item of itemsSuggestionList"
+          (click)="addItem(item, itemInput.value)"
+        >
+          {{ item }}
         </li>
       </ul>
     </div>
@@ -154,17 +190,6 @@
       </ul>
     </div>
 
-    <div>
-      <label for="championItems">Champion Items</label>
-      <select id="championItems" formControlName="championItems" multiple>
-        <option value="Nashors Tooth">Nashors Tooth</option>
-        <option value="Rabadon's Deathcap">Rabadon's Deathcap</option>
-        <option value="Sunfire Cape">Sunfire Cape</option>
-        <option value="Zhonya's Hourglass">Zhonya's Hourglass</option>
-        <option value="Runaan's Hurricane">Runaan's Hurricane</option>
-        <option value="Blade of the Ruined King">Blade of the Ruined King</option>
-      </select>
-    </div>
     <br/>
     <button type="submit" class="primary">Filter</button>
 
