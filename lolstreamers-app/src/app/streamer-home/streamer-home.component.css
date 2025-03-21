@@ -31,7 +31,7 @@ form {
 /* Results (Cards) Section */
 section.results {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(800px, 1fr)); /* Adjusts to smaller widths */
+  grid-template-columns: 1fr; /* Adjusts to smaller widths */
   gap: 20px; /* Spacing between cards */
   max-width: 1300px; /* Set maximum width for cards */
   width: 100%; /* Full-width till max-width */
@@ -54,10 +54,6 @@ section.results {
 
 /* Responsive Adjustments */
 @media (max-width: 600px) {
-  section.results {
-    grid-template-columns: 1fr; /* Stack cards vertically for small screens */
-  }
-
   .card {
     margin-bottom: 20px; /* Add spacing between stacked cards */
   }
