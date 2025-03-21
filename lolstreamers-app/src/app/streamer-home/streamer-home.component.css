@@ -111,3 +111,25 @@ button.primary {
 button.primary:hover {
   background: #45a049;
 }
+
+.lane-selection div {
+  display: flex; /* Use flexbox to arrange elements horizontally */
+  align-items: center; /* Align items vertically to the center */
+  width: 100%; /* Ensure the container takes the full row */
+  margin: 5px 0; /* Add vertical spacing between each option */
+}
+
+.lane-selection input[type="radio"] {
+  flex-shrink: 0; /* Prevent the radio button from shrinking */
+  width: 20px; /* Fixed width for the radio button container */
+  margin: 5px;
+}
+
+.lane-selection label {
+  flex-grow: 1; /* Allow the label to fill the remaining space */
+  margin: 5px; /* Optional: Space between the radio button and the label */
+  text-align: left; /* Ensure text is aligned to the left */
+}
+
+
+

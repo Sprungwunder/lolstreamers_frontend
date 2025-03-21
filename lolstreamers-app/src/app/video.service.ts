@@ -72,17 +72,19 @@ export class VideoService {
     teamChampions: string,
     opponentTeamChampions: string,
   ): Promise<Video[]> {
+    let cleanedLane = lane.replace('Any', '');
     console.log(`filterVideos called with -
     champion: ${champion},
-    lane: ${lane},
+    lane: ${cleanedLane},
     opponent_champion: ${opponent_champion},
     items: ${championItems},
     runes: ${runes},
     team_champions: ${teamChampions},
     opponent_team_champions: ${opponentTeamChampions}`);
+
     const response = await fetch(
       `${this.url}/ytvideos/?champion=${encodeURIComponent(champion)}`+
-      `&lane=${encodeURIComponent(lane)}`+
+      `&lane=${encodeURIComponent(cleanedLane)}`+
       `&opponent_champion=${encodeURIComponent(opponent_champion)}`+
       `&runes=${encodeURIComponent(runes)}`+
       `&team_champions=${encodeURIComponent(teamChampions)}` +

@@ -95,7 +95,7 @@ export class StreamerHomeComponent {
       console.log('Fetched initial data:', {championsList, opponentChampionsList, runesList, championItemsList, teamChampionsList, opponentTeamChampionsList, videoList});
       this.championsList = championsList;
       this.filteredChampionsList = championsList;
-      this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
+      this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
       this.filteredLanesList = this.lanesList;
       this.opponentChampionsList = opponentChampionsList;
       this.filteredOpponentChampionsList = opponentChampionsList;

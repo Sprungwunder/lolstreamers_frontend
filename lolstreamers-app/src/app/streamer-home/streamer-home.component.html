@@ -15,21 +15,6 @@
       </datalist>
     </div>
 
-    <!-- Lane Search -->
-    <div>
-      <label for="lane">Lane</label>
-      <input
-        id="lane"
-        type="text"
-        formControlName="lane"
-        placeholder="Type to search for a lane..."
-        list="lane-suggestions"
-      />
-      <datalist id="lane-suggestions">
-        <option *ngFor="let lane of filteredLanesList" [value]="lane"></option>
-      </datalist>
-    </div>
-
     <!-- Opponent Champion Search -->
     <div>
       <label for="opponentChampion">Opponent Champion</label>
@@ -46,6 +31,21 @@
           [value]="opponentChampion"
         ></option>
       </datalist>
+    </div>
+    <!-- Lane Search -->
+    <div>
+      <label>Select Lane:</label>
+      <div class="lane-selection">
+        <div *ngFor="let lane of lanesList" class="lane-option">
+          <input
+            type="radio"
+            id="{{ lane }}"
+            [value]="lane"
+            formControlName="lane"
+          />
+          <label [for]="lane" class="lane-label">{{ lane }}</label>
+        </div>
+      </div>
     </div>
     <br/>
     <!-- Runes search -->
