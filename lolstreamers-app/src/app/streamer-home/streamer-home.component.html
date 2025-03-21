@@ -1,57 +1,58 @@
-<section class="search">
-  <form [formGroup]="searchForm" (ngSubmit)="filterVideos()">
-    <!-- Champion Search -->
-    <div>
-      <label for="championName">Champion Name</label>
-      <input
-        id="championName"
-        type="text"
-        formControlName="championName"
-        placeholder="Type to search..."
-        list="champion-suggestions"
-      />
-      <datalist id="champion-suggestions">
-        <option *ngFor="let champion of filteredChampionsList" [value]="champion"></option>
-      </datalist>
-    </div>
+<section class="streamer-home">
+  <section class="search">
+    <form [formGroup]="searchForm" (ngSubmit)="filterVideos()">
+      <!-- Champion Search -->
+      <div>
+        <label for="championName">Champion Name</label>
+        <input
+          id="championName"
+          type="text"
+          formControlName="championName"
+          placeholder="Type to search..."
+          list="champion-suggestions"
+        />
+        <datalist id="champion-suggestions">
+          <option *ngFor="let champion of filteredChampionsList" [value]="champion"></option>
+        </datalist>
+      </div>
 
-    <!-- Opponent Champion Search -->
-    <div>
-      <label for="opponentChampion">Opponent Champion</label>
-      <input
-        id="opponentChampion"
-        type="text"
-        formControlName="opponentChampion"
-        placeholder="Type to search..."
-        list="opponent-champion-suggestions"
-      />
-      <datalist id="opponent-champion-suggestions">
-        <option
-          *ngFor="let opponentChampion of filteredOpponentChampionsList"
-          [value]="opponentChampion"
-        ></option>
-      </datalist>
-    </div>
-    <!-- Lane Search -->
-    <div>
-      <label>Select Lane:</label>
-      <div class="lane-selection">
-        <div *ngFor="let lane of lanesList" class="lane-option">
-          <input
-            type="radio"
-            id="{{ lane }}"
-            [value]="lane"
-            formControlName="lane"
-          />
-          <label [for]="lane" class="lane-label">{{ lane }}</label>
+      <!-- Opponent Champion Search -->
+      <div>
+        <label for="opponentChampion">Opponent Champion</label>
+        <input
+          id="opponentChampion"
+          type="text"
+          formControlName="opponentChampion"
+          placeholder="Type to search..."
+          list="opponent-champion-suggestions"
+        />
+        <datalist id="opponent-champion-suggestions">
+          <option
+            *ngFor="let opponentChampion of filteredOpponentChampionsList"
+            [value]="opponentChampion"
+          ></option>
+        </datalist>
+      </div>
+      <!-- Lane Search -->
+      <div>
+        <label>Select Lane:</label>
+        <div class="lane-selection">
+          <div *ngFor="let lane of lanesList" class="lane-option">
+            <input
+              type="radio"
+              id="{{ lane }}"
+              [value]="lane"
+              formControlName="lane"
+            />
+            <label [for]="lane" class="lane-label">{{ lane }}</label>
+          </div>
         </div>
       </div>
-    </div>
-    <br/>
-    <!-- Runes search -->
-    <div>
-      <label for="runes">Runes</label>
-      <div class="selected-items">
+      <br/>
+      <!-- Runes search -->
+      <div>
+        <label for="runes">Runes</label>
+        <div class="selected-items">
     <span
       class="item-tag"
       *ngFor="let selectedRune of selectedRunes"
@@ -61,32 +62,32 @@
         &times;
       </button>
     </span>
+        </div>
+
+        <!-- Input -->
+        <input
+          id="runes"
+          #runeInput
+          type="text"
+          placeholder="Type to search runes..."
+          (input)="updateRunesSuggestionList($event)"
+        />
+
+        <!-- Filtered Suggestions -->
+        <ul class="suggestions">
+          <li
+            *ngFor="let rune of runesSuggestionList"
+            (click)="addRune(rune, runeInput.value)"
+          >
+            {{ rune }}
+          </li>
+        </ul>
       </div>
 
-      <!-- Input -->
-      <input
-        id="runes"
-        #runeInput
-        type="text"
-        placeholder="Type to search runes..."
-        (input)="updateRunesSuggestionList($event)"
-      />
-
-      <!-- Filtered Suggestions -->
-      <ul class="suggestions">
-        <li
-          *ngFor="let rune of runesSuggestionList"
-          (click)="addRune(rune, runeInput.value)"
-        >
-          {{ rune }}
-        </li>
-      </ul>
-    </div>
-
-    <!-- Champion Items -->
-    <div>
-      <label for="championItems">Champion Items</label>
-      <div class="selected-items">
+      <!-- Champion Items -->
+      <div>
+        <label for="championItems">Champion Items</label>
+        <div class="selected-items">
     <span
       class="item-tag"
       *ngFor="let selectedItem of selectedItems"
@@ -96,33 +97,32 @@
         &times;
       </button>
     </span>
+        </div>
+
+        <!-- Input -->
+        <input
+          id="championItems"
+          #itemInput
+          type="text"
+          placeholder="Type to search items..."
+          (input)="updateItemsSuggestionList($event)"
+        />
+
+        <!-- Filtered Suggestions -->
+        <ul class="suggestions">
+          <li
+            *ngFor="let item of itemsSuggestionList"
+            (click)="addItem(item, itemInput.value)"
+          >
+            {{ item }}
+          </li>
+        </ul>
       </div>
 
-      <!-- Input -->
-      <input
-        id="championItems"
-        #itemInput
-        type="text"
-        placeholder="Type to search items..."
-        (input)="updateItemsSuggestionList($event)"
-      />
-
-      <!-- Filtered Suggestions -->
-      <ul class="suggestions">
-        <li
-          *ngFor="let item of itemsSuggestionList"
-          (click)="addItem(item, itemInput.value)"
-        >
-          {{ item }}
-        </li>
-      </ul>
-    </div>
-
-
-    <!-- Selected Champions as Tags -->
-    <div>
-      <label for="teamChampions">Team Champions</label>
-      <div class="selected-items">
+      <!-- Team Champions -->
+      <div>
+        <label for="teamChampions">Team Champions</label>
+        <div class="selected-items">
         <span
           class="item-tag"
           *ngFor="let selectedChampion of selectedTeamChampions"
@@ -132,32 +132,33 @@
             &times;
           </button>
         </span>
+        </div>
+
+        <!-- Input -->
+        <input
+          id="teamChampions"
+          #championInput
+          type="text"
+          placeholder="Type to search champions..."
+          (input)="updateTeamChampionsSuggestionList($event)"
+        />
+
+
+        <!-- Filtered Suggestions -->
+        <ul class="suggestions">
+          <li
+            *ngFor="let champion of teamChampionsSuggestionList"
+            (click)="addTeamChampion(champion, championInput.value)"
+          >
+            {{ champion }}
+          </li>
+        </ul>
       </div>
 
-      <!-- Input -->
-      <input
-        id="teamChampions"
-        #championInput
-        type="text"
-        placeholder="Type to search champions..."
-        (input)="updateTeamChampionsSuggestionList($event)"
-      />
-
-
-      <!-- Filtered Suggestions -->
-      <ul class="suggestions">
-        <li
-          *ngFor="let champion of teamChampionsSuggestionList"
-          (click)="addTeamChampion(champion, championInput.value)"
-        >
-          {{ champion }}
-        </li>
-      </ul>
-    </div>
-
-    <div>
-      <label for="opponentChampions">Opponent Team Champions</label>
-      <div class="selected-items">
+      <!-- Opponent Champions -->
+      <div>
+        <label for="opponentChampions">Opponent Team Champions</label>
+        <div class="selected-items">
         <span
           class="item-tag"
           *ngFor="let selectedOpponentChampion of selectedOpponentTeamChampions"
@@ -168,35 +169,37 @@
             &times;
           </button>
         </span>
+        </div>
+
+        <!-- Input -->
+        <input
+          id="opponentChampions"
+          #opponentChampionInput
+          type="text"
+          placeholder="Type to search champions..."
+          (input)="updateOpponentTeamChampions($event)"
+        />
+
+
+        <!-- Filtered Suggestions -->
+        <ul class="suggestions">
+          <li
+            *ngFor="let champion of opponentTeamChampionsSuggestionList"
+            (click)="addOpponentTeamChampion(champion, opponentChampionInput.value)"
+          >
+            {{ champion }}
+          </li>
+        </ul>
       </div>
 
-      <!-- Input -->
-      <input
-        id="opponentChampions"
-        #opponentChampionInput
-        type="text"
-        placeholder="Type to search champions..."
-        (input)="updateOpponentTeamChampions($event)"
-      />
-
-
-      <!-- Filtered Suggestions -->
-      <ul class="suggestions">
-        <li
-          *ngFor="let champion of opponentTeamChampionsSuggestionList"
-          (click)="addOpponentTeamChampion(champion, opponentChampionInput.value)"
-        >
-          {{ champion }}
-        </li>
-      </ul>
-    </div>
-
-    <button type="submit" class="primary">Search</button>
-  </form>
+      <button type="submit" class="primary">Search</button>
+    </form>
+  </section>
+  <section class="results">
+    <app-video-card
+      *ngFor="let video of filteredVideoList"
+      [video]="video"
+    ></app-video-card>
+  </section>
 </section>
-<section class="results">
-  <app-video-card
-    *ngFor="let video of filteredVideoList"
-    [video]="video"
-  ></app-video-card>
-</section>
+
