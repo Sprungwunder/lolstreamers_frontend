@@ -166,42 +166,36 @@ export class StreamerHomeComponent {
       );
   }
 
-  updateRunesSuggestion(event: Event): void {
-    const input = (event.target as HTMLInputElement).value.toLowerCase();
-    this.runesSuggestionList = this.runesList.filter((rune) =>
-      rune.toLowerCase().includes(input)
-    );
+  /**
+   * updates the runes list that the user can pick from while typing in the input box
+   * @param event
+   */
+  updateRunesSuggestionList(event: Event): void {
+    const inputElement = event.target as HTMLInputElement; // Cast here
+    const searchTerm = inputElement.value; // Get the value of the input
+    this.runesListManager.filterItems(searchTerm);
+    this.runesSuggestionList = this.runesListManager.suggestionList;
   }
 
-  addRune(rune: string, inputValue: string): void {
-    if (!this.selectedRunes.includes(rune)) {
-      this.selectedRunes.push(rune);
-    }
-    this.runesSuggestionList = this.runesList.filter(
-      rune => rune.toLowerCase().includes(inputValue.toLowerCase()) &&
-        !this.selectedRunes.includes(rune)
-    );
+  addRune(item: string, inputValue: string): void {
+    this.runesListManager.selectItem(item);
+    this.runesListManager.clearSuggestions(inputValue);
+    this.selectedRunes = this.runesListManager.selecteditems;
+    this.runesSuggestionList = this.runesListManager.suggestionList;
   }
 
-  removeRune(rune: string, inputValue?: string): void {
-    this.selectedRunes = this.selectedRunes.filter(
-      (selectedRune) => selectedRune !== rune
-    );
-    let filtered = !inputValue
-      ? this.runesList
-      : this.runesList.filter((rune) =>
-        rune.toLowerCase().includes(inputValue.toLowerCase())
-      );
-    this.runesSuggestionList = filtered.filter(
-      (rune) => !this.selectedRunes.includes(rune)
-    );
+  removeRune(item: string, inputValue?: string) {
+    this.runesListManager.deselectItem(item);
+    this.selectedRunes = this.runesListManager.selecteditems;
+    this.runesListManager.filterItems(inputValue || '');
+    this.runesSuggestionList = this.runesListManager.suggestionList;
   }
 
   /**
    * updates the items list that the user can pick from while typing in the input box
    * @param event
    */
-  updateItemssSuggestionList(event: Event): void {
+  updateItemsSuggestionList(event: Event): void {
     const inputElement = event.target as HTMLInputElement; // Cast here
     const searchTerm = inputElement.value; // Get the value of the input
     this.itemsListManager.filterItems(searchTerm);
@@ -287,7 +281,6 @@ export class StreamerHomeComponent {
       championName,
       lane,
       opponentChampion,
-      championItems
     } = this.searchForm.value;
     this.videoService.filterVideos(
       championName ?? '',
