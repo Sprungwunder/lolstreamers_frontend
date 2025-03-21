@@ -46,15 +46,14 @@ datalist {
   margin-top: 0;
 }
 
-/* Selected Tags */
-.selected-champions {
+.selected-items {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
 }
 
-.champion-tag {
+.item-tag {
   background: #e0e0e0;
   padding: 5px 10px;
   border-radius: 20px;
@@ -63,7 +62,7 @@ datalist {
   font-size: 0.9rem;
 }
 
-.champion-tag button {
+.item-tag button {
   background: none;
   border: none;
   color: #888;
@@ -72,36 +71,7 @@ datalist {
   cursor: pointer;
 }
 
-.champion-tag button:hover {
-  color: #333;
-}
-
-.selected-runes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.rune-tag {
-  background: #e0e0e0;
-  padding: 5px 10px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  font-size: 0.9rem;
-}
-
-.rune-tag button {
-  background: none;
-  border: none;
-  color: #888;
-  font-size: 1.2rem;
-  margin-left: 8px;
-  cursor: pointer;
-}
-
-.rune-tag button:hover {
+.item-tag button:hover {
   color: #333;
 }
 
