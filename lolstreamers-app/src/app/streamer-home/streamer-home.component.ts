@@ -5,11 +5,12 @@ import {VideoCardComponent} from "../video-card/video-card.component";
 import {Video} from "../video";
 import {VideoBaseComponent} from "../shared/video-base/video-base.component";
 import {VideoService} from "../video.service";
+import {ChampionNameInput} from "../shared/champion-name-input/champion-name-input.component";
 
 @Component({
   selector: 'app-streamer-home',
   standalone: true,
-  imports: [CommonModule, VideoCardComponent, ReactiveFormsModule],
+  imports: [CommonModule, VideoCardComponent, ReactiveFormsModule, ChampionNameInput],
   templateUrl: './streamer-home.component.html',
   styleUrl: './streamer-home.component.css'
 })
@@ -29,7 +30,7 @@ export class StreamerHomeComponent extends VideoBaseComponent {
       lane
     } = this.searchForm.value;
     this.videoService.filterVideos(
-      this.championsListManager.getAsCommaSeparatedString() ?? '',
+      this.selectedChampion.join(',') ?? '',
       lane ?? '',
       this.opponentChampionsListManager.getAsCommaSeparatedString() ?? '',
       this.selectedRunes.join(',') ?? '',
@@ -41,6 +42,11 @@ export class StreamerHomeComponent extends VideoBaseComponent {
     }).catch((error) => {
       console.error('Failed to filter videos:', error);
     });
+  }
+
+  // Handle Champion changes from the reusable component
+  handleChampionChange(selectedChampions: string[]): void {
+    this.selectedChampion = selectedChampions;
   }
 
   handleSubmit() {

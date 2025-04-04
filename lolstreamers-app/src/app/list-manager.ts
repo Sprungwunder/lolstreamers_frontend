@@ -1,4 +1,3 @@
-
 export class ListManager {
   itemsList: string[] = []; // Full list of champions, runes or items
   suggestionList: string[] = []; // Filtered list based on search or conditions
@@ -58,9 +57,17 @@ export class ListManager {
   }
 
   // generic functions to handle the list data
-  updateList(event: Event): string[] {
+  updateListFromEvent(event: Event): string[] {
     const inputElement = event.target as HTMLInputElement;
     const searchTerm = inputElement.value;
+    return this.updateList(searchTerm);
+  }
+
+  // generic functions to handle the list data
+  updateList(searchTerm: string | null): string[] {
+    if (searchTerm === null) {
+      return this.suggestionList;
+    }
     this.filterItems(searchTerm);
     return this.suggestionList;
   }

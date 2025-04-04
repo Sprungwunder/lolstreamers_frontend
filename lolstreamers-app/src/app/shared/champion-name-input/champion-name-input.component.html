@@ -1,0 +1,34 @@
+<div>
+  <label for="championName">Champion played</label>
+
+  <!-- Selected Champions -->
+  <div class="selected-items">
+    <span
+      class="item-tag"
+      *ngFor="let selectedChampion of selectedChampions"
+    >
+      {{ selectedChampion }}
+      <button type="button" (click)="removeChampion(selectedChampion)">
+        &times;
+      </button>
+    </span>
+  </div>
+
+  <!-- Input Field -->
+  <input
+    id="championName"
+    type="text"
+    [formControl]="championInput"
+    [placeholder]="placeholder"
+  />
+
+  <!-- Suggestions List -->
+  <ul class="suggestions">
+    <li
+      *ngFor="let champion of championsSuggestionList"
+      (click)="selectChampion(champion)"
+    >
+      {{ champion }}
+    </li>
+  </ul>
+</div>

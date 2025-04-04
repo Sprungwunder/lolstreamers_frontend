@@ -71,7 +71,7 @@ export class AdminAddVideoComponent implements OnInit {
   }
 
   updateChampionsSuggestionList(event: Event): void {
-    this.championsSuggestionList = this.championsListManager.updateList(event);
+    this.championsSuggestionList = this.championsListManager.updateListFromEvent(event);
   }
 
   // Method to add a champion to the selected list
@@ -88,7 +88,7 @@ export class AdminAddVideoComponent implements OnInit {
 
   // Updates Rune suggestion list (search)
   updateRunesSuggestionList(event: Event): void {
-    this.runesSuggestionList = this.runesListManager.updateList(event);
+    this.runesSuggestionList = this.runesListManager.updateListFromEvent(event);
   }
 
   // Add a Rune to the selected list

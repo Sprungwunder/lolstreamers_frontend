@@ -77,8 +77,6 @@ export abstract class VideoBaseComponent {
       ] = await this.videoService.fetchInitialData();
       console.log('Fetched initial data:', {championsList, opponentChampionsList, runesList, championItemsList, teamChampionsList, opponentTeamChampionsList, videoList});
       this.championsList = championsList;
-      this.championsListManager = new ListManager(championsList, 1);
-      this.championsSuggestionList = [...championsList];
       this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
       this.filteredLanesList = this.lanesList;
       this.opponentChampionsList = opponentChampionsList;
@@ -103,24 +101,8 @@ export abstract class VideoBaseComponent {
     }
   }
 
-  updateChampionsSuggestionList(event: Event): void {
-    this.championsSuggestionList = this.championsListManager.updateList(event);
-  }
-
-  // Method to add a champion to the selected list
-  selectChampion(champion: string, inputValue: string): void {
-    this.championsSuggestionList = this.championsListManager.addItem(champion, inputValue);
-    this.selectedChampion = this.championsListManager.selectedItems;
-  }
-
-  // Method to remove a champion from the selected list
-  removeChampion(champion: string, inputValue?: string) {
-    this.championsSuggestionList = this.championsListManager.removeItem(champion, inputValue);
-    this.selectedChampion = this.championsListManager.selectedItems;
-  }
-
   updateOpponentChampionsSuggestionList(event: Event): void {
-    this.opponentChampionsSuggestionList = this.opponentChampionsListManager.updateList(event);
+    this.opponentChampionsSuggestionList = this.opponentChampionsListManager.updateListFromEvent(event);
   }
 
   selectOpponentChampion(champion: string, inputValue: string): void {
@@ -139,7 +121,7 @@ export abstract class VideoBaseComponent {
    * @param event
    */
   updateRunesSuggestionList(event: Event): void {
-    this.runesSuggestionList = this.runesListManager.updateList(event);
+    this.runesSuggestionList = this.runesListManager.updateListFromEvent(event);
   }
 
   addRune(rune: string, inputValue: string): void {
@@ -157,7 +139,7 @@ export abstract class VideoBaseComponent {
    * @param event
    */
   updateItemsSuggestionList(event: Event): void {
-    this.itemsSuggestionList = this.itemsListManager.updateList(event);
+    this.itemsSuggestionList = this.itemsListManager.updateListFromEvent(event);
   }
 
   addItem(item: string, inputValue: string): void {
@@ -175,7 +157,7 @@ export abstract class VideoBaseComponent {
    * @param event
    */
   updateTeamChampionsSuggestionList(event: Event): void {
-    this.teamChampionsSuggestionList = this.teamChampionsListManager.updateList(event);
+    this.teamChampionsSuggestionList = this.teamChampionsListManager.updateListFromEvent(event);
   }
 
   // Method to add a champion to the selected list
@@ -195,7 +177,7 @@ export abstract class VideoBaseComponent {
    * @param event
    */
   updateOpponentTeamChampions(event: Event): void {
-    this.opponentTeamChampionsSuggestionList = this.opponentTeamChampionsListManager.updateList(event);
+    this.opponentTeamChampionsSuggestionList = this.opponentTeamChampionsListManager.updateListFromEvent(event);
   }
 
   // Method to add a champion to the selected list
