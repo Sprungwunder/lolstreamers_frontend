@@ -2,13 +2,13 @@
 export class ListManager {
   itemsList: string[] = []; // Full list of champions, runes or items
   suggestionList: string[] = []; // Filtered list based on search or conditions
-  selecteditems: string[] = []; // Selected champions, runes or items
-  private readonly maxitems: number; // Max number of allowable selections
+  selectedItems: string[] = []; // Selected champions, runes or items
+  private readonly maxItems: number; // Max number of allowable selections
 
   constructor(initialList: string[], maxChampions: number) {
     this.itemsList = initialList;
     this.suggestionList = [...initialList];
-    this.maxitems = maxChampions;
+    this.maxItems = maxChampions;
   }
 
   filterItems(
@@ -23,17 +23,17 @@ export class ListManager {
 
     // Further filter out already selected champions
     this.suggestionList = filtered.filter(
-      (item) => !this.selecteditems.includes(item)
+      (item) => !this.selectedItems.includes(item)
     );
   }
 
   // Adds a champion to the selected list if the max is not exceeded
   selectItem(item: string): void {
     if (
-      !this.selecteditems.includes(item) &&
-      this.selecteditems.length < this.maxitems
+      !this.selectedItems.includes(item) &&
+      this.selectedItems.length < this.maxItems
     ) {
-      this.selecteditems.push(item);
+      this.selectedItems.push(item);
     } else {
       console.warn('Max champions reached or champion already selected.');
     }
@@ -41,7 +41,7 @@ export class ListManager {
 
   // Removes a champion, rune or item from the selected list
   deselectItem(item: string): void {
-    this.selecteditems = this.selecteditems.filter(
+    this.selectedItems = this.selectedItems.filter(
       (selected) => selected !== item
     );
   }
@@ -49,12 +49,12 @@ export class ListManager {
   clearSuggestions(inputValue: string): void {
     this.suggestionList = this.itemsList.filter(
       item => item.toLowerCase().includes(inputValue.toLowerCase()) &&
-        !this.selecteditems.includes(item)
+        !this.selectedItems.includes(item)
     );
   }
 
   getAsCommaSeparatedString(): string {
-    return this.selecteditems.join(',');
+    return this.selectedItems.join(',');
   }
 
 }

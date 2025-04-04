@@ -21,24 +21,39 @@
     </div>
 
     <!-- Champion Name -->
-    <div class="form-group">
-      <label for="championName">Champion Name</label>
+    <div>
+      <label for="championName">Champion played</label>
+      <div class="selected-items">
+        <span
+          class="item-tag"
+          *ngFor="let selectedChampion of selectedChampion"
+        >
+          {{ selectedChampion }}
+          <button type="button" (click)="removeChampion(selectedChampion, championInput.value)">
+            &times;
+          </button>
+        </span>
+      </div>
+
+      <!-- Input -->
       <input
         id="championName"
+        #championInput
         type="text"
         formControlName="championName"
-        placeholder="Type to search..."
-        list="champion-suggestions"
+        placeholder="Type to search champions..."
+        (input)="updateChampionsSuggestionList($event)"
       />
-      <datalist id="champion-suggestions">
-        <option *ngFor="let champion of filteredChampionsList" [value]="champion"></option>
-      </datalist>
-      <div
-        class="error-message"
-        *ngIf="videoForm.get('championName')?.invalid && videoForm.get('championName')?.touched"
-      >
-        Champion Name is required.
-      </div>
+
+      <!-- Filtered Suggestions -->
+      <ul class="suggestions">
+        <li
+          *ngFor="let champion of championsSuggestionList"
+          (click)="selectChampion(champion, championInput.value)"
+        >
+          {{ champion }}
+        </li>
+      </ul>
     </div>
 
     <!-- Submit Button -->
