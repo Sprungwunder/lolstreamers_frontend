@@ -56,6 +56,40 @@
       </ul>
     </div>
 
+    <!-- Rune Selection -->
+    <div>
+      <label for="rune">Select Runes</label>
+      <div class="selected-items">
+    <span class="item-tag" *ngFor="let selectedRune of selectedRunes">
+      {{ selectedRune }}
+      <button type="button" (click)="removeRune(selectedRune, runeInput.value)">
+        &times;
+      </button>
+    </span>
+      </div>
+
+      <!-- Input for typing -->
+      <input
+        id="rune"
+        #runeInput
+        type="text"
+        formControlName="rune"
+        placeholder="Type to search runes..."
+        (input)="updateRunesSuggestionList($event)"
+      />
+
+      <!-- Filtered Rune Suggestions -->
+      <ul class="suggestions">
+        <li
+          *ngFor="let rune of runesSuggestionList"
+          (click)="addRune(rune, runeInput.value)"
+        >
+          {{ rune }}
+        </li>
+      </ul>
+    </div>
+
+
     <!-- Submit Button -->
     <button type="submit" [disabled]="videoForm.invalid">Submit</button>
   </form>

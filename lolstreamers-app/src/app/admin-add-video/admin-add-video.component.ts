@@ -23,6 +23,7 @@ export class AdminAddVideoComponent implements OnInit {
   videoForm = new FormGroup({
     youtubeUrl: new FormControl('', [Validators.required, Validators.pattern(/^(https?:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/)]),
     championName: new FormControl('', []),
+    rune: new FormControl('', []),
   });
 
   // champions
@@ -30,6 +31,12 @@ export class AdminAddVideoComponent implements OnInit {
   championsList: string[] = []; // Holds the fetched list of champions
   championsSuggestionList: string[] = []; // Holds the filtered list (for search suggestion)
   selectedChampion: string[] = []; // Holds the selected champion
+
+  // Rune-specific properties
+  runesListManager!: ListManager;
+  runesList: string[] = []; // Holds the list of runes
+  runesSuggestionList: string[] = []; // Filtered List for search suggestions
+  selectedRunes: string[] = []; // User-selected Runes
 
 
   ngOnInit(): void {
@@ -49,9 +56,15 @@ export class AdminAddVideoComponent implements OnInit {
         videoList,
       ] = await this.videoService.fetchInitialData();
       console.log('Fetched initial data:', {championsList, opponentChampionsList, runesList, championItemsList, teamChampionsList, opponentTeamChampionsList, videoList});
+      // init for champions
       this.championsList = championsList;
       this.championsListManager = new ListManager(championsList, 1);
       this.championsSuggestionList = [...championsList];
+      // Initialize for runes
+      this.runesList = runesList;
+      this.runesListManager = new ListManager(runesList, 1);
+      this.runesSuggestionList = [...runesList];
+
     } catch (error) {
       console.error('Failed to initialize data:', error);
     }
@@ -80,11 +93,37 @@ export class AdminAddVideoComponent implements OnInit {
     this.championsSuggestionList = this.championsListManager.suggestionList;
   }
 
+  // Updates Rune suggestion list (search)
+  updateRunesSuggestionList(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const searchTerm = inputElement.value;
+    this.runesListManager.filterItems(searchTerm);
+    this.runesSuggestionList = this.runesListManager.suggestionList;
+  }
+
+// Add a Rune to the selected list
+  addRune(rune: string, inputValue: string): void {
+    this.runesListManager.selectItem(rune);
+    this.runesListManager.clearSuggestions(inputValue);
+    this.selectedRunes = this.runesListManager.selectedItems;
+    this.runesSuggestionList = this.runesListManager.suggestionList;
+  }
+
+// Remove a Rune from the selected list
+  removeRune(rune: string, inputValue?: string): void {
+    this.runesListManager.deselectItem(rune);
+    this.selectedRunes = this.runesListManager.selectedItems;
+    this.runesListManager.filterItems(inputValue || '');
+    this.runesSuggestionList = this.runesListManager.suggestionList;
+  }
+
+
   // Submit the form
   submitForm(): void {
     if (this.videoForm.valid) {
-      const {youtubeUrl} = this.videoForm.value;
-      console.log('Submitting:', youtubeUrl, this.selectedChampion[0]);
+      const {youtubeUrl, championName, rune} = this.videoForm.value;
+      console.log('Submitting:', youtubeUrl, championName, rune);
+      console.log('Manager data:', this.championsListManager.getAsCommaSeparatedString(), this.runesListManager.getAsCommaSeparatedString());
 
       // Here, you can make an API call to save the video and its metadata
       // Example:
