@@ -5,7 +5,6 @@ import {VideoCardComponent} from "../video-card/video-card.component";
 import {Video} from "../video";
 import {VideoBaseComponent} from "../shared/video-base/video-base.component";
 import {VideoService} from "../video.service";
-import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-streamer-home',
@@ -16,8 +15,8 @@ import {AuthService} from "../auth.service";
 })
 export class StreamerHomeComponent extends VideoBaseComponent {
 
-  constructor(protected override videoService: VideoService, authService: AuthService) {
-    super(videoService, authService);
+  constructor(protected override videoService: VideoService) {
+    super(videoService);
   }
 
   ngOnInit() {
