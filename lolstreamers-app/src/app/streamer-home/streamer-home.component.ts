@@ -5,7 +5,6 @@ import {VideoCardComponent} from "../video-card/video-card.component";
 import {Video} from "../video";
 import {VideoService} from "../video.service";
 import {AuthService} from "../auth.service";
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {ListManager} from "../list-manager";
 
 @Component({
@@ -21,14 +20,20 @@ export class StreamerHomeComponent {
   videoService: VideoService = inject(VideoService);
   authService: AuthService = inject(AuthService);
 
-  championsList: string[] = [];
-  filteredChampionsList: string[] = [];
+  // champions
+  championsListManager!: ListManager;
+  championsList: string[] = []; // Holds the fetched list of champions
+  championsSuggestionList: string[] = []; // Holds the filtered list (for search suggestion)
+  selectedChampion: string[] = []; // Holds the selected champion
+
+  // opponent champions
+  opponentChampionsListManager!: ListManager;
+  opponentChampionsList: string[] = [];
+  opponentChampionsSuggestionList: string[] = [];
+  selectedOpponentChampion: string[] = [];
 
   lanesList: string[] = [];
   filteredLanesList: string[] = []; // Initially show all lanes
-
-  opponentChampionsList: string[] = [];
-  filteredOpponentChampionsList: string[] = [];
 
   teamChampionsListManager!: ListManager;
   opponentTeamChampionsListManager!: ListManager;
@@ -49,20 +54,20 @@ export class StreamerHomeComponent {
   private readonly maxItems = 6;
 
   // team champions
-  teamChampionsList: string[] = []; // Holds the fetched list of team champions
-  teamChampionsSuggestionList: string[] = []; // Holds the filtered list (for search suggestion)
-  selectedTeamChampions: string[] = []; // Holds the selected team champions
+  teamChampionsList: string[] = [];
+  teamChampionsSuggestionList: string[] = [];
+  selectedTeamChampions: string[] = [];
 
   // opponent team champions
-  opponentTeamChampionsList: string[] = []; // Holds the fetched list of opponent team champions
-  opponentTeamChampionsSuggestionList: string[] = []; // Holds the filtered list (for search suggestion)
-  selectedOpponentTeamChampions: string[] = []; // Holds the selected opponent team champions
+  opponentTeamChampionsList: string[] = [];
+  opponentTeamChampionsSuggestionList: string[] = [];
+  selectedOpponentTeamChampions: string[] = [];
 
   // Search form controls
   searchForm = new FormGroup({
     championName: new FormControl(''),
     lane: new FormControl(''),
-    opponentChampion: new FormControl(''),
+    opponentChampionName: new FormControl(''),
     runes: new FormControl(''),
     championItems: new FormControl(''),
     teamChampions: new FormControl(''),
@@ -78,7 +83,6 @@ export class StreamerHomeComponent {
       error: (error) => console.error('Login failed:', error)
     });
     this.initializeData();
-    this.initSearchAsYouType();
   }
 
   async initializeData() {
@@ -94,11 +98,13 @@ export class StreamerHomeComponent {
       ] = await this.videoService.fetchInitialData();
       console.log('Fetched initial data:', {championsList, opponentChampionsList, runesList, championItemsList, teamChampionsList, opponentTeamChampionsList, videoList});
       this.championsList = championsList;
-      this.filteredChampionsList = championsList;
+      this.championsListManager = new ListManager(championsList, 1);
+      this.championsSuggestionList = [...championsList];
       this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
       this.filteredLanesList = this.lanesList;
       this.opponentChampionsList = opponentChampionsList;
-      this.filteredOpponentChampionsList = opponentChampionsList;
+      this.opponentChampionsListManager = new ListManager(opponentChampionsList, 1);
+      this.opponentChampionsSuggestionList = [...opponentChampionsList];
       this.runesListManager = new ListManager(runesList, this.maxRunes);
       this.itemsListManager = new ListManager(championItemsList, this.maxItems);
       this.teamChampionsListManager = new ListManager(teamChampionsList, this.maxTeamChampions);
@@ -118,43 +124,35 @@ export class StreamerHomeComponent {
     }
   }
 
-  async initSearchAsYouType() {
-    this.searchForm.controls.championName?.valueChanges
-      .pipe(
-        debounceTime(300), // Add a debounce to reduce API calls
-        distinctUntilChanged() // Avoid repetitive calls for the same value
-      )
-      .subscribe((value: string | null) => {
-        this.filterChampionList(value);
-      });
-
-    this.searchForm.controls.opponentChampion?.valueChanges
-      .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe((value: string | null) => {
-        this.filterOpponentChampionList(value);
-      });
+  updateChampionsSuggestionList(event: Event): void {
+    this.championsSuggestionList = this.championsListManager.updateList(event);
   }
 
-  // Filter lists based on input
-  filterChampionList(input: string | null) {
-    console.log('filterChampionList', this.filteredChampionsList);
-    console.log('filterChampionList', input);
-    if (!input) {
-      this.filteredChampionsList = this.championsList; // Reset to all champions if input is empty
-    } else {
-      this.filteredChampionsList = this.championsList.filter(champion =>
-        champion.toLowerCase().includes(input.toLowerCase())
-      );
-    }
-    console.log('filterChampionList', this.filteredChampionsList);
+  // Method to add a champion to the selected list
+  selectChampion(champion: string, inputValue: string): void {
+    this.championsSuggestionList = this.championsListManager.addItem(champion, inputValue);
+    this.selectedChampion = this.championsListManager.selectedItems;
   }
 
-  filterOpponentChampionList(input: string | null) {
-    this.filteredOpponentChampionsList = !input
-      ? this.opponentChampionsList
-      : this.opponentChampionsList.filter((opponentChampion) =>
-        opponentChampion.toLowerCase().includes(input.toLowerCase())
-      );
+  // Method to remove a champion from the selected list
+  removeChampion(champion: string, inputValue?: string) {
+    this.championsSuggestionList = this.championsListManager.removeItem(champion, inputValue);
+    this.selectedChampion = this.championsListManager.selectedItems;
+  }
+
+  updateOpponentChampionsSuggestionList(event: Event): void {
+    this.opponentChampionsSuggestionList = this.opponentChampionsListManager.updateList(event);
+  }
+
+  selectOpponentChampion(champion: string, inputValue: string): void {
+    this.opponentChampionsSuggestionList = this.opponentChampionsListManager.addItem(champion, inputValue);
+    this.selectedOpponentChampion = this.opponentChampionsListManager.selectedItems;
+  }
+
+  // Method to remove a champion from the selected list
+  removeOpponentChampion(champion: string, inputValue?: string) {
+    this.opponentChampionsSuggestionList = this.opponentChampionsListManager.removeItem(champion, inputValue);
+    this.selectedOpponentChampion = this.opponentChampionsListManager.selectedItems;
   }
 
   /**
@@ -235,24 +233,17 @@ export class StreamerHomeComponent {
 
   // Filter videos based on the selected champion and other filters
   filterVideos() {
-    const selectedChampionsString = this.teamChampionsListManager.getAsCommaSeparatedString();
-    const selectedOpponentChampionsString = this.opponentTeamChampionsListManager.getAsCommaSeparatedString();
-    const selectedRunesString = this.selectedRunes.join(',');
-    const selectedItemsString = this.itemsListManager.getAsCommaSeparatedString();
-
     const {
-      championName,
-      lane,
-      opponentChampion,
+      lane
     } = this.searchForm.value;
     this.videoService.filterVideos(
-      championName ?? '',
+      this.championsListManager.getAsCommaSeparatedString() ?? '',
       lane ?? '',
-      opponentChampion ?? '',
-      selectedRunesString ?? '',
-      selectedItemsString ?? '',
-      selectedChampionsString ?? '',
-      selectedOpponentChampionsString ?? '',
+      this.opponentChampionsListManager.getAsCommaSeparatedString() ?? '',
+      this.selectedRunes.join(',') ?? '',
+      this.itemsListManager.getAsCommaSeparatedString() ?? '',
+      this.teamChampionsListManager.getAsCommaSeparatedString() ?? '',
+      this.opponentTeamChampionsListManager.getAsCommaSeparatedString() ?? '',
     ).then((videos: Video[]) => {
       this.filteredVideoList = videos;
     }).catch((error) => {

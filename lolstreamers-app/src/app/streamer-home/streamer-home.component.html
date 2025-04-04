@@ -1,37 +1,76 @@
 <section class="streamer-home">
   <section class="search">
     <form [formGroup]="searchForm" (ngSubmit)="filterVideos()">
-      <!-- Champion Search -->
+      <!-- Champion Name -->
       <div>
-        <label for="championName">Champion Name</label>
+        <label for="championName">Champion played</label>
+        <div class="selected-items">
+        <span
+          class="item-tag"
+          *ngFor="let selectedChampion of selectedChampion"
+        >
+          {{ selectedChampion }}
+          <button type="button" (click)="removeChampion(selectedChampion, championInput.value)">
+            &times;
+          </button>
+        </span>
+        </div>
+
+        <!-- Input -->
         <input
           id="championName"
+          #championInput
           type="text"
           formControlName="championName"
-          placeholder="Type to search..."
-          list="champion-suggestions"
+          placeholder="Type to search champions..."
+          (input)="updateChampionsSuggestionList($event)"
         />
-        <datalist id="champion-suggestions">
-          <option *ngFor="let champion of filteredChampionsList" [value]="champion"></option>
-        </datalist>
+
+        <!-- Filtered Suggestions -->
+        <ul class="suggestions">
+          <li
+            *ngFor="let champion of championsSuggestionList"
+            (click)="selectChampion(champion, championInput.value)"
+          >
+            {{ champion }}
+          </li>
+        </ul>
       </div>
 
       <!-- Opponent Champion Search -->
       <div>
-        <label for="opponentChampion">Opponent Champion</label>
+        <label for="opponentChampionName">Opponent Champion</label>
+        <div class="selected-items">
+        <span
+          class="item-tag"
+          *ngFor="let selectedOpponentChampion of selectedOpponentChampion"
+        >
+          {{ selectedOpponentChampion }}
+          <button type="button" (click)="removeOpponentChampion(selectedOpponentChampion, opponentChampionInput.value)">
+            &times;
+          </button>
+        </span>
+        </div>
+
+        <!-- Input -->
         <input
-          id="opponentChampion"
+          id="opponentChampionName"
+          #opponentChampionInput
           type="text"
-          formControlName="opponentChampion"
-          placeholder="Type to search..."
-          list="opponent-champion-suggestions"
+          formControlName="opponentChampionName"
+          placeholder="Type to search champions..."
+          (input)="updateOpponentChampionsSuggestionList($event)"
         />
-        <datalist id="opponent-champion-suggestions">
-          <option
-            *ngFor="let opponentChampion of filteredOpponentChampionsList"
-            [value]="opponentChampion"
-          ></option>
-        </datalist>
+
+        <!-- Filtered Suggestions -->
+        <ul class="suggestions">
+          <li
+            *ngFor="let opponentChampion of opponentChampionsSuggestionList"
+            (click)="selectOpponentChampion(opponentChampion, opponentChampionInput.value)"
+          >
+            {{ opponentChampion }}
+          </li>
+        </ul>
       </div>
       <!-- Lane Search -->
       <div>
