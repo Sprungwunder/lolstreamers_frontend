@@ -57,4 +57,24 @@ export class ListManager {
     return this.selectedItems.join(',');
   }
 
+  // generic functions to handle the list data
+  updateList(event: Event): string[] {
+    const inputElement = event.target as HTMLInputElement;
+    const searchTerm = inputElement.value;
+    this.filterItems(searchTerm);
+    return this.suggestionList;
+  }
+
+  addItem(item: string, inputValue: string): string[] {
+    this.selectItem(item);
+    this.clearSuggestions(inputValue);
+    return this.suggestionList;
+  }
+
+  removeItem(item: string, inputValue: string | undefined): string[] {
+    this.deselectItem(item);
+    this.filterItems(inputValue || '');
+    return this.suggestionList;
+  }
+
 }

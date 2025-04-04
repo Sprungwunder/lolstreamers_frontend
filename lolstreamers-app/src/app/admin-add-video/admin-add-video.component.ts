@@ -62,7 +62,7 @@ export class AdminAddVideoComponent implements OnInit {
       this.championsSuggestionList = [...championsList];
       // Initialize for runes
       this.runesList = runesList;
-      this.runesListManager = new ListManager(runesList, 1);
+      this.runesListManager = new ListManager(runesList, 5);
       this.runesSuggestionList = [...runesList];
 
     } catch (error) {
@@ -71,50 +71,36 @@ export class AdminAddVideoComponent implements OnInit {
   }
 
   updateChampionsSuggestionList(event: Event): void {
-    const inputElement = event.target as HTMLInputElement; // Cast here
-    const searchTerm = inputElement.value; // Get the value of the input
-    this.championsListManager.filterItems(searchTerm);
-    this.championsSuggestionList = this.championsListManager.suggestionList;
+    this.championsSuggestionList = this.championsListManager.updateList(event);
   }
 
   // Method to add a champion to the selected list
   selectChampion(champion: string, inputValue: string): void {
-    this.championsListManager.selectItem(champion);
-    this.championsListManager.clearSuggestions(inputValue);
+    this.championsSuggestionList = this.championsListManager.addItem(champion, inputValue);
     this.selectedChampion = this.championsListManager.selectedItems;
-    this.championsSuggestionList = this.championsListManager.suggestionList;
   }
 
   // Method to remove a champion from the selected list
   removeChampion(champion: string, inputValue?: string) {
-    this.championsListManager.deselectItem(champion);
+    this.championsSuggestionList = this.championsListManager.removeItem(champion, inputValue);
     this.selectedChampion = this.championsListManager.selectedItems;
-    this.championsListManager.filterItems(inputValue || '');
-    this.championsSuggestionList = this.championsListManager.suggestionList;
   }
 
   // Updates Rune suggestion list (search)
   updateRunesSuggestionList(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    const searchTerm = inputElement.value;
-    this.runesListManager.filterItems(searchTerm);
-    this.runesSuggestionList = this.runesListManager.suggestionList;
+    this.runesSuggestionList = this.runesListManager.updateList(event);
   }
 
-// Add a Rune to the selected list
+  // Add a Rune to the selected list
   addRune(rune: string, inputValue: string): void {
-    this.runesListManager.selectItem(rune);
-    this.runesListManager.clearSuggestions(inputValue);
+    this.runesSuggestionList = this.runesListManager.addItem(rune, inputValue);
     this.selectedRunes = this.runesListManager.selectedItems;
-    this.runesSuggestionList = this.runesListManager.suggestionList;
   }
 
-// Remove a Rune from the selected list
+  // Remove a Rune from the selected list
   removeRune(rune: string, inputValue?: string): void {
-    this.runesListManager.deselectItem(rune);
+    this.runesSuggestionList = this.runesListManager.removeItem(rune, inputValue);
     this.selectedRunes = this.runesListManager.selectedItems;
-    this.runesListManager.filterItems(inputValue || '');
-    this.runesSuggestionList = this.runesListManager.suggestionList;
   }
 
 

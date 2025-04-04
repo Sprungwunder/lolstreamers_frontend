@@ -162,24 +162,17 @@ export class StreamerHomeComponent {
    * @param event
    */
   updateRunesSuggestionList(event: Event): void {
-    const inputElement = event.target as HTMLInputElement; // Cast here
-    const searchTerm = inputElement.value; // Get the value of the input
-    this.runesListManager.filterItems(searchTerm);
-    this.runesSuggestionList = this.runesListManager.suggestionList;
+    this.runesSuggestionList = this.runesListManager.updateList(event);
   }
 
-  addRune(item: string, inputValue: string): void {
-    this.runesListManager.selectItem(item);
-    this.runesListManager.clearSuggestions(inputValue);
+  addRune(rune: string, inputValue: string): void {
+    this.runesSuggestionList = this.runesListManager.addItem(rune, inputValue);
     this.selectedRunes = this.runesListManager.selectedItems;
-    this.runesSuggestionList = this.runesListManager.suggestionList;
   }
 
-  removeRune(item: string, inputValue?: string) {
-    this.runesListManager.deselectItem(item);
+  removeRune(rune: string, inputValue?: string) {
+    this.runesSuggestionList = this.runesListManager.removeItem(rune, inputValue);
     this.selectedRunes = this.runesListManager.selectedItems;
-    this.runesListManager.filterItems(inputValue || '');
-    this.runesSuggestionList = this.runesListManager.suggestionList;
   }
 
   /**
@@ -187,24 +180,17 @@ export class StreamerHomeComponent {
    * @param event
    */
   updateItemsSuggestionList(event: Event): void {
-    const inputElement = event.target as HTMLInputElement; // Cast here
-    const searchTerm = inputElement.value; // Get the value of the input
-    this.itemsListManager.filterItems(searchTerm);
-    this.itemsSuggestionList = this.itemsListManager.suggestionList;
+    this.itemsSuggestionList = this.itemsListManager.updateList(event);
   }
 
   addItem(item: string, inputValue: string): void {
-    this.itemsListManager.selectItem(item);
-    this.itemsListManager.clearSuggestions(inputValue);
+    this.itemsSuggestionList = this.itemsListManager.addItem(item, inputValue);
     this.selectedItems = this.itemsListManager.selectedItems;
-    this.itemsSuggestionList = this.itemsListManager.suggestionList;
   }
 
   removeItem(item: string, inputValue?: string) {
-    this.itemsListManager.deselectItem(item);
+    this.itemsSuggestionList = this.itemsListManager.removeItem(item, inputValue);
     this.selectedItems = this.itemsListManager.selectedItems;
-    this.itemsListManager.filterItems(inputValue || '');
-    this.itemsSuggestionList = this.itemsListManager.suggestionList;
   }
 
   /**
@@ -212,26 +198,19 @@ export class StreamerHomeComponent {
    * @param event
    */
   updateTeamChampionsSuggestionList(event: Event): void {
-    const inputElement = event.target as HTMLInputElement; // Cast here
-    const searchTerm = inputElement.value; // Get the value of the input
-    this.teamChampionsListManager.filterItems(searchTerm);
-    this.teamChampionsSuggestionList = this.teamChampionsListManager.suggestionList;
+    this.teamChampionsSuggestionList = this.teamChampionsListManager.updateList(event);
   }
 
   // Method to add a champion to the selected list
   addTeamChampion(champion: string, inputValue: string): void {
-    this.teamChampionsListManager.selectItem(champion);
-    this.teamChampionsListManager.clearSuggestions(inputValue);
+    this.teamChampionsSuggestionList = this.teamChampionsListManager.addItem(champion, inputValue);
     this.selectedTeamChampions = this.teamChampionsListManager.selectedItems;
-    this.teamChampionsSuggestionList = this.teamChampionsListManager.suggestionList;
   }
 
   // Method to remove a champion from the selected list
   removeTeamChampion(champion: string, inputValue?: string) {
-    this.teamChampionsListManager.deselectItem(champion);
+    this.teamChampionsSuggestionList = this.teamChampionsListManager.removeItem(champion, inputValue);
     this.selectedTeamChampions = this.teamChampionsListManager.selectedItems;
-    this.teamChampionsListManager.filterItems(inputValue || '');
-    this.teamChampionsSuggestionList = this.teamChampionsListManager.suggestionList;
   }
 
   /**
@@ -239,26 +218,19 @@ export class StreamerHomeComponent {
    * @param event
    */
   updateOpponentTeamChampions(event: Event): void {
-    const inputElement = event.target as HTMLInputElement; // Cast here
-    const searchTerm = inputElement.value; // Get the value of the input
-    this.opponentTeamChampionsListManager.filterItems(searchTerm);
-    this.opponentTeamChampionsSuggestionList = this.opponentTeamChampionsListManager.suggestionList;
+    this.opponentTeamChampionsSuggestionList = this.opponentTeamChampionsListManager.updateList(event);
   }
 
   // Method to add a champion to the selected list
   addOpponentTeamChampion(champion: string, inputValue: string): void {
-    this.opponentTeamChampionsListManager.selectItem(champion);
-    this.opponentTeamChampionsListManager.clearSuggestions(inputValue);
+    this.opponentTeamChampionsSuggestionList = this.opponentTeamChampionsListManager.addItem(champion, inputValue);
     this.selectedOpponentTeamChampions = this.opponentTeamChampionsListManager.selectedItems;
-    this.opponentTeamChampionsSuggestionList = this.opponentTeamChampionsListManager.suggestionList;
   }
 
   // Method to remove a champion from the selected list
   removeOpponentTeamChampion(champion: string, inputValue?: string) {
-    this.opponentTeamChampionsListManager.deselectItem(champion);
+    this.opponentTeamChampionsSuggestionList = this.opponentTeamChampionsListManager.removeItem(champion, inputValue);
     this.selectedOpponentTeamChampions = this.opponentTeamChampionsListManager.selectedItems;
-    this.opponentTeamChampionsListManager.filterItems(inputValue || '');
-    this.opponentTeamChampionsSuggestionList = this.opponentTeamChampionsListManager.suggestionList;
   }
 
   // Filter videos based on the selected champion and other filters
