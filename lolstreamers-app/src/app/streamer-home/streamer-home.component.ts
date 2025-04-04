@@ -128,12 +128,6 @@ export class StreamerHomeComponent {
         this.filterChampionList(value);
       });
 
-    this.searchForm.controls.lane?.valueChanges
-      .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe((value: string | null) => {
-        this.filterLaneList(value);
-      });
-
     this.searchForm.controls.opponentChampion?.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value: string | null) => {
@@ -153,16 +147,6 @@ export class StreamerHomeComponent {
       );
     }
     console.log('filterChampionList', this.filteredChampionsList);
-  }
-
-  filterLaneList(input: string | null) {
-    if (!input) {
-      this.filteredLanesList = this.lanesList; // Reset to all lanes if input is empty
-    } else {
-      this.filteredLanesList = this.lanesList.filter(lane =>
-        lane.toLowerCase().includes(input.toLowerCase())
-      );
-    }
   }
 
   filterOpponentChampionList(input: string | null) {
