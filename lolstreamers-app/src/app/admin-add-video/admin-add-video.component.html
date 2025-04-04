@@ -1,3 +1,47 @@
 <section class="content">
-  admin add
+  <h2>Add a New Video</h2>
+
+  <!-- Video Form -->
+  <form [formGroup]="videoForm" (ngSubmit)="submitForm()">
+    <!-- YouTube URL -->
+    <div class="form-group">
+      <label for="youtubeUrl">YouTube URL</label>
+      <input
+        id="youtubeUrl"
+        type="url"
+        formControlName="youtubeUrl"
+        placeholder="Enter YouTube Video Link"
+      />
+      <div
+        class="error-message"
+        *ngIf="videoForm.get('youtubeUrl')?.invalid && videoForm.get('youtubeUrl')?.touched"
+      >
+        Please provide a valid YouTube URL.
+      </div>
+    </div>
+
+    <!-- Champion Name -->
+    <div class="form-group">
+      <label for="championName">Champion Name</label>
+      <input
+        id="championName"
+        type="text"
+        formControlName="championName"
+        placeholder="Type to search..."
+        list="champion-suggestions"
+      />
+      <datalist id="champion-suggestions">
+        <option *ngFor="let champion of filteredChampions" [value]="champion"></option>
+      </datalist>
+      <div
+        class="error-message"
+        *ngIf="videoForm.get('championName')?.invalid && videoForm.get('championName')?.touched"
+      >
+        Champion Name is required.
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" [disabled]="videoForm.invalid">Submit</button>
+  </form>
 </section>
