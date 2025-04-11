@@ -4,17 +4,17 @@ import {CommonModule} from '@angular/common';
 import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.component";
 
 @Component({
-  selector: 'app-opponent-champion-name-input',
+  selector: 'app-enemy-champion-name-input',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './opponent-champion-name-input.component.html',
-  styleUrls: ['./opponent-champion-name-input.component.css']
+  templateUrl: './enemy-champion-name-input.component.html',
+  styleUrls: ['./enemy-champion-name-input.component.css']
 })
-export class OpponentChampionNameInputComponent extends TypeAheadInputComponent {
+export class EnemyChampionNameInputComponent extends TypeAheadInputComponent {
   @Input() placeholder: string = 'Type to search champions...';  // Placeholder for input
-  @Input() opponentChampionsList: string[] = [];                         // List of all champions
+  @Input() enemyChampionsList: string[] = [];                    // List of all champions
 
-  @Output() opponentChampionsChange = new EventEmitter<string[]>();      // Notify parent about selection changes
+  @Output() enemyChampionsChange = new EventEmitter<string[]>();      // Notify parent about selection changes
 
   constructor() {
     super();
@@ -28,17 +28,17 @@ export class OpponentChampionNameInputComponent extends TypeAheadInputComponent 
    * Called whenever Input properties are updated.
    */
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['opponentChampionsList'] && changes['opponentChampionsList'].currentValue?.length > 0) {
+    if (changes['enemyChampionsList'] && changes['enemyChampionsList'].currentValue?.length > 0) {
       this.initializeItemsList();
     }
   }
 
   override getList(): string[] {
-    return this.opponentChampionsList;
+    return this.enemyChampionsList;
   }
 
   emitEvent() {
-    this.opponentChampionsChange.emit(this.selectedItems);
+    this.enemyChampionsChange.emit(this.selectedItems);
   }
 
 }

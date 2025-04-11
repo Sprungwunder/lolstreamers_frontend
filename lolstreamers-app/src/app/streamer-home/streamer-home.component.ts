@@ -7,8 +7,8 @@ import {VideoBaseComponent} from "../shared/video-base/video-base.component";
 import {VideoService} from "../video.service";
 import {ChampionNameInputComponent} from "../shared/champion-name-input/champion-name-input.component";
 import {
-  OpponentChampionNameInputComponent
-} from "../shared/opponent-champion-name-input/opponent-champion-name-input.component";
+  EnemyChampionNameInputComponent
+} from "../shared/enemy-champion-name-input/enemy-champion-name-input.component";
 import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
 import {ItemsInputComponent} from "../shared/items-input/items-input.component";
 import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-champions-input.component";
@@ -24,7 +24,7 @@ import {
     VideoCardComponent,
     ReactiveFormsModule,
     ChampionNameInputComponent,
-    OpponentChampionNameInputComponent,
+    EnemyChampionNameInputComponent,
     RunesInputComponent,
     ItemsInputComponent,
     TeamChampionsInputComponent,
@@ -51,7 +51,7 @@ export class StreamerHomeComponent extends VideoBaseComponent {
     this.videoService.filterVideos(
       this.selectedChampion.join(',') ?? '',
       lane ?? '',
-      this.selectedOpponentChampion.join(',') ?? '',
+      this.selectedEnemyChampion.join(',') ?? '',
       this.selectedRunes.join(',') ?? '',
       this.selectedItems.join(',') ?? '',
       this.selectedTeamChampions.join(',') ?? '',
@@ -68,8 +68,8 @@ export class StreamerHomeComponent extends VideoBaseComponent {
     this.selectedChampion = selectedChampions;
   }
 
-  handleOpponentChampionChange(selectedChampions: string[]): void {
-    this.selectedOpponentChampion = selectedChampions;
+  handleEnemyChampionChange(selectedChampions: string[]): void {
+    this.selectedEnemyChampion = selectedChampions;
   }
 
   handleRunesChange(selectedRunes: string[]): void {

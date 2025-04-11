@@ -12,8 +12,8 @@ export abstract class VideoBaseComponent {
   selectedChampion: string[] = []; // Holds the selected champion
 
   // opponent champions
-  opponentChampionsList: string[] = [];
-  selectedOpponentChampion: string[] = [];
+  enemyChampionsList: string[] = [];
+  selectedEnemyChampion: string[] = [];
 
   lanesList: string[] = [];
   filteredLanesList: string[] = []; // Initially show all lanes
@@ -39,7 +39,7 @@ export abstract class VideoBaseComponent {
   searchForm = new FormGroup({
     championName: new FormControl(''),
     lane: new FormControl(''),
-    opponentChampionName: new FormControl(''),
+    enemyChampionName: new FormControl(''),
     runes: new FormControl(''),
     championItems: new FormControl(''),
     teamChampions: new FormControl(''),
@@ -63,7 +63,7 @@ export abstract class VideoBaseComponent {
       this.championsList = championsList;
       this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
       this.filteredLanesList = this.lanesList;
-      this.opponentChampionsList = opponentChampionsList;
+      this.enemyChampionsList = opponentChampionsList;
       this.runesList = runesList;
       this.itemsList = championItemsList;
       this.teamChampionsList = teamChampionsList;
