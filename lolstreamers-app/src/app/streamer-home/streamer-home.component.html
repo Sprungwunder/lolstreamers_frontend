@@ -48,11 +48,11 @@
         (teamChampionsChange)="handleTeamChampionsChange($event)">
       </app-team-champions-input>
 
-      <!-- Opponent Champions -->
-      <app-opponent-team-champions-input
-        [opponentTeamChampionsList]="opponentTeamChampionsList"
-        (opponentTeamChampionsChange)="handleOpponentTeamChampionsChange($event)">
-      </app-opponent-team-champions-input>
+      <!-- enemy Champions -->
+      <app-enemy-team-champions-input
+        [enemyTeamChampionsList]="enemyTeamChampionsList"
+        (enemyTeamChampionsChange)="handleEnemyTeamChampionsChange($event)">
+      </app-enemy-team-champions-input>
 
       <button type="submit" class="primary">Search</button>
     </form>

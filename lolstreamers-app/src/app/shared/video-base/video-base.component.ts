@@ -32,8 +32,8 @@ export abstract class VideoBaseComponent {
   selectedTeamChampions: string[] = [];
 
   // opponent team champions
-  opponentTeamChampionsList: string[] = [];
-  selectedOpponentTeamChampions: string[] = [];
+  enemyTeamChampionsList: string[] = [];
+  selectedEnemyTeamChampions: string[] = [];
 
   // Search form controls
   searchForm = new FormGroup({
@@ -43,7 +43,7 @@ export abstract class VideoBaseComponent {
     runes: new FormControl(''),
     championItems: new FormControl(''),
     teamChampions: new FormControl(''),
-    opponentTeamChampions: new FormControl(''),
+    enemyTeamChampions: new FormControl(''),
   });
 
   constructor(protected videoService: VideoService) {}
@@ -52,22 +52,22 @@ export abstract class VideoBaseComponent {
     try {
       const [
         championsList,
-        opponentChampionsList,
+        enemyChampionsList,
         runesList,
         championItemsList,
         teamChampionsList,
-        opponentTeamChampionsList,
+        enemyTeamChampionsList,
         videoList,
       ] = await this.videoService.fetchInitialData();
-      console.log('Fetched initial data:', {championsList, opponentChampionsList, runesList, championItemsList, teamChampionsList, opponentTeamChampionsList, videoList});
+      console.log('Fetched initial data:', {championsList, enemyChampionsList: enemyChampionsList, runesList, championItemsList, teamChampionsList, enemyTeamChampionsList: enemyTeamChampionsList, videoList});
       this.championsList = championsList;
       this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
       this.filteredLanesList = this.lanesList;
-      this.enemyChampionsList = opponentChampionsList;
+      this.enemyChampionsList = enemyChampionsList;
       this.runesList = runesList;
       this.itemsList = championItemsList;
       this.teamChampionsList = teamChampionsList;
-      this.opponentTeamChampionsList = opponentTeamChampionsList;
+      this.enemyTeamChampionsList = enemyTeamChampionsList;
       this.videoList = videoList;
       this.filteredVideoList = [...videoList];
     } catch (error) {

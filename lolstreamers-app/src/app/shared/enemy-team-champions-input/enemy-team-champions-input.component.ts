@@ -4,17 +4,17 @@ import {CommonModule} from '@angular/common';
 import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.component";
 
 @Component({
-  selector: 'app-opponent-team-champions-input',
+  selector: 'app-enemy-team-champions-input',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './opponent-team-champions-input.component.html',
-  styleUrls: ['./opponent-team-champions-input.component.css']
+  templateUrl: './enemy-team-champions-input.component.html',
+  styleUrls: ['./enemy-team-champions-input.component.css']
 })
-export class OpponentTeamChampionsInputComponent extends TypeAheadInputComponent {
+export class EnemyTeamChampionsInputComponent extends TypeAheadInputComponent {
   @Input() placeholder: string = 'Type to search for team-champions...';  // Placeholder for input
-  @Input() opponentTeamChampionsList: string[] = [];                      // List of all team-champions
+  @Input() enemyTeamChampionsList: string[] = [];                         // List of all team-champions
 
-  @Output() opponentTeamChampionsChange = new EventEmitter<string[]>();      // Notify parent about selection changes
+  @Output() enemyTeamChampionsChange = new EventEmitter<string[]>();      // Notify parent about selection changes
 
   override  maxItems = 4
 
@@ -30,17 +30,17 @@ export class OpponentTeamChampionsInputComponent extends TypeAheadInputComponent
    * Called whenever Input properties are updated.
    */
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['opponentTeamChampionsList'] && changes['opponentTeamChampionsList'].currentValue?.length > 0) {
+    if (changes['enemyTeamChampionsList'] && changes['enemyTeamChampionsList'].currentValue?.length > 0) {
       this.initializeItemsList();
     }
   }
 
   override getList(): string[] {
-    return this.opponentTeamChampionsList;
+    return this.enemyTeamChampionsList;
   }
 
   emitEvent() {
-    this.opponentTeamChampionsChange.emit(this.selectedItems);
+    this.enemyTeamChampionsChange.emit(this.selectedItems);
   }
 
 }
