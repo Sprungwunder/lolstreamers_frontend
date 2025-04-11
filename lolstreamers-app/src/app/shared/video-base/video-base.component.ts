@@ -24,18 +24,12 @@ export abstract class VideoBaseComponent {
   private readonly maxTeamChampions = 4;
 
   // Runes Management
-  runesListManager!: ListManager;
   runesList: string[] = [];
-  runesSuggestionList: string[] = [];
   selectedRunes: string[] = [];
-  private readonly maxRunes = 5;
 
   // Items
-  itemsListManager!: ListManager;
   itemsList: string[] = [];
-  itemsSuggestionList: string[] = [];
   selectedItems: string[] = [];
-  private readonly maxItems = 6;
 
   // team champions
   teamChampionsList: string[] = [];
@@ -76,14 +70,10 @@ export abstract class VideoBaseComponent {
       this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
       this.filteredLanesList = this.lanesList;
       this.opponentChampionsList = opponentChampionsList;
-      this.runesListManager = new ListManager(runesList, this.maxRunes);
-      this.itemsListManager = new ListManager(championItemsList, this.maxItems);
       this.teamChampionsListManager = new ListManager(teamChampionsList, this.maxTeamChampions);
       this.opponentTeamChampionsListManager = new ListManager(opponentTeamChampionsList, this.maxTeamChampions);
       this.runesList = runesList;
-      this.runesSuggestionList = [...runesList];
       this.itemsList = championItemsList;
-      this.itemsSuggestionList = [...championItemsList];
       this.teamChampionsList = teamChampionsList;
       this.teamChampionsSuggestionList = teamChampionsList;
       this.opponentTeamChampionsList = opponentTeamChampionsList;
@@ -95,23 +85,6 @@ export abstract class VideoBaseComponent {
     }
   }
 
-  /**
-   * updates the items list that the user can pick from while typing in the input box
-   * @param event
-   */
-  updateItemsSuggestionList(event: Event): void {
-    this.itemsSuggestionList = this.itemsListManager.updateListFromEvent(event);
-  }
-
-  addItem(item: string, inputValue: string): void {
-    this.itemsSuggestionList = this.itemsListManager.addItem(item, inputValue);
-    this.selectedItems = this.itemsListManager.selectedItems;
-  }
-
-  removeItem(item: string, inputValue?: string) {
-    this.itemsSuggestionList = this.itemsListManager.removeItem(item, inputValue);
-    this.selectedItems = this.itemsListManager.selectedItems;
-  }
 
   /**
    * updates the champion list that the user can pick from while typing in the input box

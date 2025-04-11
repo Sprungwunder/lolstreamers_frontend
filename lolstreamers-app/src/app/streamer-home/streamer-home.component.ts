@@ -10,6 +10,7 @@ import {
   OpponentChampionNameInputComponent
 } from "../shared/opponent-champion-name-input/opponent-champion-name-input.component";
 import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
+import {ItemsInputComponent} from "../shared/items-input/items-input.component";
 
 @Component({
   selector: 'app-streamer-home',
@@ -21,6 +22,7 @@ import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
     ChampionNameInputComponent,
     OpponentChampionNameInputComponent,
     RunesInputComponent,
+    ItemsInputComponent,
   ],
   templateUrl: './streamer-home.component.html',
   styleUrl: './streamer-home.component.css'
@@ -45,7 +47,7 @@ export class StreamerHomeComponent extends VideoBaseComponent {
       lane ?? '',
       this.selectedOpponentChampion.join(',') ?? '',
       this.selectedRunes.join(',') ?? '',
-      this.itemsListManager.getAsCommaSeparatedString() ?? '',
+      this.selectedItems.join(',') ?? '',
       this.teamChampionsListManager.getAsCommaSeparatedString() ?? '',
       this.opponentTeamChampionsListManager.getAsCommaSeparatedString() ?? '',
     ).then((videos: Video[]) => {
@@ -66,6 +68,10 @@ export class StreamerHomeComponent extends VideoBaseComponent {
 
   handleRunesChange(selectedRunes: string[]): void {
     this.selectedRunes = selectedRunes;
+  }
+
+  handleItemsChange(selectedItems: string[]): void {
+    this.selectedItems = selectedItems;
   }
 
   handleSubmit() {

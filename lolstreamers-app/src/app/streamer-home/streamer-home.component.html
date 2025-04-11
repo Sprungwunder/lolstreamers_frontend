@@ -37,39 +37,10 @@
 
 
       <!-- Champion Items -->
-      <div>
-        <label for="championItems">Champion Items</label>
-        <div class="selected-items">
-    <span
-      class="item-tag"
-      *ngFor="let selectedItem of selectedItems"
-    >
-      {{ selectedItem }}
-      <button type="button" (click)="removeItem(selectedItem, itemInput.value)">
-        &times;
-      </button>
-    </span>
-        </div>
-
-        <!-- Input -->
-        <input
-          id="championItems"
-          #itemInput
-          type="text"
-          placeholder="Type to search items..."
-          (input)="updateItemsSuggestionList($event)"
-        />
-
-        <!-- Filtered Suggestions -->
-        <ul class="suggestions">
-          <li
-            *ngFor="let item of itemsSuggestionList"
-            (click)="addItem(item, itemInput.value)"
-          >
-            {{ item }}
-          </li>
-        </ul>
-      </div>
+      <app-items-input
+        [itemsList]="itemsList"
+        (itemsChange)="handleItemsChange($event)">
+      </app-items-input>
 
       <!-- Team Champions -->
       <div>

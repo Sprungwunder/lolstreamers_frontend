@@ -1,0 +1,34 @@
+<div>
+  <label for="items">Items used</label>
+
+  <!-- Selected Champions -->
+  <div class="selected-items">
+    <span
+      class="item-tag"
+      *ngFor="let selectedItem of selectedItems"
+    >
+      {{ selectedItem }}
+      <button type="button" (click)="removeItem(selectedItem)">
+        &times;
+      </button>
+    </span>
+  </div>
+
+  <!-- Input Field -->
+  <input
+    id="items"
+    type="text"
+    [formControl]="itemInput"
+    [placeholder]="placeholder"
+  />
+
+  <!-- Suggestions List -->
+  <ul class="suggestions">
+    <li
+      *ngFor="let item of itemsSuggestionList"
+      (click)="selectItem(item)"
+    >
+      {{ item }}
+    </li>
+  </ul>
+</div>
