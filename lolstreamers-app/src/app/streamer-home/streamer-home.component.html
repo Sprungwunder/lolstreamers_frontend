@@ -2,48 +2,17 @@
   <section class="search">
     <form [formGroup]="searchForm" (ngSubmit)="handleSubmit()">
       <!-- Champion Name -->
-      <!-- Champion Name -->
       <app-champion-name-input
         [championsList]="championsList"
         (championsChange)="handleChampionChange($event)">
       </app-champion-name-input>
 
+      <!-- Opponent Champion Name -->
+      <app-opponent-champion-name-input
+        [opponentChampionsList]="opponentChampionsList"
+        (opponentChampionsChange)="handleOpponentChampionChange($event)">
+      </app-opponent-champion-name-input>
 
-      <!-- Opponent Champion Search -->
-      <div>
-        <label for="opponentChampionName">Opponent Champion</label>
-        <div class="selected-items">
-        <span
-          class="item-tag"
-          *ngFor="let selectedOpponentChampion of selectedOpponentChampion"
-        >
-          {{ selectedOpponentChampion }}
-          <button type="button" (click)="removeOpponentChampion(selectedOpponentChampion, opponentChampionInput.value)">
-            &times;
-          </button>
-        </span>
-        </div>
-
-        <!-- Input -->
-        <input
-          id="opponentChampionName"
-          #opponentChampionInput
-          type="text"
-          formControlName="opponentChampionName"
-          placeholder="Type to search champions..."
-          (input)="updateOpponentChampionsSuggestionList($event)"
-        />
-
-        <!-- Filtered Suggestions -->
-        <ul class="suggestions">
-          <li
-            *ngFor="let opponentChampion of opponentChampionsSuggestionList"
-            (click)="selectOpponentChampion(opponentChampion, opponentChampionInput.value)"
-          >
-            {{ opponentChampion }}
-          </li>
-        </ul>
-      </div>
       <!-- Lane Search -->
       <div>
         <label>Select Lane:</label>

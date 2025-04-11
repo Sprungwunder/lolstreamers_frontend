@@ -9,15 +9,11 @@ export abstract class VideoBaseComponent {
   filteredVideoList: Video[] = [];
 
   // champions
-  championsListManager!: ListManager;
   championsList: string[] = []; // Holds the fetched list of champions
-  championsSuggestionList: string[] = []; // Holds the filtered list (for search suggestion)
   selectedChampion: string[] = []; // Holds the selected champion
 
   // opponent champions
-  opponentChampionsListManager!: ListManager;
   opponentChampionsList: string[] = [];
-  opponentChampionsSuggestionList: string[] = [];
   selectedOpponentChampion: string[] = [];
 
   lanesList: string[] = [];
@@ -80,8 +76,6 @@ export abstract class VideoBaseComponent {
       this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
       this.filteredLanesList = this.lanesList;
       this.opponentChampionsList = opponentChampionsList;
-      this.opponentChampionsListManager = new ListManager(opponentChampionsList, 1);
-      this.opponentChampionsSuggestionList = [...opponentChampionsList];
       this.runesListManager = new ListManager(runesList, this.maxRunes);
       this.itemsListManager = new ListManager(championItemsList, this.maxItems);
       this.teamChampionsListManager = new ListManager(teamChampionsList, this.maxTeamChampions);
@@ -101,20 +95,6 @@ export abstract class VideoBaseComponent {
     }
   }
 
-  updateOpponentChampionsSuggestionList(event: Event): void {
-    this.opponentChampionsSuggestionList = this.opponentChampionsListManager.updateListFromEvent(event);
-  }
-
-  selectOpponentChampion(champion: string, inputValue: string): void {
-    this.opponentChampionsSuggestionList = this.opponentChampionsListManager.addItem(champion, inputValue);
-    this.selectedOpponentChampion = this.opponentChampionsListManager.selectedItems;
-  }
-
-  // Method to remove a champion from the selected list
-  removeOpponentChampion(champion: string, inputValue?: string) {
-    this.opponentChampionsSuggestionList = this.opponentChampionsListManager.removeItem(champion, inputValue);
-    this.selectedOpponentChampion = this.opponentChampionsListManager.selectedItems;
-  }
 
   /**
    * updates the runes list that the user can pick from while typing in the input box
