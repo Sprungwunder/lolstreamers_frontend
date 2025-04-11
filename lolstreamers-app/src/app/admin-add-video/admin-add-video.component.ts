@@ -1,115 +1,56 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import {Component} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {VideoService} from '../video.service';
-import {ListManager} from "../list-manager";
+import {VideoBaseComponent} from "../shared/video-base/video-base.component";
+import {ChampionNameInputComponent} from "../shared/champion-name-input/champion-name-input.component";
+import {EnemyChampionNameInputComponent} from "../shared/enemy-champion-name-input/enemy-champion-name-input.component";
+import {
+  EnemyTeamChampionsInputComponent
+} from "../shared/enemy-team-champions-input/enemy-team-champions-input.component";
+import {ItemsInputComponent} from "../shared/items-input/items-input.component";
+import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
+import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-champions-input.component";
+import {VideoCardComponent} from "../video-card/video-card.component";
+
 
 @Component({
   selector: 'app-admin-add-video',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './admin-add-video.component.html',
+  imports: [CommonModule, ReactiveFormsModule, ChampionNameInputComponent, EnemyChampionNameInputComponent, EnemyTeamChampionsInputComponent, ItemsInputComponent, RunesInputComponent, TeamChampionsInputComponent, VideoCardComponent],
+  templateUrl: '../streamer-home/streamer-home.component.html',
   styleUrls: ['./admin-add-video.component.css'],
 })
-export class AdminAddVideoComponent implements OnInit {
-  videoService: VideoService = inject(VideoService);
+export class AdminAddVideoComponent extends VideoBaseComponent {
+  override hasYoutubeUrl = true;
+  buttonText = "Submit"
 
-  // The form group for YouTube URL and Champion Name
-  videoForm = new FormGroup({
-    youtubeUrl: new FormControl('', [Validators.required, Validators.pattern(/^(https?:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/)]),
-    championName: new FormControl('', []),
-    rune: new FormControl('', []),
-  });
+  constructor(protected override videoService: VideoService) {
+    super(videoService);
+  }
 
-  // champions
-  championsListManager!: ListManager;
-  championsList: string[] = []; // Holds the fetched list of champions
-  championsSuggestionList: string[] = []; // Holds the filtered list (for search suggestion)
-  selectedChampion: string[] = []; // Holds the selected champion
-
-  // Rune-specific properties
-  runesListManager!: ListManager;
-  runesList: string[] = []; // Holds the list of runes
-  runesSuggestionList: string[] = []; // Filtered List for search suggestions
-  selectedRunes: string[] = []; // User-selected Runes
-
-
-  ngOnInit(): void {
-    // Fetch the list of champions once the component initializes
+  ngOnInit() {
     this.initializeData();
   }
 
-  async initializeData() {
-    try {
-      const [
-        championsList,
-        opponentChampionsList,
-        runesList,
-        championItemsList,
-        teamChampionsList,
-        opponentTeamChampionsList,
-        videoList,
-      ] = await this.videoService.fetchInitialData();
-      console.log('Fetched initial data:', {championsList, opponentChampionsList, runesList, championItemsList, teamChampionsList, opponentTeamChampionsList, videoList});
-      // init for champions
-      this.championsList = championsList;
-      this.championsListManager = new ListManager(championsList, 1);
-      this.championsSuggestionList = [...championsList];
-      // Initialize for runes
-      this.runesList = runesList;
-      this.runesListManager = new ListManager(runesList, 5);
-      this.runesSuggestionList = [...runesList];
-
-    } catch (error) {
-      console.error('Failed to initialize data:', error);
-    }
+  handleSubmit() {
+    this.submitForm();
   }
-
-  updateChampionsSuggestionList(event: Event): void {
-    this.championsSuggestionList = this.championsListManager.updateListFromEvent(event);
-  }
-
-  // Method to add a champion to the selected list
-  selectChampion(champion: string, inputValue: string): void {
-    this.championsSuggestionList = this.championsListManager.addItem(champion, inputValue);
-    this.selectedChampion = this.championsListManager.selectedItems;
-  }
-
-  // Method to remove a champion from the selected list
-  removeChampion(champion: string, inputValue?: string) {
-    this.championsSuggestionList = this.championsListManager.removeItem(champion, inputValue);
-    this.selectedChampion = this.championsListManager.selectedItems;
-  }
-
-  // Updates Rune suggestion list (search)
-  updateRunesSuggestionList(event: Event): void {
-    this.runesSuggestionList = this.runesListManager.updateListFromEvent(event);
-  }
-
-  // Add a Rune to the selected list
-  addRune(rune: string, inputValue: string): void {
-    this.runesSuggestionList = this.runesListManager.addItem(rune, inputValue);
-    this.selectedRunes = this.runesListManager.selectedItems;
-  }
-
-  // Remove a Rune from the selected list
-  removeRune(rune: string, inputValue?: string): void {
-    this.runesSuggestionList = this.runesListManager.removeItem(rune, inputValue);
-    this.selectedRunes = this.runesListManager.selectedItems;
-  }
-
 
   // Submit the form
   submitForm(): void {
-    if (this.videoForm.valid) {
-      const {youtubeUrl, championName, rune} = this.videoForm.value;
-      console.log('Submitting:', youtubeUrl, championName, rune);
-      console.log('Manager data:', this.championsListManager.getAsCommaSeparatedString(), this.runesListManager.getAsCommaSeparatedString());
+    if (this.inputForm.valid) {
+      const {youtubeUrl, lane} = this.inputForm.value;
+      console.log('Submitting:', youtubeUrl);
+      console.log('Manager data:',
+        this.selectedChampion.join(',') ?? '',
+        lane ?? '',
+        this.selectedEnemyChampion.join(',') ?? '',
+        this.selectedRunes.join(',') ?? '',
+        this.selectedItems.join(',') ?? '',
+        this.selectedTeamChampions.join(',') ?? '',
+        this.selectedEnemyTeamChampions.join(',') ?? '',
+      );
 
       // Here, you can make an API call to save the video and its metadata
       // Example:

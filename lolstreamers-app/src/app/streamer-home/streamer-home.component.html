@@ -1,6 +1,22 @@
 <section class="streamer-home">
   <section class="search">
-    <form [formGroup]="searchForm" (ngSubmit)="handleSubmit()">
+    <form [formGroup]="inputForm" (ngSubmit)="handleSubmit()">
+      <div class="form-group" *ngIf="hasYoutubeUrl">
+        <label for="youtubeUrl">YouTube URL</label>
+        <div class="selected-items"></div>
+        <input
+          id="youtubeUrl"
+          type="url"
+          formControlName="youtubeUrl"
+          placeholder="Enter YouTube Video Link"
+        />
+        <div
+          class="error-message"
+          *ngIf="inputForm.get('youtubeUrl')?.invalid && inputForm.get('youtubeUrl')?.touched"
+        >
+          Please provide a valid YouTube URL.
+        </div>
+      </div>
       <!-- Champion Name -->
       <app-champion-name-input
         [championsList]="championsList"
@@ -28,7 +44,7 @@
           </div>
         </div>
       </div>
-      <br/>
+
       <!-- Runes search -->
       <app-runes-input
         [runesList]="runesList"
@@ -54,10 +70,10 @@
         (enemyTeamChampionsChange)="handleEnemyTeamChampionsChange($event)">
       </app-enemy-team-champions-input>
 
-      <button type="submit" class="primary">Search</button>
+      <button type="submit" class="primary">{{ buttonText }}</button>
     </form>
   </section>
-  <section class="results">
+  <section class="results" *ngIf="!hasYoutubeUrl">
     <app-video-card
       *ngFor="let video of filteredVideoList"
       [video]="video"

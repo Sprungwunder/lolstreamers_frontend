@@ -1,9 +1,11 @@
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Video} from "../../video";
 import {VideoService} from "../../video.service";
 
 
 export abstract class VideoBaseComponent {
+  hasYoutubeUrl = false;
+
   videoList: Video[] = [];
   filteredVideoList: Video[] = [];
 
@@ -36,7 +38,7 @@ export abstract class VideoBaseComponent {
   selectedEnemyTeamChampions: string[] = [];
 
   // Search form controls
-  searchForm = new FormGroup({
+  inputForm = new FormGroup({
     championName: new FormControl(''),
     lane: new FormControl(''),
     enemyChampionName: new FormControl(''),
@@ -44,6 +46,7 @@ export abstract class VideoBaseComponent {
     championItems: new FormControl(''),
     teamChampions: new FormControl(''),
     enemyTeamChampions: new FormControl(''),
+    youtubeUrl: new FormControl('', [Validators.required, Validators.pattern(/^(https?:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/)]),
   });
 
   constructor(protected videoService: VideoService) {}
@@ -73,6 +76,31 @@ export abstract class VideoBaseComponent {
     } catch (error) {
       console.error('Failed to initialize data:', error);
     }
+  }
+
+  // Handle Champion changes from the reusable component
+  handleChampionChange(selectedChampions: string[]): void {
+    this.selectedChampion = selectedChampions;
+  }
+
+  handleEnemyChampionChange(selectedChampions: string[]): void {
+    this.selectedEnemyChampion = selectedChampions;
+  }
+
+  handleRunesChange(selectedRunes: string[]): void {
+    this.selectedRunes = selectedRunes;
+  }
+
+  handleItemsChange(selectedItems: string[]): void {
+    this.selectedItems = selectedItems;
+  }
+
+  handleTeamChampionsChange(selectedTeamChampions: string[]): void {
+    this.selectedTeamChampions = selectedTeamChampions;
+  }
+
+  handleEnemyTeamChampionsChange(selectedTeamChampions: string[]): void {
+    this.selectedEnemyTeamChampions = selectedTeamChampions;
   }
 
   abstract handleSubmit(): void; // To be implemented by child classes

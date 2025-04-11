@@ -35,6 +35,8 @@ import {
 })
 export class StreamerHomeComponent extends VideoBaseComponent {
 
+  buttonText = "Search"
+
   constructor(protected override videoService: VideoService) {
     super(videoService);
   }
@@ -47,7 +49,7 @@ export class StreamerHomeComponent extends VideoBaseComponent {
   filterVideos() {
     const {
       lane
-    } = this.searchForm.value;
+    } = this.inputForm.value;
     this.videoService.filterVideos(
       this.selectedChampion.join(',') ?? '',
       lane ?? '',
@@ -61,31 +63,6 @@ export class StreamerHomeComponent extends VideoBaseComponent {
     }).catch((error) => {
       console.error('Failed to filter videos:', error);
     });
-  }
-
-  // Handle Champion changes from the reusable component
-  handleChampionChange(selectedChampions: string[]): void {
-    this.selectedChampion = selectedChampions;
-  }
-
-  handleEnemyChampionChange(selectedChampions: string[]): void {
-    this.selectedEnemyChampion = selectedChampions;
-  }
-
-  handleRunesChange(selectedRunes: string[]): void {
-    this.selectedRunes = selectedRunes;
-  }
-
-  handleItemsChange(selectedItems: string[]): void {
-    this.selectedItems = selectedItems;
-  }
-
-  handleTeamChampionsChange(selectedTeamChampions: string[]): void {
-    this.selectedTeamChampions = selectedTeamChampions;
-  }
-
-  handleEnemyTeamChampionsChange(selectedTeamChampions: string[]): void {
-    this.selectedEnemyTeamChampions = selectedTeamChampions;
   }
 
   handleSubmit() {
