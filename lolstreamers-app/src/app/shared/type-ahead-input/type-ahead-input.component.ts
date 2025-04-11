@@ -6,6 +6,7 @@ export abstract class TypeAheadInputComponent {
   itemsListManager!: ListManager;
   itemsSuggestionList: string[] = [];
   selectedItems: string[] = [];
+  maxItems = 1;
 
   abstract getList(): string[];
 
@@ -15,7 +16,7 @@ export abstract class TypeAheadInputComponent {
    * Initialize or reinitialize the i.e. champions list manager.
    */
   initializeItemsList(): void {
-    this.itemsListManager = new ListManager(this.getList(), 1);
+    this.itemsListManager = new ListManager(this.getList(), this.maxItems);
     this.itemsSuggestionList = [...this.getList()]; // Reset filtered list
   }
 

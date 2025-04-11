@@ -5,13 +5,23 @@ import {VideoCardComponent} from "../video-card/video-card.component";
 import {Video} from "../video";
 import {VideoBaseComponent} from "../shared/video-base/video-base.component";
 import {VideoService} from "../video.service";
-import {ChampionNameInput} from "../shared/champion-name-input/champion-name-input.component";
-import {OpponentChampionNameInput} from "../shared/opponent-champion-name-input/opponent-champion-name-input.component";
+import {ChampionNameInputComponent} from "../shared/champion-name-input/champion-name-input.component";
+import {
+  OpponentChampionNameInputComponent
+} from "../shared/opponent-champion-name-input/opponent-champion-name-input.component";
+import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
 
 @Component({
   selector: 'app-streamer-home',
   standalone: true,
-  imports: [CommonModule, VideoCardComponent, ReactiveFormsModule, ChampionNameInput, OpponentChampionNameInput],
+  imports: [
+    CommonModule,
+    VideoCardComponent,
+    ReactiveFormsModule,
+    ChampionNameInputComponent,
+    OpponentChampionNameInputComponent,
+    RunesInputComponent,
+  ],
   templateUrl: './streamer-home.component.html',
   styleUrl: './streamer-home.component.css'
 })
@@ -52,6 +62,10 @@ export class StreamerHomeComponent extends VideoBaseComponent {
 
   handleOpponentChampionChange(selectedChampions: string[]): void {
     this.selectedOpponentChampion = selectedChampions;
+  }
+
+  handleRunesChange(selectedRunes: string[]): void {
+    this.selectedRunes = selectedRunes;
   }
 
   handleSubmit() {

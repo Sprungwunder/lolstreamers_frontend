@@ -10,7 +10,7 @@ import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.comp
   templateUrl: './opponent-champion-name-input.component.html',
   styleUrls: ['./opponent-champion-name-input.component.css']
 })
-export class OpponentChampionNameInput extends TypeAheadInputComponent {
+export class OpponentChampionNameInputComponent extends TypeAheadInputComponent {
   @Input() placeholder: string = 'Type to search champions...';  // Placeholder for input
   @Input() opponentChampionsList: string[] = [];                         // List of all champions
 

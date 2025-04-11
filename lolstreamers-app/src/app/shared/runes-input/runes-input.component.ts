@@ -4,21 +4,23 @@ import {CommonModule} from '@angular/common';
 import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.component";
 
 @Component({
-  selector: 'app-champion-name-input',
+  selector: 'app-runes-input',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './champion-name-input.component.html',
-  styleUrls: ['./champion-name-input.component.css']
+  templateUrl: './runes-input.component.html',
+  styleUrls: ['./runes-input.component.css']
 })
-export class ChampionNameInputComponent extends TypeAheadInputComponent {
-  @Input() placeholder: string = 'Type to search champions...';  // Placeholder for input
-  @Input() championsList: string[] = [];                         // List of all champions
+export class RunesInputComponent extends TypeAheadInputComponent {
+  @Input() placeholder: string = 'Type to search for runes...';  // Placeholder for input
+  @Input() runesList: string[] = [];                         // List of all runes
 
-  @Output() championsChange = new EventEmitter<string[]>();      // Notify parent about selection changes
+  @Output() runesChange = new EventEmitter<string[]>();      // Notify parent about selection changes
+
+  override  maxItems = 6
 
   constructor() {
     super();
-    // Filter champions as user types
+    // Filter runes as user types
     this.itemInput.valueChanges.subscribe(value =>
       this.itemsSuggestionList = this.itemsListManager.updateList(value)
     );
@@ -28,17 +30,17 @@ export class ChampionNameInputComponent extends TypeAheadInputComponent {
    * Called whenever Input properties are updated.
    */
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['championsList'] && changes['championsList'].currentValue?.length > 0) {
+    if (changes['runesList'] && changes['runesList'].currentValue?.length > 0) {
       this.initializeItemsList();
     }
   }
 
   override getList(): string[] {
-    return this.championsList;
+    return this.runesList;
   }
 
   emitEvent() {
-    this.championsChange.emit(this.selectedItems);
+    this.runesChange.emit(this.selectedItems);
   }
 
 }

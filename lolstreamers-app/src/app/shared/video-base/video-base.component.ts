@@ -95,25 +95,6 @@ export abstract class VideoBaseComponent {
     }
   }
 
-
-  /**
-   * updates the runes list that the user can pick from while typing in the input box
-   * @param event
-   */
-  updateRunesSuggestionList(event: Event): void {
-    this.runesSuggestionList = this.runesListManager.updateListFromEvent(event);
-  }
-
-  addRune(rune: string, inputValue: string): void {
-    this.runesSuggestionList = this.runesListManager.addItem(rune, inputValue);
-    this.selectedRunes = this.runesListManager.selectedItems;
-  }
-
-  removeRune(rune: string, inputValue?: string) {
-    this.runesSuggestionList = this.runesListManager.removeItem(rune, inputValue);
-    this.selectedRunes = this.runesListManager.selectedItems;
-  }
-
   /**
    * updates the items list that the user can pick from while typing in the input box
    * @param event

@@ -30,39 +30,11 @@
       </div>
       <br/>
       <!-- Runes search -->
-      <div>
-        <label for="runes">Runes</label>
-        <div class="selected-items">
-    <span
-      class="item-tag"
-      *ngFor="let selectedRune of selectedRunes"
-    >
-      {{ selectedRune }}
-      <button type="button" (click)="removeRune(selectedRune, runeInput.value)">
-        &times;
-      </button>
-    </span>
-        </div>
+      <app-runes-input
+        [runesList]="runesList"
+        (runesChange)="handleRunesChange($event)">
+      </app-runes-input>
 
-        <!-- Input -->
-        <input
-          id="runes"
-          #runeInput
-          type="text"
-          placeholder="Type to search runes..."
-          (input)="updateRunesSuggestionList($event)"
-        />
-
-        <!-- Filtered Suggestions -->
-        <ul class="suggestions">
-          <li
-            *ngFor="let rune of runesSuggestionList"
-            (click)="addRune(rune, runeInput.value)"
-          >
-            {{ rune }}
-          </li>
-        </ul>
-      </div>
 
       <!-- Champion Items -->
       <div>
