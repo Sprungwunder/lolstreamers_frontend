@@ -11,6 +11,10 @@ import {
 } from "../shared/opponent-champion-name-input/opponent-champion-name-input.component";
 import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
 import {ItemsInputComponent} from "../shared/items-input/items-input.component";
+import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-champions-input.component";
+import {
+  OpponentTeamChampionsInputComponent
+} from "../shared/opponent-team-champions-input/opponent-team-champions-input.component";
 
 @Component({
   selector: 'app-streamer-home',
@@ -23,6 +27,8 @@ import {ItemsInputComponent} from "../shared/items-input/items-input.component";
     OpponentChampionNameInputComponent,
     RunesInputComponent,
     ItemsInputComponent,
+    TeamChampionsInputComponent,
+    OpponentTeamChampionsInputComponent,
   ],
   templateUrl: './streamer-home.component.html',
   styleUrl: './streamer-home.component.css'
@@ -48,8 +54,8 @@ export class StreamerHomeComponent extends VideoBaseComponent {
       this.selectedOpponentChampion.join(',') ?? '',
       this.selectedRunes.join(',') ?? '',
       this.selectedItems.join(',') ?? '',
-      this.teamChampionsListManager.getAsCommaSeparatedString() ?? '',
-      this.opponentTeamChampionsListManager.getAsCommaSeparatedString() ?? '',
+      this.selectedTeamChampions.join(',') ?? '',
+      this.selectedOpponentTeamChampions.join(',') ?? '',
     ).then((videos: Video[]) => {
       this.filteredVideoList = videos;
     }).catch((error) => {
@@ -72,6 +78,14 @@ export class StreamerHomeComponent extends VideoBaseComponent {
 
   handleItemsChange(selectedItems: string[]): void {
     this.selectedItems = selectedItems;
+  }
+
+  handleTeamChampionsChange(selectedTeamChampions: string[]): void {
+    this.selectedTeamChampions = selectedTeamChampions;
+  }
+
+  handleOpponentTeamChampionsChange(selectedTeamChampions: string[]): void {
+    this.selectedOpponentTeamChampions = selectedTeamChampions;
   }
 
   handleSubmit() {

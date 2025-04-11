@@ -1,7 +1,7 @@
 <div>
-  <label for="runes">Runes used</label>
+  <label for="teamChampions">Team champions</label>
 
-  <!-- Selected Runes -->
+  <!-- Selected Champions -->
   <div class="selected-items">
     <span
       class="item-tag"
@@ -16,7 +16,7 @@
 
   <!-- Input Field -->
   <input
-    id="runes"
+    id="teamChampions"
     type="text"
     [formControl]="itemInput"
     [placeholder]="placeholder"
@@ -25,10 +25,10 @@
   <!-- Suggestions List -->
   <ul class="suggestions">
     <li
-      *ngFor="let rune of itemsSuggestionList"
-      (click)="selectItem(rune)"
+      *ngFor="let champion of itemsSuggestionList"
+      (click)="selectItem(champion)"
     >
-      {{ rune }}
+      {{ champion }}
     </li>
   </ul>
 </div>
