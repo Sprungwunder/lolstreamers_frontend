@@ -1,6 +1,7 @@
 export interface Video {
   id: string;
   ytid: string;
+  timestamp: string;
   champion: string;
   champion_items: string;
   lane: string;

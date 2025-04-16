@@ -31,7 +31,12 @@ export class AdminEditVideoComponent {
     this.videoService.getVideoById(videoId).then(video => {
       this.video = video;
       if (this.video) {
-        this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/" + this.video.ytid);
+        this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
+          "https://www.youtube.com/embed/" + this.video.ytid + "?start=" + this.video.timestamp
+        );
+        console.log(
+          "Video URL: " + this.safeSrc
+        );
       }
     });
 
