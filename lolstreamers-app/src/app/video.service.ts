@@ -40,7 +40,7 @@ export class VideoService {
 
   async getAllVideos(): Promise<Video[]> {
     console.log(`getAllVideos`);
-    const data = await fetch(this.url+'/ytvideos/');
+    const data = await fetch(this.url+'/ytvideos/?is_active=true');
     return await data.json() ?? [];
   }
 
@@ -83,7 +83,8 @@ export class VideoService {
     opponent_team_champions: ${opponentTeamChampions}`);
 
     const response = await fetch(
-      `${this.url}/ytvideos/?champion=${encodeURIComponent(champion)}`+
+      `${this.url}/ytvideos/?is_active=true&`+
+      `champion=${encodeURIComponent(champion)}`+
       `&lane=${encodeURIComponent(cleanedLane)}`+
       `&opponent_champion=${encodeURIComponent(opponent_champion)}`+
       `&runes=${encodeURIComponent(runes)}`+
