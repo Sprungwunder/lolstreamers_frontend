@@ -40,14 +40,17 @@ export class VideoService {
 
   async getAllVideos(): Promise<Video[]> {
     console.log(`getAllVideos`);
-    const data = await fetch(this.url+'/ytvideos/?is_active=true');
+    const data = await fetch(this.url + '/ytvideos/?is_active=true');
     return await data.json() ?? [];
   }
 
   async getVideoById(id: string): Promise<Video | undefined> {
     console.log(`getVideoById: ${id}`);
     const data = await fetch(`${this.url}/ytvideos/${id}`);
-    return await data.json() ?? {};
+    if (data.status !== 200) {
+      return undefined;
+    }
+    return await data.json();
   }
 
   // Centralized method to fetch and manage all initialization data
@@ -83,16 +86,29 @@ export class VideoService {
     opponent_team_champions: ${opponentTeamChampions}`);
 
     const response = await fetch(
-      `${this.url}/ytvideos/?is_active=true&`+
-      `champion=${encodeURIComponent(champion)}`+
-      `&lane=${encodeURIComponent(cleanedLane)}`+
-      `&opponent_champion=${encodeURIComponent(opponent_champion)}`+
-      `&runes=${encodeURIComponent(runes)}`+
+      `${this.url}/ytvideos/?is_active=true&` +
+      `champion=${encodeURIComponent(champion)}` +
+      `&lane=${encodeURIComponent(cleanedLane)}` +
+      `&opponent_champion=${encodeURIComponent(opponent_champion)}` +
+      `&runes=${encodeURIComponent(runes)}` +
       `&team_champions=${encodeURIComponent(teamChampions)}` +
       `&opponent_team_champions=${encodeURIComponent(opponentTeamChampions)}` +
       `&champion_items=${encodeURIComponent(championItems)}`
     );
     return await response.json() ?? [];
+  }
+
+  async getInactiveVideos(): Promise<Video[]> {
+    console.log(`getInactiveVideos`);
+    const data = await fetch(`${this.url}/ytvideos/?is_active=false`);
+    return await data.json() ?? [];
+  }
+
+  async activateVideoById(videoId: string) {
+    console.log(`activateVideoById: ${videoId}`);
+    await fetch(`${this.url}/ytvideos/activate/${videoId}/`, {
+      method: 'POST',
+    });
   }
 
   constructor() {

@@ -1,0 +1,8 @@
+/* Add padding and spacing for table rows */
+table tr {
+  padding: 6px 0; /* Adjusts the padding for rows */
+}
+
+table tr td {
+  padding: 10px; /* Increases padding within table cells */
+}

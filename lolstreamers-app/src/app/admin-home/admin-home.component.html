@@ -1,8 +1,10 @@
 <section class="content">
   <a [routerLink]="['/admin/add']">
     Add
-  </a> |
-  <a [routerLink]="['/admin/edit']">
-    Edit
   </a>
+  <section class="results">
+    <a *ngFor="let video of videoList" [routerLink]="['/admin/edit', video.id]">
+      <app-video-card [video]="video"></app-video-card>
+    </a>
+  </section>
 </section>
