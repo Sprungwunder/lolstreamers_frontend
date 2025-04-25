@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {VideoService} from '../video.service';
@@ -12,6 +12,7 @@ import {ItemsInputComponent} from "../shared/items-input/items-input.component";
 import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
 import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-champions-input.component";
 import {VideoCardComponent} from "../video-card/video-card.component";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -34,6 +35,7 @@ import {VideoCardComponent} from "../video-card/video-card.component";
 export class AdminAddVideoComponent extends VideoBaseComponent {
   override hasYoutubeUrl = true;
   buttonText = "Submit"
+  private router = inject(Router);
 
   constructor(protected override videoService: VideoService) {
     super(videoService);
@@ -61,12 +63,30 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
         this.selectedTeamChampions.join(',') ?? '',
         this.selectedEnemyTeamChampions.join(',') ?? '',
       );
+      const selectedChampions = this.selectedChampion.join(',') ?? '';
+      const selectedEnemyChampion = this.selectedEnemyChampion.join(',') ?? '';
+      const selectedRunes = this.selectedRunes;
+      const selectedItems = this.selectedItems;
+      const selectedTeamChampions = this.selectedTeamChampions;
+      const selectedEnemyTeamChampions = this.selectedEnemyTeamChampions;
 
-      // Here, you can make an API call to save the video and its metadata
-      // Example:
-      // this.videoService.addVideo({ youtubeUrl, championName });
-
-      alert('Video data submitted successfully!');
+      this.videoService.addVideo({
+        youtubeUrl,
+        selectedChampions,
+        selectedEnemyChampion,
+        lane,
+        selectedRunes,
+        selectedItems,
+        selectedTeamChampions,
+        selectedEnemyTeamChampions
+      }).then(response => {
+        if (response.success) {
+          alert(response.message);
+          this.router.navigate(['/admin']);
+        } else {
+          alert(response.message);
+        }
+      });
     } else {
       alert('Please fill in all required fields correctly.');
     }

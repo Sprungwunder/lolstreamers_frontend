@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {lastValueFrom} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,19 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post(this.baseUrl, {username, password});
+  async login(username: string, password: string): Promise<string> {
+    console.log("Logging in...");
+    const response = await lastValueFrom(
+      this.http.post<{ token: string }>(this.baseUrl, {
+        username,
+        password,
+      })
+    );
+
+    if (!response.token) {
+      throw new Error("Failed to obtain token.");
+    }
+
+    return response.token;
   }
 }

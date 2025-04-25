@@ -3,6 +3,7 @@
     Add
   </a>
   <section class="results">
+    <h2>Videos which need validation and activation</h2>
     <a *ngFor="let video of videoList" [routerLink]="['/admin/edit', video.id]">
       <app-video-card [video]="video"></app-video-card>
     </a>

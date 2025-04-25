@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Video} from "./video";
+import {AuthService} from "./auth.service";
 
 
 @Injectable({
@@ -111,7 +112,59 @@ export class VideoService {
     });
   }
 
-  constructor() {
+  async addVideo(videoData: any): Promise<{ success: boolean; message: string }> {
+    console.log(`addVideo`);
+    const video = {
+      video_url: videoData['youtubeUrl'],
+      champion: videoData['selectedChampions'],
+      enemy_champion: videoData['selectedEnemyChampion'],
+      lane: videoData['lane'],
+      runes: videoData['selectedRunes'],
+      champion_items: videoData['selectedItems'],
+      team_champions: videoData['selectedTeamChampions'],
+      enemy_team_champions: videoData['selectedEnemyTeamChampions'],
+      lol_version: '15',
+    }
+    console.log(JSON.stringify(video));
 
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      try {
+        const token = await this.authService.login('christian', '3rg0PRO!');
+        console.log('Logged in successfully, token:', token);
+        localStorage.setItem('access_token', token);
+      } catch (error) {
+        console.error('Authentication failed:', error);
+        return {success: false, message: 'Authentication failed'};
+      }
+    }
+
+    try {
+      const response = await fetch(`${this.url}/ytvideos/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`
+        },
+        body: JSON.stringify(video)
+      });
+
+      if (response.ok) {
+        return {success: true, message: 'Video added successfully'};
+      }
+
+      if (response.status === 400) {
+        return {success: false, message: 'Invalid video data submitted'};
+      } else if (response.status === 500) {
+        return {success: false, message: 'Server error occurred'};
+      } else {
+        return {success: false, message: `HTTP error! status: ${response.status}`};
+      }
+    } catch (error) {
+      console.error('Error adding video:', error);
+      return {success: false, message: 'Network or server error occurred'};
+    }
   }
+
+  constructor(private authService: AuthService) {}
 }
