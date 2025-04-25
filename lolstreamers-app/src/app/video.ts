@@ -5,8 +5,8 @@ export interface Video {
   champion: string;
   champion_items: string;
   lane: string;
-  opponent_champion: string;
-  opponent_team_champions: string;
+  enemy_champion: string;
+  enemy_team_champions: string;
   runes: string
   streamer: string;
   team_champions: string;

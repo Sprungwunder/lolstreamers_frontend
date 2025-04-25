@@ -23,9 +23,9 @@ export class VideoService {
     return await (await data.json()).champion_items ?? [];
   };
 
-  async getAllOpponentChampions(): Promise<string[]> {
-    const data = await fetch(`${this.url}/opponent-champions/`);
-    return await (await data.json()).opponent_champion ?? [];
+  async getAllEnemyChampions(): Promise<string[]> {
+    const data = await fetch(`${this.url}/enemy-champions/`);
+    return await (await data.json()).enemy_champion ?? [];
   };
 
   async getAllTeamChampions(): Promise<string[]> {
@@ -33,9 +33,9 @@ export class VideoService {
     return await (await data.json()).team_champions ?? [];
   }
 
-  async getAllOpponentTeamChampions(): Promise<string[]> {
-    const data = await fetch(`${this.url}/opponent-team-champions/`);
-    return await (await data.json()).opponent_team_champions ?? [];
+  async getAllEnemyTeamChampions(): Promise<string[]> {
+    const data = await fetch(`${this.url}/enemy-team-champions/`);
+    return await (await data.json()).enemy_team_champions ?? [];
   }
 
   async getAllVideos(): Promise<Video[]> {
@@ -57,11 +57,11 @@ export class VideoService {
   async fetchInitialData() {
     return Promise.all([
       this.getAllChampions(),
-      this.getAllOpponentChampions(),
+      this.getAllEnemyChampions(),
       this.getAllRunes(),
       this.getAllChampionItems(),
       this.getAllTeamChampions(),
-      this.getAllOpponentTeamChampions(),
+      this.getAllEnemyTeamChampions(),
       this.getAllVideos(),
     ]);
   }
@@ -69,30 +69,30 @@ export class VideoService {
   async filterVideos(
     champion: string,
     lane: string,
-    opponent_champion: string,
+    enemy_champion: string,
     runes: string,
     championItems: string,
     teamChampions: string,
-    opponentTeamChampions: string,
+    enemyTeamChampions: string,
   ): Promise<Video[]> {
     let cleanedLane = lane.replace('Any', '');
     console.log(`filterVideos called with -
     champion: ${champion},
     lane: ${cleanedLane},
-    opponent_champion: ${opponent_champion},
+    enemy_champion: ${enemy_champion},
     items: ${championItems},
     runes: ${runes},
     team_champions: ${teamChampions},
-    opponent_team_champions: ${opponentTeamChampions}`);
+    enemy_team_champions: ${enemyTeamChampions}`);
 
     const response = await fetch(
       `${this.url}/ytvideos/?is_active=true&` +
       `champion=${encodeURIComponent(champion)}` +
       `&lane=${encodeURIComponent(cleanedLane)}` +
-      `&opponent_champion=${encodeURIComponent(opponent_champion)}` +
+      `&enemy_champion=${encodeURIComponent(enemy_champion)}` +
       `&runes=${encodeURIComponent(runes)}` +
       `&team_champions=${encodeURIComponent(teamChampions)}` +
-      `&opponent_team_champions=${encodeURIComponent(opponentTeamChampions)}` +
+      `&enemy_team_champions=${encodeURIComponent(enemyTeamChampions)}` +
       `&champion_items=${encodeURIComponent(championItems)}`
     );
     return await response.json() ?? [];

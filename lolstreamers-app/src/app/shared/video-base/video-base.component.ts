@@ -13,7 +13,7 @@ export abstract class VideoBaseComponent {
   championsList: string[] = []; // Holds the fetched list of champions
   selectedChampion: string[] = []; // Holds the selected champion
 
-  // opponent champions
+  // enemy champions
   enemyChampionsList: string[] = [];
   selectedEnemyChampion: string[] = [];
 
@@ -33,7 +33,7 @@ export abstract class VideoBaseComponent {
   teamChampionsList: string[] = [];
   selectedTeamChampions: string[] = [];
 
-  // opponent team champions
+  // enemy team champions
   enemyTeamChampionsList: string[] = [];
   selectedEnemyTeamChampions: string[] = [];
 
