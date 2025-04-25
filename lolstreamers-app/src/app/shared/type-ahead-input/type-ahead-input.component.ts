@@ -24,9 +24,7 @@ export abstract class TypeAheadInputComponent {
   // Add i.e. a champion to the selected list
   selectItem(item: string): void {
     this.itemsSuggestionList = this.itemsListManager.addItem(item, this.itemInput.value || '');
-    console.log(this.itemsSuggestionList);
     this.selectedItems = this.itemsListManager.selectedItems;
-    console.log(this.selectedItems);
     this.emitEvent();
   }
 
