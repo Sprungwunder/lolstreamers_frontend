@@ -1,6 +1,6 @@
 <section class="streamer-home">
   <section class="search">
-    <form [formGroup]="inputForm" (ngSubmit)="handleSubmit()">
+    <form [formGroup]="inputForm" (ngSubmit)="handleSubmit()" (keydown.enter)="$event.preventDefault()">
       <div class="form-group" *ngIf="hasYoutubeUrl">
         <label for="youtubeUrl">YouTube URL</label>
         <div class="selected-items"></div>

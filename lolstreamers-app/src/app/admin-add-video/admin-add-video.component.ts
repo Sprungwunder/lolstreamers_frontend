@@ -17,7 +17,17 @@ import {VideoCardComponent} from "../video-card/video-card.component";
 @Component({
   selector: 'app-admin-add-video',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ChampionNameInputComponent, EnemyChampionNameInputComponent, EnemyTeamChampionsInputComponent, ItemsInputComponent, RunesInputComponent, TeamChampionsInputComponent, VideoCardComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ChampionNameInputComponent,
+    EnemyChampionNameInputComponent,
+    EnemyTeamChampionsInputComponent,
+    ItemsInputComponent,
+    RunesInputComponent,
+    TeamChampionsInputComponent,
+    VideoCardComponent
+  ],
   templateUrl: '../streamer-home/streamer-home.component.html',
   styleUrls: ['./admin-add-video.component.css'],
 })

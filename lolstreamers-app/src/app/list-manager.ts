@@ -29,12 +29,13 @@ export class ListManager {
   // Adds a champion to the selected list if the max is not exceeded
   selectItem(item: string): void {
     if (
+      !!item &&
       !this.selectedItems.includes(item) &&
       this.selectedItems.length < this.maxItems
     ) {
       this.selectedItems.push(item);
     } else {
-      console.warn('Max champions reached or champion already selected.');
+      console.warn('Max champions reached or champion already selected or nothing to select.');
     }
   }
 
@@ -50,17 +51,6 @@ export class ListManager {
       item => item.toLowerCase().includes(inputValue.toLowerCase()) &&
         !this.selectedItems.includes(item)
     );
-  }
-
-  getAsCommaSeparatedString(): string {
-    return this.selectedItems.join(',');
-  }
-
-  // generic functions to handle the list data
-  updateListFromEvent(event: Event): string[] {
-    const inputElement = event.target as HTMLInputElement;
-    const searchTerm = inputElement.value;
-    return this.updateList(searchTerm);
   }
 
   // generic functions to handle the list data
