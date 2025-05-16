@@ -1,0 +1,23 @@
+/* navigation.component.css */
+.buttons {
+  padding-top: 10px;
+}
+
+.buttons a {
+  display: inline-block;
+  padding: 10px 15px;
+  text-decoration: none; /* Remove underline */
+  color: #ffffff; /* Text color */
+  background-color: #007bff; /* Button background color (blue) */
+  border: 1px solid #007bff; /* Border color matching the background */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 16px; /* Adjust font size */
+  font-family: Arial, sans-serif; /* Set font */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+  cursor: pointer;
+}
+
+.buttons a:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  color: #e6e6e6; /* Slightly lighter text color */
+}

@@ -1,7 +1,9 @@
 <section class="content">
-  <a [routerLink]="['/admin/add']">
-    Add
-  </a>
+  <div class="buttons">
+    <a [routerLink]="['/admin/add']">
+      Add
+    </a>
+  </div>
   <section class="results">
     <h2>Videos which need validation and activation</h2>
     <a *ngFor="let video of videoList" [routerLink]="['/admin/edit', video.id]">
