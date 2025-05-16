@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {lastValueFrom} from 'rxjs';
 
 @Injectable({
@@ -8,7 +8,8 @@ import {lastValueFrom} from 'rxjs';
 export class AuthService {
   private baseUrl: string = "http://localhost:8000/api/token/";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   async login(username: string, password: string): Promise<string> {
     console.log("Logging in...");
@@ -22,7 +23,16 @@ export class AuthService {
     if (!response.token) {
       throw new Error("Failed to obtain token.");
     }
-
+    localStorage.setItem('access_token', response.token);
     return response.token;
   }
+
+  logout() {
+    localStorage.removeItem('access_token');
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('access_token');
+  }
+
 }
