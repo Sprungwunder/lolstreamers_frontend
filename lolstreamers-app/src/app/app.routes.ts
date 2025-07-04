@@ -11,34 +11,34 @@ export const routes: Routes = [
   {
     path: '',
     component: StreamerHomeComponent,
-    title: 'Video Streamers Home'
+    title: 'League of Legends Streamers Home'
   },
   {
     path: 'login',
     component: LoginComponent,
-    title: 'Login'
+    title: 'League of Legens Streamers Login'
   },
   {
     path: 'contact',
     component: ContactComponent,
-    title: 'Contact'
+    title: 'League of Legengs Streamers Contact'
   },
   {
     path: 'admin',
     component: AdminHomeComponent,
-    title: 'Admin Home',
+    title: 'LS Streamers Admin Home',
     canActivate: [authFunctionalGuard],
   },
   {
     path: 'admin/add',
     component: AdminAddVideoComponent,
-    title: 'Admin Add Video',
+    title: 'LS Streamers Admin Add Video',
     canActivate: [authFunctionalGuard],
   },
   {
     path: 'admin/edit/:id',
     component: AdminEditVideoComponent,
-    title: 'Admin Edit Video',
+    title: 'LS Streamers Admin Edit Video',
     canActivate: [authFunctionalGuard],
   }
 ];
