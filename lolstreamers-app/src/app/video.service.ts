@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 export class VideoService {
-  private url = environment.apiUrl;
+  private url = environment.apiUrl + "/streamers";
 
   async getAllChampions(): Promise<string[]> {
     const data = await fetch(`${this.url}/champions/`);

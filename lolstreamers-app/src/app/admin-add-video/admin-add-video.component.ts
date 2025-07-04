@@ -49,10 +49,47 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
     this.submitForm();
   }
 
+  isValidateFormData() {
+    if (this.selectedChampion.length > 1 ||
+      this.selectedEnemyChampion.length > 1 ||
+      this.selectedRunes.length > 6 ||
+      this.selectedItems.length > 6 ||
+      this.selectedTeamChampions.length > 4 ||
+      this.selectedEnemyTeamChampions.length > 4) {
+      alert('Too many selections in one or more fields');
+      return false;
+    }
+    // Validate each array element for suspicious content
+    const allInputs = [
+      ...this.selectedChampion,
+      ...this.selectedEnemyChampion,
+      ...this.selectedRunes,
+      ...this.selectedItems,
+      ...this.selectedTeamChampions,
+      ...this.selectedEnemyTeamChampions
+    ];
+
+    // Check for suspicious content like script tags, SQL injection, etc.
+    const hasSuspiciousContent = allInputs.some(input =>
+      /<script|javascript:|alert\(|SELECT|INSERT|UPDATE|DELETE|DROP|http|xml|;/.test(input)
+    );
+
+    if (hasSuspiciousContent) {
+      alert('Invalid input detected');
+      return false;
+    }
+    return true;
+
+  }
   // Submit the form
   submitForm(): void {
     if (this.inputForm.valid) {
+      if (!this.isValidateFormData()) {
+        return;
+      }
+
       const {youtubeUrl, lane} = this.inputForm.value;
+
       console.log('Submitting:', youtubeUrl);
       console.log('Manager data:',
         this.selectedChampion.join(',') ?? '',

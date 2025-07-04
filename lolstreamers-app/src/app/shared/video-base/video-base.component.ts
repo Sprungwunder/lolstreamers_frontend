@@ -1,6 +1,7 @@
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Video} from "../../video";
 import {VideoService} from "../../video.service";
+import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 
 export abstract class VideoBaseComponent {
@@ -46,10 +47,11 @@ export abstract class VideoBaseComponent {
     championItems: new FormControl(''),
     teamChampions: new FormControl(''),
     enemyTeamChampions: new FormControl(''),
-    youtubeUrl: new FormControl('', [Validators.required, Validators.pattern(/^(https?:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/)]),
+    youtubeUrl: new FormControl('', [Validators.required, youtubeUrlValidator()]),
   });
 
-  constructor(protected videoService: VideoService) {}
+  constructor(protected videoService: VideoService) {
+  }
 
   async initializeData() {
     try {
@@ -62,7 +64,15 @@ export abstract class VideoBaseComponent {
         enemyTeamChampionsList,
         videoList,
       ] = await this.videoService.fetchInitialData();
-      console.log('Fetched initial data:', {championsList, enemyChampionsList: enemyChampionsList, runesList, championItemsList, teamChampionsList, enemyTeamChampionsList: enemyTeamChampionsList, videoList});
+      console.log('Fetched initial data:', {
+        championsList,
+        enemyChampionsList: enemyChampionsList,
+        runesList,
+        championItemsList,
+        teamChampionsList,
+        enemyTeamChampionsList: enemyTeamChampionsList,
+        videoList
+      });
       this.championsList = championsList;
       this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
       this.filteredLanesList = this.lanesList;
@@ -106,3 +116,41 @@ export abstract class VideoBaseComponent {
   abstract handleSubmit(): void; // To be implemented by child classes
 }
 
+
+// YouTube URL validator function
+export function youtubeUrlValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!control.value) {
+      return null; // Let required validator handle empty values
+    }
+
+    // Extract video ID from different YouTube URL formats
+    let videoId: string | null = null;
+
+    // Handle youtube.com/watch?v= format
+    const fullUrlRegex = /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?.*v=([a-zA-Z0-9_-]{11}).*$/;
+    const fullMatch = control.value.match(fullUrlRegex);
+
+    // Handle youtu.be/ format
+    const shortUrlRegex = /^(https?:\/\/)?(www\.)?youtu\.be\/([a-zA-Z0-9_-]{11})(\?.*)?$/;
+    const shortMatch = control.value.match(shortUrlRegex);
+
+    if (fullMatch && fullMatch[3]) {
+      videoId = fullMatch[3];
+    } else if (shortMatch && shortMatch[3]) {
+      videoId = shortMatch[3];
+    }
+
+    // If no valid video ID was extracted, the URL is invalid
+    if (!videoId) {
+      return { invalidYoutubeUrl: true };
+    }
+
+    // Validate the video ID is the correct length
+    if (videoId.length !== 11) {
+      return { invalidYoutubeId: true };
+    }
+
+    return null;
+  };
+}
