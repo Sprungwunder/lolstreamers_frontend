@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Video} from "./video";
-import {AuthService} from "./auth.service";
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -130,12 +130,10 @@ export class VideoService {
     const token = localStorage.getItem('access_token');
     if (!token) {
       try {
-        const token = await this.authService.login('christian', '3rg0PRO!');
-        console.log('Logged in successfully, token:', token);
-        localStorage.setItem('access_token', token);
+        this.router.navigate(['login']);
       } catch (error) {
         console.error('Authentication failed:', error);
-        return {success: false, message: 'Authentication failed'};
+        return {success: false, message: 'You have to login to add a video.'};
       }
     }
 
@@ -166,5 +164,5 @@ export class VideoService {
     }
   }
 
-  constructor(private authService: AuthService) {}
+  constructor(private router: Router) {}
 }
