@@ -24,7 +24,7 @@ export class AuthService {
 
   logout() {
     // Call the logout endpoint to clear the cookie on the server
-    return lastValueFrom(this.http.post(`${this.baseUrl}logout`, {}, {
+    return lastValueFrom(this.http.post(`${this.baseUrl}logout/`, {}, {
       withCredentials: true
     })).then(() => {
       // Clear the login state flag

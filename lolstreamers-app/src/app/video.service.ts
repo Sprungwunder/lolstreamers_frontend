@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Video} from "./video";
-import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -101,7 +100,7 @@ export class VideoService {
 
   async getInactiveVideos(): Promise<Video[]> {
     console.log(`getInactiveVideos`);
-    const data = await fetch(`${this.url}/ytvideos/?is_active=false`);
+    const data = await fetch(`${this.url}/ytvideos/?is_active=false`, {credentials: 'include'});
     return await data.json() ?? [];
   }
 
@@ -109,6 +108,7 @@ export class VideoService {
     console.log(`activateVideoById: ${videoId}`);
     await fetch(`${this.url}/ytvideos/activate/${videoId}/`, {
       method: 'POST',
+      credentials: 'include',
     });
   }
 
@@ -127,24 +127,14 @@ export class VideoService {
     }
     console.log(JSON.stringify(video));
 
-    const token = localStorage.getItem('access_token');
-    if (!token) {
-      try {
-        this.router.navigate(['login']);
-      } catch (error) {
-        console.error('Authentication failed:', error);
-        return {success: false, message: 'You have to login to add a video.'};
-      }
-    }
-
     try {
       const response = await fetch(`${this.url}/ytvideos/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Token ${token}`
         },
-        body: JSON.stringify(video)
+        body: JSON.stringify(video),
+        credentials: 'include',
       });
 
       if (response.ok) {
@@ -164,5 +154,5 @@ export class VideoService {
     }
   }
 
-  constructor(private router: Router) {}
+  constructor() {}
 }
