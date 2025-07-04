@@ -81,6 +81,13 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
     return true;
 
   }
+
+  private sanitizeInput(input: string): string {
+    // Remove potentially dangerous characters
+    return input.replace(/[<>'"]/g, '');
+  }
+
+
   // Submit the form
   submitForm(): void {
     if (this.inputForm.valid) {
@@ -100,23 +107,31 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
         this.selectedTeamChampions.join(',') ?? '',
         this.selectedEnemyTeamChampions.join(',') ?? '',
       );
-      const selectedChampions = this.selectedChampion.join(',') ?? '';
-      const selectedEnemyChampion = this.selectedEnemyChampion.join(',') ?? '';
-      const selectedRunes = this.selectedRunes;
-      const selectedItems = this.selectedItems;
-      const selectedTeamChampions = this.selectedTeamChampions;
-      const selectedEnemyTeamChampions = this.selectedEnemyTeamChampions;
+
+      // Sanitize all inputs
+      const selectedChampions = this.sanitizeInput(this.selectedChampion.join(',') || '');
+      const selectedEnemyChampion = this.sanitizeInput(this.selectedEnemyChampion.join(',') || '');
+      const selectedRunes = this.selectedRunes.map(c => this.sanitizeInput(c));
+      const selectedItems = this.selectedItems.map(c => this.sanitizeInput(c));
+      const selectedTeamChampions = this.selectedTeamChampions.map(c => this.sanitizeInput(c));
+      const selectedEnemyTeamChampions = this.selectedEnemyTeamChampions.map(c => this.sanitizeInput(c));
+      const sanitizedUrl = this.sanitizeInput(youtubeUrl || '');
+      const sanitizedLane = this.sanitizeInput(lane || '');
+
+      console.log('Sanitized data:',
+        sanitizedLane, sanitizedUrl);
 
       this.videoService.addVideo({
-        youtubeUrl,
-        selectedChampions,
-        selectedEnemyChampion,
-        lane,
-        selectedRunes,
-        selectedItems,
-        selectedTeamChampions,
-        selectedEnemyTeamChampions
-      }).then(response => {
+          youtubeUrl: sanitizedUrl,
+          selectedChampions: selectedChampions,
+          selectedEnemyChampion: selectedEnemyChampion,
+          lane: sanitizedLane,
+          selectedRunes: selectedRunes,
+          selectedItems: selectedItems,
+          selectedTeamChampions: selectedTeamChampions,
+          selectedEnemyTeamChampions: selectedEnemyTeamChampions
+        }
+      ).then(response => {
         if (response.success) {
           alert(response.message);
           this.router.navigate(['/admin']);
