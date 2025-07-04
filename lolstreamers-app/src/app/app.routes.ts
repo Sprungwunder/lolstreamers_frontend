@@ -5,6 +5,7 @@ import {AdminHomeComponent} from "./admin-home/admin-home.component";
 import {AdminAddVideoComponent} from "./admin-add-video/admin-add-video.component";
 import {AdminEditVideoComponent} from "./admin-edit-video/admin-edit-video.component";
 import {LoginComponent} from "./login/login.component";
+import {ContactComponent} from "./contact/contact.component";
 
 export const routes: Routes = [
   {
@@ -16,6 +17,11 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     title: 'Login'
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
+    title: 'Contact'
   },
   {
     path: 'admin',
