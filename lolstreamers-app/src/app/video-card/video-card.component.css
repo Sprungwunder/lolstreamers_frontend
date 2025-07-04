@@ -1,46 +1,108 @@
 .video-card {
   width: 100%;
   max-width: 1250px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  margin: 10px;
-  background: #fff;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  background: var(--lol-blue);
+  border: 1px solid var(--lol-gold);
+  border-radius: 0;
+  padding: 20px;
+  margin: 0;
+  box-shadow: 0 5px 15px rgba(9, 20, 40, 0.8);
   position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--lol-gold), transparent);
+}
+
+.video-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(3, 151, 171, 0.4);
 }
 
 .video-title {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  color: var(--lol-gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.video-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  right: 25%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--lol-gold), transparent);
 }
 
 .video-content {
   display: flex;
   align-items: flex-start;
   position: relative;
+  gap: 20px;
 }
 
 .video-thumbnail {
   width: 320px;
   height: 180px;
-  border-radius: 5px;
+  border: 2px solid var(--lol-gold);
+  border-radius: 0;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease;
 }
 
 .video-thumbnail:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(200, 155, 60, 0.4);
 }
 
 .video-details {
-  position: relative;
-  right: 0;
-  top: 0;
+  flex: 1;
   text-align: left;
-  margin-left: 10px;
+  color: var(--lol-gold-light);
 }
 
 .video-details p {
-  margin: 2px 0;
+  margin: 8px 0;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(200, 155, 60, 0.2);
+}
+
+.video-details strong {
+  color: var(--lol-gold);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  margin-right: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .video-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .video-thumbnail {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    margin-bottom: 15px;
+  }
+
+  .video-details {
+    width: 100%;
+  }
 }

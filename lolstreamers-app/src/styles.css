@@ -1,90 +1,157 @@
-/* You can add global styles to this file, and also import other style files */
+
+/* League of Legends Theme Styling - Root Variables */
+:root {
+  --lol-blue-dark: #091428;
+  --lol-blue: #0A1428;
+  --lol-blue-light: #0A323C;
+  --lol-blue-accent: #0397AB;
+  --lol-gold: #C89B3C;
+  --lol-gold-light: #F0E6D2;
+  --lol-grey: #5B5A56;
+  --lol-grey-dark: #3C3C41;
+  --lol-red: #CF2847;
+  --lol-green: #1E8B30;
+}
+
+/* Global Styles */
+body {
+  background-color: var(--lol-blue-dark);
+  color: var(--lol-gold-light);
+  font-family: 'Beaufort for LOL', 'Spiegel', 'Helvetica Neue', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 /* Parent Container (Stream Home) */
 section.streamer-home {
   display: flex;
-  flex-direction: column; /* Stack elements vertically */
-  align-items: center;    /* Center align horizontally */
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  gap: 20px; /* Add spacing between search form and results */
+  gap: 20px;
+  background-image: url('assets/lol-background.png');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  min-height: 100vh;
+  padding: 20px 0;
 }
 
 /* Search Form Section */
 section.search {
   margin: 20px auto;
   padding: 20px;
-  max-width: 1300px; /* Explicitly set width to match results */
-  width: 100%; /* Ensure full width container */
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 1300px;
+  width: 100%;
+  background: rgba(10, 20, 40, 0.9);
+  border-radius: 0;
+  box-shadow: 0 0 15px rgba(200, 155, 60, 0.5);
+  border: 1px solid var(--lol-gold);
+  position: relative;
+}
+
+section.search::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--lol-gold), transparent, var(--lol-gold));
+  z-index: -1;
+  border-radius: 2px;
+  opacity: 0.3;
 }
 
 /* Form Layout */
 form {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Allow flexibility in smaller screens */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
-  max-width: 1300px; /* Enforce same max width as the parent */
-  margin: 0 auto; /* Center form grid horizontally */
-  width: 100%; /* Use entire width of its container */
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* Results (Cards) Section */
 section.results {
   display: grid;
-  grid-template-columns: 1fr; /* Adjusts to smaller widths */
-  gap: 20px; /* Spacing between cards */
-  max-width: 1300px; /* Set maximum width for cards */
-  width: 100%; /* Full-width till max-width */
+  grid-template-columns: 1fr;
+  gap: 30px;
+  max-width: 1300px;
+  width: 100%;
   padding: 20px;
-  justify-content: center; /* Center align grid within container */
+  justify-content: center;
 }
 
 /* Individual Card Styling */
 .card {
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Prevent content overflow */
-  min-width: 300px; /* Minimum content width */
-  max-width: 100%; /* Allow shrinking on smaller screens */
-  height: auto; /* Dynamic height */
-  display: flex; /* Flexible layout */
-  flex-direction: column; /* Stack card content vertically */
+  background: var(--lol-blue);
+  border: 1px solid var(--lol-gold);
+  border-radius: 0;
+  box-shadow: 0 5px 15px rgba(9, 20, 40, 0.8);
+  overflow: hidden;
+  min-width: 300px;
+  max-width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--lol-gold), transparent);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(3, 151, 171, 0.4);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 600px) {
   .card {
-    margin-bottom: 20px; /* Add spacing between stacked cards */
+    margin-bottom: 20px;
   }
 }
-
 
 /* Labels and Inputs Styling */
 label {
   display: block;
   font-weight: bold;
-  margin-bottom: 5px;
-  color: #333;
+  margin-bottom: 8px;
+  color: var(--lol-gold);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
 }
 
 input,
 select {
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin-top: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  background-color: rgba(9, 20, 40, 0.7);
+  border: 1px solid var(--lol-grey);
+  border-radius: 0;
   box-sizing: border-box;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  color: var(--lol-gold-light);
 }
 
 input:focus,
 select:focus {
-  border-color: #4caf50;
+  border-color: var(--lol-blue-accent);
   outline: none;
+  box-shadow: 0 0 8px rgba(3, 151, 171, 0.5);
 }
 
 /* DataLists and Suggestions */
@@ -100,79 +167,138 @@ datalist {
 }
 
 .item-tag {
-  background: #e0e0e0;
-  padding: 5px 10px;
-  border-radius: 20px;
+  background: var(--lol-blue-light);
+  padding: 5px 12px;
+  border-radius: 0;
   display: flex;
   align-items: center;
   font-size: 0.9rem;
+  color: var(--lol-gold-light);
+  border-left: 2px solid var(--lol-gold);
 }
 
 .item-tag button {
   background: none;
   border: none;
-  color: #888;
+  color: var(--lol-gold);
   font-size: 1.2rem;
   margin-left: 8px;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .item-tag button:hover {
-  color: #333;
+  color: var(--lol-red);
 }
-
 
 /* Suggestions */
 ul.suggestions {
   list-style: none;
   padding: 0;
   margin: 10px 0 0 0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid var(--lol-grey);
+  border-radius: 0;
   max-height: 150px;
   overflow-y: auto;
+  background-color: var(--lol-blue);
+  scrollbar-width: thin;
+  scrollbar-color: var(--lol-gold) var(--lol-blue-dark);
+}
+
+ul.suggestions::-webkit-scrollbar {
+  width: 8px;
+}
+
+ul.suggestions::-webkit-scrollbar-track {
+  background: var(--lol-blue-dark);
+}
+
+ul.suggestions::-webkit-scrollbar-thumb {
+  background-color: var(--lol-gold);
 }
 
 ul.suggestions li {
-  padding: 10px;
+  padding: 10px 15px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-bottom: 1px solid rgba(240, 230, 210, 0.1);
 }
 
 ul.suggestions li:hover {
-  background-color: #f0f0f0;
+  background-color: var(--lol-blue-light);
+  color: var(--lol-gold);
 }
 
 /* Buttons */
 button.primary {
-  padding: 10px 20px;
-  background: #4caf50;
-  color: #fff;
+  padding: 12px 24px;
+  background: linear-gradient(to bottom, var(--lol-gold), #A17A2C);
+  color: var(--lol-blue-dark);
   border: none;
-  border-radius: 4px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  font-size: 0.9rem;
 }
 
 button.primary:hover {
-  background: #45a049;
+  background: linear-gradient(to bottom, #D6AF6D, var(--lol-gold));
+  box-shadow: 0 0 10px rgba(200, 155, 60, 0.6);
+}
+
+button.primary:active {
+  transform: scale(0.98);
 }
 
 .lane-selection div {
-  display: flex; /* Use flexbox to arrange elements horizontally */
-  align-items: center; /* Align items vertically to the center */
-  width: 100%; /* Ensure the container takes the full row */
-  margin: 5px 0; /* Add vertical spacing between each option */
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 8px 0;
+  padding: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.lane-selection div:hover {
+  background-color: var(--lol-blue-light);
 }
 
 .lane-selection input[type="radio"] {
-  flex-shrink: 0; /* Prevent the radio button from shrinking */
-  width: 20px; /* Fixed width for the radio button container */
+  flex-shrink: 0;
+  width: 20px;
   margin: 5px;
+  accent-color: var(--lol-gold);
 }
 
 .lane-selection label {
-  flex-grow: 1; /* Allow the label to fill the remaining space */
-  margin: 5px; /* Optional: Space between the radio button and the label */
-  text-align: left; /* Ensure text is aligned to the left */
+  flex-grow: 1;
+  margin: 5px;
+  text-align: left;
+  text-transform: none;
+  font-size: 1rem;
+  letter-spacing: normal;
+}
+
+/* Add custom heading styles */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--lol-gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+h1::after, h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--lol-gold), transparent);
 }
