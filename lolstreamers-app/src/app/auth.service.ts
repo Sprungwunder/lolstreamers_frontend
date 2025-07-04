@@ -1,38 +1,43 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {lastValueFrom} from 'rxjs';
+import {lastValueFrom} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private baseUrl: string = "http://localhost:8000/api/token/";
+  private loggedInKey: string = 'user_logged_in';
+
 
   constructor(private http: HttpClient) {
   }
 
-  async login(username: string, password: string): Promise<string> {
+  async login(username: string, password: string) {
     console.log("Logging in...");
-    const response = await lastValueFrom(
-      this.http.post<{ token: string }>(this.baseUrl, {
-        username,
-        password,
-      })
-    );
-
-    if (!response.token) {
-      throw new Error("Failed to obtain token.");
-    }
-    localStorage.setItem('access_token', response.token);
-    return response.token;
+    const response =await lastValueFrom(this.http.post(this.baseUrl, { username, password }, {
+      withCredentials: true  // Important! This allows cookies to be sent/received
+    }));
+    sessionStorage.setItem(this.loggedInKey, 'true');
+    return response;
   }
 
   logout() {
-    localStorage.removeItem('access_token');
+    // Call the logout endpoint to clear the cookie on the server
+    return lastValueFrom(this.http.post(`${this.baseUrl}logout`, {}, {
+      withCredentials: true
+    })).then(() => {
+      // Clear the login state flag
+      sessionStorage.removeItem(this.loggedInKey);
+    }).catch(error => {
+      console.error('Logout error:', error);
+      // Even if the server call fails, clear the local login state
+      sessionStorage.removeItem(this.loggedInKey);
+    });
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('access_token');
+    return sessionStorage.getItem(this.loggedInKey) === 'true';
   }
 
 }

@@ -21,8 +21,7 @@ export class LoginComponent {
 
   async onSubmit() {
     try {
-      const token = await this.authService.login(this.username, this.password);
-      localStorage.setItem('token', token); // Store token for authentication
+      await this.authService.login(this.username, this.password);
       this.router.navigate(['']); // Redirect to home or another page after login
     } catch (error) {
       this.errorMessage = 'Invalid username or password';
