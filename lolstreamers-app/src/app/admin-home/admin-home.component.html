@@ -1,13 +1,15 @@
-<section class="content">
-  <div class="buttons">
-    <a [routerLink]="['/admin/add']">
-      Add
-    </a>
-  </div>
-  <section class="results">
-    <h2>Videos which need validation and activation</h2>
-    <a *ngFor="let video of videoList" [routerLink]="['/admin/edit', video.id]">
-      <app-video-card [video]="video"></app-video-card>
-    </a>
+<div class="admin-page">
+  <section class="content">
+    <div class="buttons">
+      <a [routerLink]="['/admin/add']">
+        Add New Video
+      </a>
+    </div>
+    <section class="results">
+      <h2>Videos which need validation and activation</h2>
+      <a *ngFor="let video of videoList" [routerLink]="['/admin/edit', video.id]">
+        <app-video-card [video]="video"></app-video-card>
+      </a>
+    </section>
   </section>
-</section>
+</div>

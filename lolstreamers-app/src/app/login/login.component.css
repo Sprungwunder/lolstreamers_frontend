@@ -1,0 +1,85 @@
+.login-page {
+  background-image: url('../../assets/lol-background.png');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.login-container {
+  max-width: 400px;
+  width: 100%;
+  padding: 30px;
+  background: rgba(10, 20, 40, 0.9);
+  border: 1px solid var(--lol-gold);
+  box-shadow: 0 0 15px rgba(200, 155, 60, 0.5);
+  position: relative;
+}
+
+.login-container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--lol-gold), transparent, var(--lol-gold));
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.login-container h2 {
+  text-align: left; /* Left align the heading */
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: var(--lol-gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.login-container h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, var(--lol-gold), transparent);
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-container div {
+  margin-bottom: 15px;
+}
+
+.login-container button {
+  padding: 12px 24px;
+  background: linear-gradient(to bottom, var(--lol-gold), #A17A2C);
+  color: var(--lol-blue-dark);
+  border: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  align-self: flex-start; /* Align button to the left */
+}
+
+.login-container button:hover {
+  background: linear-gradient(to bottom, #D6AF6D, var(--lol-gold));
+  box-shadow: 0 0 10px rgba(200, 155, 60, 0.6);
+}
+
+.login-container button:active {
+  transform: scale(0.98);
+}

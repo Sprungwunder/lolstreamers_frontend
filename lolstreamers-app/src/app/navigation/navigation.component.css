@@ -3,6 +3,10 @@ nav {
   display: flex;
   gap: 15px; /* Space between buttons */
   padding: 15px 0;
+  justify-content: center; /* Center the navigation buttons */
+  width: 100%;
+  max-width: 1300px; /* Match the max-width of the search section */
+  margin: 0 auto 20px; /* Add bottom margin for spacing */
 }
 
 nav a {
@@ -20,6 +24,8 @@ nav a {
   position: relative;
   font-size: 0.9rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  min-width: 100px; /* Ensure buttons have consistent width */
+  text-align: center; /* Center text in buttons */
 }
 
 nav a::before {
@@ -47,4 +53,16 @@ nav a:hover::before {
 
 nav a:active {
   transform: scale(0.98) translateY(0);
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  nav {
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    flex: 1 0 auto;
+    min-width: 80px;
+  }
 }
