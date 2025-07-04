@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Video} from "./video";
+import { environment } from '../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class VideoService {
-  url = 'http://localhost:8000/streamers';
+  private url = environment.apiUrl;
 
   async getAllChampions(): Promise<string[]> {
     const data = await fetch(`${this.url}/champions/`);

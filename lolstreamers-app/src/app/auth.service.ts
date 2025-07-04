@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {lastValueFrom} from "rxjs";
+import {environment} from "../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl: string = "http://localhost:8000/api/token/";
+  private baseUrl: string = environment.apiUrl + "/api/token/";
   private loggedInKey: string = 'user_logged_in';
 
 
@@ -15,7 +16,7 @@ export class AuthService {
 
   async login(username: string, password: string) {
     console.log("Logging in...");
-    const response =await lastValueFrom(this.http.post(this.baseUrl, { username, password }, {
+    const response = await lastValueFrom(this.http.post(this.baseUrl, {username, password}, {
       withCredentials: true  // Important! This allows cookies to be sent/received
     }));
     sessionStorage.setItem(this.loggedInKey, 'true');
