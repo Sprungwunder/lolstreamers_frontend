@@ -34,9 +34,6 @@ export class AdminEditVideoComponent {
         this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
           "https://www.youtube.com/embed/" + this.video.ytid + "?start=" + this.video.timestamp
         );
-        console.log(
-          "Video URL: " + this.safeSrc
-        );
       }
     });
 

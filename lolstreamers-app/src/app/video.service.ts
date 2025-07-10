@@ -40,13 +40,11 @@ export class VideoService {
   }
 
   async getAllVideos(): Promise<Video[]> {
-    console.log(`getAllVideos`);
     const data = await fetch(this.url + '/ytvideos/?is_active=true');
     return await data.json() ?? [];
   }
 
   async getVideoById(id: string): Promise<Video | undefined> {
-    console.log(`getVideoById: ${id}`);
     const data = await fetch(`${this.url}/ytvideos/${id}`);
     if (data.status !== 200) {
       return undefined;
@@ -77,6 +75,7 @@ export class VideoService {
     enemyTeamChampions: string,
   ): Promise<Video[]> {
     let cleanedLane = lane.replace('Any', '');
+    /*
     console.log(`filterVideos called with -
     champion: ${champion},
     lane: ${cleanedLane},
@@ -85,6 +84,7 @@ export class VideoService {
     runes: ${runes},
     team_champions: ${teamChampions},
     enemy_team_champions: ${enemyTeamChampions}`);
+     */
 
     const response = await fetch(
       `${this.url}/ytvideos/?is_active=true&` +
@@ -100,7 +100,6 @@ export class VideoService {
   }
 
   async getInactiveVideos(): Promise<Video[]> {
-    console.log(`getInactiveVideos`);
     const data = await fetch(`${this.url}/ytvideos/?is_active=false`, {credentials: 'include'});
     return await data.json() ?? [];
   }
@@ -114,7 +113,6 @@ export class VideoService {
   }
 
   async addVideo(videoData: any): Promise<{ success: boolean; message: string }> {
-    console.log(`addVideo`);
     const video = {
       video_url: videoData['youtubeUrl'],
       champion: videoData['selectedChampions'],
@@ -126,7 +124,7 @@ export class VideoService {
       enemy_team_champions: videoData['selectedEnemyTeamChampions'],
       lol_version: '15',
     }
-    console.log(JSON.stringify(video));
+    //console.log(JSON.stringify(video));
 
     try {
       const response = await fetch(`${this.url}/ytvideos/`, {

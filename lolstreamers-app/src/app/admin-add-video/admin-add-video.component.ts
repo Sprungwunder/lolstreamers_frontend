@@ -97,6 +97,7 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
 
       const {youtubeUrl, lane} = this.inputForm.value;
 
+      /*
       console.log('Submitting:', youtubeUrl);
       console.log('Manager data:',
         this.selectedChampion.join(',') ?? '',
@@ -107,6 +108,7 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
         this.selectedTeamChampions.join(',') ?? '',
         this.selectedEnemyTeamChampions.join(',') ?? '',
       );
+      */
 
       // Sanitize all inputs
       const selectedChampions = this.sanitizeInput(this.selectedChampion.join(',') || '');
@@ -117,9 +119,6 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
       const selectedEnemyTeamChampions = this.selectedEnemyTeamChampions.map(c => this.sanitizeInput(c));
       const sanitizedUrl = this.sanitizeInput(youtubeUrl || '');
       const sanitizedLane = this.sanitizeInput(lane || '');
-
-      console.log('Sanitized data:',
-        sanitizedLane, sanitizedUrl);
 
       this.videoService.addVideo({
           youtubeUrl: sanitizedUrl,

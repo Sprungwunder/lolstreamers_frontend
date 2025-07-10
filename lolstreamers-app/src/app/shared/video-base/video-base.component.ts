@@ -64,7 +64,7 @@ export abstract class VideoBaseComponent {
         enemyTeamChampionsList,
         videoList,
       ] = await this.videoService.fetchInitialData();
-      console.log('Fetched initial data:', {
+      /*console.log('Fetched initial data:', {
         championsList,
         enemyChampionsList: enemyChampionsList,
         runesList,
@@ -72,7 +72,7 @@ export abstract class VideoBaseComponent {
         teamChampionsList,
         enemyTeamChampionsList: enemyTeamChampionsList,
         videoList
-      });
+      }); */
       this.championsList = championsList;
       this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
       this.filteredLanesList = this.lanesList;
