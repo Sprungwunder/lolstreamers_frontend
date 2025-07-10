@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  angular-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - web-app-network
+    # Optional: add environment variables to configure the API URL
+    environment:
+      - API_URL=http://django-api:8000
+
+
+networks:
+  web-app-network:
+    # This makes the network external so it can be shared with your Django app
+    external: true
+    # or you can create it here and then connect Django to it
+    # driver: bridge
