@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, SecurityContext} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {VideoService} from '../video.service';
@@ -13,6 +13,7 @@ import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
 import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-champions-input.component";
 import {VideoCardComponent} from "../video-card/video-card.component";
 import {Router} from "@angular/router";
+import {DomSanitizer} from "@angular/platform-browser";
 
 
 @Component({
@@ -37,7 +38,8 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
   buttonText = "Submit"
   private router = inject(Router);
 
-  constructor(protected override videoService: VideoService) {
+  constructor(protected override videoService: VideoService, private sanitizer: DomSanitizer
+  ) {
     super(videoService);
   }
 
@@ -69,15 +71,21 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
       ...this.selectedEnemyTeamChampions
     ];
 
-    // Check for suspicious content like script tags, SQL injection, etc.
-    const hasSuspiciousContent = allInputs.some(input =>
-      /<script|javascript:|alert\(|SELECT|INSERT|UPDATE|DELETE|DROP|http|xml|;/.test(input)
-    );
+    // Check that each input remains unchanged after sanitization
+    for (const input of allInputs) {
+      const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, input);
+      if (sanitized !== input) {
+        alert('Invalid input detected');
+        return false;
+      }
 
-    if (hasSuspiciousContent) {
-      alert('Invalid input detected');
-      return false;
+      // Additional validation for strictly alphanumeric content with specific allowed characters
+      if (!/^[a-zA-Z0-9\s\-_.,:']+$/.test(input)) {
+        alert('Input contains invalid characters');
+        return false;
+      }
     }
+
     return true;
 
   }
@@ -90,11 +98,7 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
 
   // Submit the form
   submitForm(): void {
-    if (this.inputForm.valid) {
-      if (!this.isValidateFormData()) {
-        return;
-      }
-
+    if (this.inputForm.valid && this.isValidateFormData()) {
       const {youtubeUrl, lane} = this.inputForm.value;
 
       /*
