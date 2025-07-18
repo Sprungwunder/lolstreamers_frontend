@@ -4,7 +4,7 @@ WORKDIR /app
 COPY lolstreamers-app/package*.json ./
 RUN npm ci
 COPY lolstreamers-app/ ./
-RUN npm run build:prod
+RUN npm run build:prod -- --base-href=/lolstreamers/
 
 # Production stage
 FROM nginx:alpine

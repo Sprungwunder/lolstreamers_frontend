@@ -1,17 +1,15 @@
-version: '3.8'
-
 services:
   angular-app:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "8081:80"
     networks:
       - web-app-network
     # Optional: add environment variables to configure the API URL
     environment:
-      - API_URL=http://django-api:8000
+      - API_URL=http://localhost:8000
 
 
 networks:
