@@ -45,17 +45,28 @@ export class AdminEditVideoComponent {
       return;
     }
 
-    // Assuming the video service method to be `activateVideoById`
     this.videoService.activateVideoById(this.video.id)
-      .then(() => {
-        console.log('Video activation request sent successfully!');
-        alert('Video activated successfully!');
-        this.router.navigate(['/adm']);
+      .then((result) => {
+        if (result.success) {
+          console.log('Video activation request sent successfully!');
+          alert('Video activated successfully!');
+          this.router.navigate(['/adm']);
+        } else {
+          console.error('Error activating video:', result.message);
+          if (result.message.includes('Authentication required')) {
+            // If it's an authentication error, redirect to login
+            alert('Your session has expired. Please log in again.');
+            this.router.navigate(['/login']);
+          } else {
+            alert(`Failed to activate video: ${result.message}`);
+          }
+        }
       })
       .catch((error) => {
-        console.error('Error activating video:', error);
-        alert('Failed to activate video. Please try again later.');
+        console.error('Unexpected error activating video:', error);
+        alert('An unexpected error occurred. Please try again later.');
       });
+
   }
 
 }

@@ -106,10 +106,25 @@ export class VideoService {
 
   async activateVideoById(videoId: string) {
     console.log(`activateVideoById: ${videoId}`);
-    await fetch(`${this.url}/ytvideos/activate/${videoId}/`, {
-      method: 'POST',
-      credentials: 'include',
-    });
+    try {
+      const response = await fetch(`${this.url}/ytvideos/activate/${videoId}/`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        return { success: true, message: 'Video activated successfully' };
+      } else if (response.status === 401) {
+        console.error('Authentication error: User not authenticated');
+        // You might want to redirect to login or handle this in your component
+        return { success: false, message: 'Authentication required. Please log in again.' };
+      } else {
+        return { success: false, message: `Error: ${response.status} - ${response.statusText}` };
+      }
+    } catch (error) {
+      console.error('Error activating video:', error);
+      return { success: false, message: 'Network or server error occurred' };
+    }
   }
 
   async addVideo(videoData: any): Promise<{ success: boolean; message: string }> {
