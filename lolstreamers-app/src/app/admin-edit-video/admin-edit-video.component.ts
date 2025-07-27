@@ -50,7 +50,7 @@ export class AdminEditVideoComponent {
       .then(() => {
         console.log('Video activation request sent successfully!');
         alert('Video activated successfully!');
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/adm']);
       })
       .catch((error) => {
         console.error('Error activating video:', error);

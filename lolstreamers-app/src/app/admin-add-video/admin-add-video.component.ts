@@ -137,7 +137,7 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
       ).then(response => {
         if (response.success) {
           alert(response.message);
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/adm']);
         } else {
           alert(response.message);
         }

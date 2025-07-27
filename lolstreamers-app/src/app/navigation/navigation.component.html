@@ -1,6 +1,6 @@
 <nav>
   <a [routerLink]="['/']">Home</a>
   <a [routerLink]="['/contact']">Contact</a>
-  <a [routerLink]="['/admin']" *ngIf="authService.isLoggedIn()">Admin</a>
+  <a [routerLink]="['/adm']" *ngIf="authService.isLoggedIn()">Admin</a>
   <a href="#" (click)="logout()" *ngIf="authService.isLoggedIn()">Logout</a>
 </nav>

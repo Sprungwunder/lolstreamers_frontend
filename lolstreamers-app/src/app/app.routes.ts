@@ -11,34 +11,34 @@ export const routes: Routes = [
   {
     path: '',
     component: StreamerHomeComponent,
-    title: 'League of Legends Streamers Home'
+    title: 'Search The Rift Home'
   },
   {
     path: 'login',
     component: LoginComponent,
-    title: 'League of Legens Streamers Login'
+    title: 'Search The Rift Login'
   },
   {
     path: 'contact',
     component: ContactComponent,
-    title: 'League of Legengs Streamers Contact'
+    title: 'Search The Rift Contact'
   },
   {
-    path: 'admin',
+    path: 'adm',
     component: AdminHomeComponent,
-    title: 'LS Streamers Admin Home',
+    title: 'Search The Rift Admin Home',
     canActivate: [authFunctionalGuard],
   },
   {
-    path: 'admin/add',
+    path: 'adm/add',
     component: AdminAddVideoComponent,
-    title: 'LS Streamers Admin Add Video',
+    title: 'Search The Rift Admin Add Video',
     canActivate: [authFunctionalGuard],
   },
   {
-    path: 'admin/edit/:id',
+    path: 'adm/edit/:id',
     component: AdminEditVideoComponent,
-    title: 'LS Streamers Admin Edit Video',
+    title: 'Search The Rift Admin Edit Video',
     canActivate: [authFunctionalGuard],
   }
 ];
