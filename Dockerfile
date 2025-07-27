@@ -6,7 +6,7 @@ RUN npm ci
 COPY lolstreamers-app/ ./
 
 # Build the app
-RUN npm run build:prod -- --base-href=/lolstreamers/
+RUN npm run build:prod -- --base-href=/
 
 # Production stage
 FROM nginx:alpine
