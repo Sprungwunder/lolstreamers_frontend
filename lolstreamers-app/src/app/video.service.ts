@@ -45,7 +45,7 @@ export class VideoService {
   }
 
   async getVideoById(id: string): Promise<Video | undefined> {
-    const data = await fetch(`${this.url}/ytvideos/${id}`);
+    const data = await fetch(`${this.url}/ytvideos/${id}/`);
     if (data.status !== 200) {
       return undefined;
     }
