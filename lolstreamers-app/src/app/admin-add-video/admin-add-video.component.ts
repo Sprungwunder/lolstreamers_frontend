@@ -92,7 +92,7 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
 
   private sanitizeInput(input: string): string {
     // Remove potentially dangerous characters
-    return input.replace(/[<>'"]/g, '');
+    return input.replace(/[<>"]/g, '');
   }
 
 
