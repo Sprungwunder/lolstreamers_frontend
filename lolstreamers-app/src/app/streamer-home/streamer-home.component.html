@@ -72,7 +72,7 @@
         (enemyTeamChampionsChange)="handleEnemyTeamChampionsChange($event)">
       </app-enemy-team-champions-input>
 
-      <button type="submit" class="primary">{{ buttonText }}</button>
+      <button type="button" class="primary" (click)="handleSubmit()">{{ buttonText }}</button>
     </form>
   </section>
   <section class="results" *ngIf="!isAdmin">
