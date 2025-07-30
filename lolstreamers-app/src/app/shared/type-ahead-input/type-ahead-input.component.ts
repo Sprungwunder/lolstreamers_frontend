@@ -25,6 +25,7 @@ export abstract class TypeAheadInputComponent {
   selectItem(item: string): void {
     this.itemsSuggestionList = this.itemsListManager.addItem(item, this.itemInput.value || '');
     this.selectedItems = this.itemsListManager.selectedItems;
+    this.itemInput.setValue(''); // Clear the input field after selection
     this.emitEvent();
   }
 
