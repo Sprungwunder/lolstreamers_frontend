@@ -11,8 +11,9 @@ import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.comp
   styleUrls: ['./champion-name-input.component.css']
 })
 export class ChampionNameInputComponent extends TypeAheadInputComponent {
-  @Input() placeholder: string = 'Type to search champions...';  // Placeholder for input
-  @Input() championsList: string[] = [];                         // List of all champions
+  @Input() placeholder: string = 'Type to filter champion names...';  // Placeholder for input
+  @Input() championsList: string[] = [];
+  @Input() isAdmin: boolean = false;
 
   @Output() championsChange = new EventEmitter<string[]>();      // Notify parent about selection changes
 

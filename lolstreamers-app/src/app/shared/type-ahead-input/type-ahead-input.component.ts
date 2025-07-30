@@ -34,12 +34,4 @@ export abstract class TypeAheadInputComponent {
     this.selectedItems = this.itemsListManager.selectedItems;
     this.emitEvent();
   }
-
-  addNewItem(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const newItem = input.value.trim();
-    this.itemsSuggestionList = this.itemsListManager.addItem(newItem, '');
-    this.selectedItems = this.itemsListManager.selectedItems;
-    this.emitEvent();
-  }
 }

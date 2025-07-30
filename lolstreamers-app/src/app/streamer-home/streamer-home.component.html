@@ -1,8 +1,8 @@
 <section class="streamer-home">
   <section class="search">
     <form [formGroup]="inputForm" (ngSubmit)="handleSubmit()" (keydown.enter)="$event.preventDefault()">
-      <div class="form-group" *ngIf="hasYoutubeUrl">
-        <label for="youtubeUrl">YouTube URL</label>
+      <div class="form-group" *ngIf="isAdmin">
+        <label for="youtubeUrl">YouTube URL*</label>
         <div class="selected-items"></div>
         <input
           id="youtubeUrl"
@@ -20,18 +20,20 @@
       <!-- Champion Name -->
       <app-champion-name-input
         [championsList]="championsList"
+        [isAdmin]="isAdmin"
         (championsChange)="handleChampionChange($event)">
       </app-champion-name-input>
 
       <!-- Enemy Champion Name -->
       <app-enemy-champion-name-input
         [enemyChampionsList]="enemyChampionsList"
+        [isAdmin]="isAdmin"
         (enemyChampionsChange)="handleEnemyChampionChange($event)">
       </app-enemy-champion-name-input>
 
       <!-- Lane Search -->
       <div>
-        <label>Select Lane:</label>
+        <label>Select Lane<span *ngIf="isAdmin">*</span></label>
         <div class="lane-selection">
           <div *ngFor="let lane of lanesList" class="lane-option">
             <input
@@ -73,7 +75,7 @@
       <button type="submit" class="primary">{{ buttonText }}</button>
     </form>
   </section>
-  <section class="results" *ngIf="!hasYoutubeUrl">
+  <section class="results" *ngIf="!isAdmin">
     <app-video-card
       *ngFor="let video of filteredVideoList"
       [video]="video"

@@ -11,7 +11,7 @@ import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.comp
   styleUrls: ['./items-input.component.css']
 })
 export class ItemsInputComponent extends TypeAheadInputComponent {
-  @Input() placeholder: string = 'Type to search for items...';  // Placeholder for input
+  @Input() placeholder: string = 'Type to filter for legendary items...';  // Placeholder for input
   @Input() itemsList: string[] = [];                         // List of all items
 
   @Output() itemsChange = new EventEmitter<string[]>();      // Notify parent about selection changes

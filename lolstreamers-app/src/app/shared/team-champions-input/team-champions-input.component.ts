@@ -11,7 +11,7 @@ import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.comp
   styleUrls: ['./team-champions-input.component.css']
 })
 export class TeamChampionsInputComponent extends TypeAheadInputComponent {
-  @Input() placeholder: string = 'Type to search for team-champions...';  // Placeholder for input
+  @Input() placeholder: string = 'Type to filter for team-champions...';  // Placeholder for input
   @Input() teamChampionsList: string[] = [];                         // List of all team-champions
 
   @Output() teamChampionsChange = new EventEmitter<string[]>();      // Notify parent about selection changes

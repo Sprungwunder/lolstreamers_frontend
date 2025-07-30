@@ -11,7 +11,7 @@ import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.comp
   styleUrls: ['./runes-input.component.css']
 })
 export class RunesInputComponent extends TypeAheadInputComponent {
-  @Input() placeholder: string = 'Type to search for runes...';  // Placeholder for input
+  @Input() placeholder: string = 'Type to filter for runes...';  // Placeholder for input
   @Input() runesList: string[] = [];                         // List of all runes
 
   @Output() runesChange = new EventEmitter<string[]>();      // Notify parent about selection changes

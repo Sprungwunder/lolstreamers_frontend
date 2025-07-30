@@ -1,0 +1,39 @@
+
+.streamer-home {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.search form {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Make YouTube URL input span full width */
+.search form .form-group {
+  grid-column: 1 / -1;
+}
+
+/* Alternative selector if the above doesn't work */
+.search form div:first-child {
+  grid-column: 1 / -1;
+}
+
+.lane-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.lane-option {
+  display: flex;
+  align-items: center;
+}
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}

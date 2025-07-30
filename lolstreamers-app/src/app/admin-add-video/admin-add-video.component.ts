@@ -34,7 +34,7 @@ import {DomSanitizer} from "@angular/platform-browser";
   styleUrls: ['./admin-add-video.component.css'],
 })
 export class AdminAddVideoComponent extends VideoBaseComponent {
-  override hasYoutubeUrl = true;
+  override isAdmin = true;
   buttonText = "Submit"
   private router = inject(Router);
 

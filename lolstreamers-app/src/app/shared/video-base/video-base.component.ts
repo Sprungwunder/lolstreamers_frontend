@@ -1,21 +1,42 @@
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {Video} from "../../video";
 import {VideoService} from "../../video.service";
-import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 
 export abstract class VideoBaseComponent {
-  hasYoutubeUrl = false;
+  isAdmin = false;
 
   videoList: Video[] = [];
   filteredVideoList: Video[] = [];
 
   // champions
-  championsList: string[] = []; // Holds the fetched list of champions
+  championsList: string[] = [
+    'Aatrox', 'Ahri', 'Akali', 'Akshan', 'Alistar', 'Amumu', 'Anivia', 'Annie', 'Aphelios',
+    'Ashe', 'Aurelion Sol', 'Azir', 'Bard', 'Bel\'Veth', 'Blitzcrank', 'Brand', 'Braum',
+    'Briar', 'Caitlyn', 'Camille', 'Cassiopeia', 'Cho\'Gath', 'Corki', 'Darius', 'Diana',
+    'Dr. Mundo', 'Draven', 'Ekko', 'Elise', 'Evelynn', 'Ezreal', 'Fiddlesticks', 'Fiora',
+    'Fizz', 'Galio', 'Gangplank', 'Garen', 'Gnar', 'Gragas', 'Graves', 'Gwen', 'Hecarim',
+    'Heimerdinger', 'Hwei', 'Illaoi', 'Irelia', 'Ivern', 'Janna', 'Jarvan IV', 'Jax', 'Jayce',
+    'Jhin', 'Jinx', 'K\'Sante', 'Kai\'Sa', 'Kalista', 'Karma', 'Karthus', 'Kassadin',
+    'Katarina', 'Kayle', 'Kayn', 'Kennen', 'Kha\'Zix', 'Kindred', 'Kled', 'Kog\'Maw',
+    'LeBlanc', 'Lee Sin', 'Leona', 'Lillia', 'Lissandra', 'Lucian', 'Lulu', 'Lux', 'Malphite',
+    'Malzahar', 'Maokai', 'Master Yi', 'Milio', 'Miss Fortune', 'Mordekaiser', 'Morgana', 'Naafiri',
+    'Nami', 'Nasus', 'Nautilus', 'Neeko', 'Nidalee', 'Nilah', 'Nocturne', 'Nunu & Willump',
+    'Olaf', 'Orianna', 'Ornn', 'Pantheon', 'Poppy', 'Pyke', 'Qiyana', 'Quinn', 'Rakan',
+    'Rammus', 'Rek\'Sai', 'Rell', 'Renata Glasc', 'Renekton', 'Rengar', 'Riven', 'Rumble',
+    'Ryze', 'Samira', 'Sejuani', 'Senna', 'Seraphine', 'Sett', 'Shaco', 'Shen', 'Shyvana',
+    'Singed', 'Sion', 'Sivir', 'Skarner', 'Smolder', 'Sona', 'Soraka', 'Swain', 'Sylas', 'Syndra',
+    'Tahm Kench', 'Taliyah', 'Talon', 'Taric', 'Teemo', 'Thresh', 'Tristana', 'Trundle',
+    'Tryndamere', 'Twisted Fate', 'Twitch', 'Udyr', 'Urgot', 'Varus', 'Vayne', 'Veigar',
+    'Vel\'Koz', 'Vex', 'Vi', 'Viego', 'Viktor', 'Vladimir', 'Volibear', 'Warwick', 'Wukong',
+    'Xayah', 'Xerath', 'Xin Zhao', 'Yasuo', 'Yone', 'Yorick', 'Yunara', 'Yuumi', 'Zac', 'Zed',
+    'Zeri', 'Ziggs', 'Zilean', 'Zoe', 'Zyra'
+  ];
+
   selectedChampion: string[] = []; // Holds the selected champion
 
   // enemy champions
-  enemyChampionsList: string[] = [];
+  enemyChampionsList: string[] = this.championsList;
   selectedEnemyChampion: string[] = [];
 
   lanesList: string[] = [];
@@ -23,19 +44,84 @@ export abstract class VideoBaseComponent {
 
 
   // Runes Management
-  runesList: string[] = [];
+  runesList: string[] = [
+    // Precision
+    'Press the Attack', 'Lethal Tempo', 'Fleet Footwork', 'Conqueror',
+    'Absorb Life', 'Triumph', 'Presence of Mind',
+    'Legend: Alacrity', 'Legend: Haste', 'Legend: Bloodline',
+    'Coup de Grace', 'Cut Down', 'Last Stand',
+
+    // Domination
+    'Electrocute', 'Dark Harvest', 'Hail of Blades',
+    'Cheap Shot', 'Taste of Blood', 'Sudden Impact',
+    'Sixth Sense', 'Grisly Mementos', 'Deep Ward',
+    'Treasure Hunter', 'Relentless Hunter', 'Ultimate Hunter',
+
+    // Sorcery
+    'Summon Aery', 'Arcane Comet', 'Phase Rush',
+    'Axiom Arcanist', 'Manaflow Band', 'Nimbus Cloak',
+    'Transcendence', 'Celerity', 'Absolute Focus',
+    'Scorch', 'Waterwalking', 'Gathering Storm',
+
+    // Resolve
+    'Grasp of the Undying', 'Aftershock', 'Guardian',
+    'Demolish', 'Font of Life', 'Shield Bash',
+    'Conditioning', 'Second Wind', 'Bone Plating',
+    'Overgrowth', 'Revitalize', 'Unflinching',
+
+    // Inspiration
+    'Glacial Augment', 'Unsealed Spellbook', 'First Strike',
+    'Hextech Flashtraption', 'Magical Footwear', 'Cash Back',
+    'Triple Tonic', 'Time Warp Tonic', 'Biscuit Delivery',
+    'Cosmic Insight', 'Approach Velocity', 'Jack of All Trades'
+  ]
+  ;
   selectedRunes: string[] = [];
 
   // Items
-  itemsList: string[] = [];
+  itemsList: string[] = [
+    // legendary items
+    "Abyssal Mask", "Archangel's Staff", "Ardent Censer", "Axiom Arc", "Banshee's Veil",
+    "Black Cleaver", "Blackfire Torch", "Blade of the Ruined King", "Bloodletter's Curse",
+    "Bloodsong", "Bloodthirster", "Bounty of Worlds", "Celestial Opposition",
+    "Chempunk Chainsword", "Cosmic Drive", "Cryptbloom", "Dawncore", "Dead Man's Plate",
+    "Death's Dance", "Dream Maker", "Echoes of Helia", "Eclipse", "Edge of Night",
+    "Essence Reaver", "Experimental Hexplate", "Fimbulwinter", "Force of Nature",
+    "Frozen Heart", "Guardian Angel", "Guinsoo's Rageblade", "Heartsteel",
+    "Hextech Rocketbelt", "Hollow Radiance", "Horizon Focus", "Hubris", "Hullbreaker",
+    "Iceborn Gauntlet", "Immortal Shieldbow", "Imperial Mandate", "Infinity Edge",
+    "Jak'Sho, The Protean", "Kaenic Rookern", "Knight's Vow", "Kraken Slayer",
+    "Liandry's Torment", "Lich Bane", "Locket of the Iron Solari", "Lord Dominik's Regards",
+    "Luden's Companion", "Malignance", "Manamune", "Maw of Malmortius", "Mejai's Soulstealer",
+    "Mercurial Scimitar", "Mikael's Blessing", "Moonstone Renewer", "Morellonomicon",
+    "Mortal Reminder", "Muramana", "Nashor's Tooth", "Navori Flickerblade", "Opportunity",
+    "Overlord's Bloodmail", "Phantom Dancer", "Profane Hydra", "Rabadon's Deathcap",
+    "Randuin's Omen", "Rapid Firecannon", "Ravenous Hydra", "Redemption", "Runaan's Hurricane",
+    "Rylai's Crystal Scepter", "Serylda's Grudge", "Serpent's Fang", "Seraph's Embrace",
+    "Shadowflame", "Shard of True Ice", "Sheen", "Shurelya's Battlesong", "Silvermere Dawn",
+    "Spear of Shojin", "Staff of Flowing Water", "Statikk Shiv", "Sterak's Gage",
+    "Stormrazor", "Stridebreaker", "Sunfire Aegis", "Tear of the Goddess", "Terminus",
+    "The Collector", "Thornmail", "Titanic Hydra", "Trailblazer", "Trinity Force",
+    "Turbo Chemtank", "Umbral Glaive", "Unending Despair", "Void Staff", "Voltaic Cyclosword",
+    "Warmog's Armor", "Winter's Approach", "Wit's End", "Youmuu's Ghostblade",
+    "Zeke's Convergence", "Zhonya's Hourglass",
+
+    // boots
+    "Armored Advance", "Berserker's Greaves", "Boots", "Boots of Swiftness",
+    "Chainlaced Crushers", "Crimson Lucidity", "Forever Forward", "Gunmetal Greaves",
+    "Ionian Boots of Lucidity", "Mercury's Treads", "Plated Steelcaps", "Sorcerer's Shoes",
+    "Spellslinger's Shoes", "Swiftmarch", "Symbiotic Soles", "Synchronized Souls"
+
+  ];
+
   selectedItems: string[] = [];
 
   // team champions
-  teamChampionsList: string[] = [];
+  teamChampionsList: string[] = this.championsList;
   selectedTeamChampions: string[] = [];
 
   // enemy team champions
-  enemyTeamChampionsList: string[] = [];
+  enemyTeamChampionsList: string[] = this.championsList;
   selectedEnemyTeamChampions: string[] = [];
 
   // Search form controls
@@ -55,32 +141,13 @@ export abstract class VideoBaseComponent {
 
   async initializeData() {
     try {
-      const [
-        championsList,
-        enemyChampionsList,
-        runesList,
-        championItemsList,
-        teamChampionsList,
-        enemyTeamChampionsList,
-        videoList,
-      ] = await this.videoService.fetchInitialData();
+      const videoList = await this.videoService.getAllVideos();
       /*console.log('Fetched initial data:', {
-        championsList,
-        enemyChampionsList: enemyChampionsList,
-        runesList,
-        championItemsList,
-        teamChampionsList,
-        enemyTeamChampionsList: enemyTeamChampionsList,
         videoList
       }); */
-      this.championsList = championsList;
+
       this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
       this.filteredLanesList = this.lanesList;
-      this.enemyChampionsList = enemyChampionsList;
-      this.runesList = runesList;
-      this.itemsList = championItemsList;
-      this.teamChampionsList = teamChampionsList;
-      this.enemyTeamChampionsList = enemyTeamChampionsList;
       this.videoList = videoList;
       this.filteredVideoList = [...videoList];
     } catch (error) {
@@ -143,12 +210,12 @@ export function youtubeUrlValidator(): ValidatorFn {
 
     // If no valid video ID was extracted, the URL is invalid
     if (!videoId) {
-      return { invalidYoutubeUrl: true };
+      return {invalidYoutubeUrl: true};
     }
 
     // Validate the video ID is the correct length
     if (videoId.length !== 11) {
-      return { invalidYoutubeId: true };
+      return {invalidYoutubeId: true};
     }
 
     return null;
