@@ -1,4 +1,23 @@
 <section class="results">
+  <section class="search">
+    <div *ngIf="video">
+      <form>
+        <app-champion-name-input
+          #championInput
+          [championsList]="championsList"
+          [isAdmin]="true"
+          (championsChange)="handleChampionChange($event)">
+        </app-champion-name-input>
+        <app-enemy-champion-name-input
+          #enemyChampionInput
+          [enemyChampionsList]="enemyChampionsList"
+          [isAdmin]="true"
+          (enemyChampionsChange)="handleEnemyChampionChange($event)">
+        </app-enemy-champion-name-input>
+      </form>
+    </div>
+  </section>
+
   <div>
     <app-video-card *ngIf="video" [video]="video"></app-video-card>
   </div>

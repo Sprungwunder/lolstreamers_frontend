@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ViewChild, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {VideoService} from "../video.service";
 import {Video} from "../video";
@@ -6,6 +6,9 @@ import {VideoCardComponent} from "../video-card/video-card.component";
 import {CommonModule} from "@angular/common";
 import {Router} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {ChampionNameInputComponent} from "../shared/champion-name-input/champion-name-input.component";
+import {EnemyChampionNameInputComponent} from "../shared/enemy-champion-name-input/enemy-champion-name-input.component";
+import {VideoBaseComponent} from "../shared/video-base/video-base.component";
 
 
 @Component({
@@ -13,30 +16,53 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
   standalone: true,
   imports: [
     VideoCardComponent,
-    CommonModule
+    CommonModule,
+    ChampionNameInputComponent,
+    EnemyChampionNameInputComponent
   ],
   templateUrl: './admin-edit-video.component.html',
   styleUrl: './admin-edit-video.component.css'
 })
-export class AdminEditVideoComponent {
-  route: ActivatedRoute = inject(ActivatedRoute);
-  videoService: VideoService = inject(VideoService);
-  video: Video | undefined;
+export class AdminEditVideoComponent extends VideoBaseComponent implements OnInit {
   private router = inject(Router);
+  video: Video | undefined;
   safeSrc: SafeResourceUrl | undefined;
 
+  @ViewChild('championInput') championInput!: ChampionNameInputComponent;
+  @ViewChild('enemyChampionInput') enemyChampionInput!: EnemyChampionNameInputComponent;
 
-  constructor(private sanitizer: DomSanitizer) {
-    const videoId = String(this.route.snapshot.params['id']);
-    this.videoService.getVideoById(videoId).then(video => {
-      this.video = video;
-      if (this.video) {
-        this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
-          "https://www.youtube.com/embed/" + this.video.ytid + "?start=" + this.video.timestamp
-        );
-      }
-    });
+  constructor(
+    protected override videoService: VideoService,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer
+  ) {
+    super(videoService);
+    this.isAdmin = true;
+  }
 
+  ngOnInit(): void {
+    this.initializeData();
+    this.loadVideo();
+  }
+
+  loadVideo(): void {
+    const videoId = this.route.snapshot.paramMap.get('id');
+    if (videoId) {
+      this.videoService.getVideoById(videoId).then(video => {
+        this.video = video;
+        if (this.video) {
+          if (this.video.champion) {
+            this.selectedChampion = this.video.champion.split(',');
+          }
+          if (this.video.enemy_champion) {
+            this.selectedEnemyChampion = this.video.enemy_champion.split(',');
+          }
+          this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
+            "https://www.youtube.com/embed/" + this.video.ytid + "?start=" + this.video.timestamp
+          );
+        }
+      });
+    }
   }
 
   activateVideo(): void {
@@ -66,7 +92,50 @@ export class AdminEditVideoComponent {
         console.error('Unexpected error activating video:', error);
         alert('An unexpected error occurred. Please try again later.');
       });
+  }
 
+  override handleSubmit(): void {
+    // Implementation of the abstract method
+    this.activateVideo();
+  }
+
+
+  ngAfterViewInit() {
+    // We need to wait for both the view to be initialized and the video data to be loaded
+    setTimeout(() => {
+      this.initializeInputs();
+    }, 500);
+  }
+
+  initializeInputs() {
+    if (this.championInput && this.video && this.video.champion) {
+      // Set the selected items directly on the component
+      this.championInput.selectedItems = this.video.champion.split(',');
+      // Call the component's method to update suggestions based on the current selection
+      this.championInput.initializeItemsList();
+      this.championInput.selectItem(this.video.champion);
+    }
+    if (this.enemyChampionInput && this.video && this.video.enemy_champion) {
+      // Set the selected items directly on the component
+      this.enemyChampionInput.selectedItems = this.video.enemy_champion.split(',');
+      // Call the component's method to update suggestions based on the current selection
+      this.enemyChampionInput.initializeItemsList();
+      this.enemyChampionInput.selectItem(this.video.enemy_champion);
+    }
+  }
+
+  override handleChampionChange(selectedChampions: string[]) {
+    super.handleChampionChange(selectedChampions);
+    if (this.video) {
+      this.video.champion = selectedChampions.join(',');
+    }
+  }
+
+  override handleEnemyChampionChange(selectedChampions: string[]) {
+    super.handleEnemyChampionChange(selectedChampions);
+    if (this.video) {
+      this.video.enemy_champion = selectedChampions.join(',');
+    }
   }
 
 }
