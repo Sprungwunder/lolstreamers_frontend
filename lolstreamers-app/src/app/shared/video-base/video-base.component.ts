@@ -96,21 +96,22 @@ export abstract class VideoBaseComponent {
     "Mercurial Scimitar", "Mikael's Blessing", "Moonstone Renewer", "Morellonomicon",
     "Mortal Reminder", "Muramana", "Nashor's Tooth", "Navori Flickerblade", "Opportunity",
     "Overlord's Bloodmail", "Phantom Dancer", "Profane Hydra", "Rabadon's Deathcap",
-    "Randuin's Omen", "Rapid Firecannon", "Ravenous Hydra", "Redemption", "Runaan's Hurricane",
+    "Randuin's Omen", "Rapid Firecannon", "Ravenous Hydra", "Redemption",
+    "Riftmaker", "Rod of Ages", "Runaan's Hurricane",
     "Rylai's Crystal Scepter", "Serylda's Grudge", "Serpent's Fang", "Seraph's Embrace",
-    "Shadowflame", "Shard of True Ice", "Sheen", "Shurelya's Battlesong", "Silvermere Dawn",
-    "Spear of Shojin", "Staff of Flowing Water", "Statikk Shiv", "Sterak's Gage",
-    "Stormrazor", "Stridebreaker", "Sunfire Aegis", "Tear of the Goddess", "Terminus",
+    "Shadowflame", "Sheen", "Shurelya's Battlesong", "Solstice Sleigh",
+    "Spear of Shojin", "Spirit Visage", "Staff of Flowing Water", "Statikk Shiv", "Sterak's Gage",
+    "Stormrazor", "Stridebreaker", "Sundered Sky", "Sunfire Aegis", "Terminus",
     "The Collector", "Thornmail", "Titanic Hydra", "Trailblazer", "Trinity Force",
-    "Turbo Chemtank", "Umbral Glaive", "Unending Despair", "Void Staff", "Voltaic Cyclosword",
-    "Warmog's Armor", "Winter's Approach", "Wit's End", "Youmuu's Ghostblade",
-    "Zeke's Convergence", "Zhonya's Hourglass",
+    "Umbral Glaive", "Unending Despair", "Vigilant Wardstone", "Void Staff", "Voltaic Cyclosword",
+    "Warmog's Armor", "Winter's Approach", "Wit's End", "Youmuu's Ghostblade", "Yun Tal Wildarrows",
+    "Zaz'Zak's Realmspike", "Zeke's Convergence", "Zhonya's Hourglass",
 
     // boots
     "Armored Advance", "Berserker's Greaves", "Boots", "Boots of Swiftness",
     "Chainlaced Crushers", "Crimson Lucidity", "Forever Forward", "Gunmetal Greaves",
     "Ionian Boots of Lucidity", "Mercury's Treads", "Plated Steelcaps", "Sorcerer's Shoes",
-    "Spellslinger's Shoes", "Swiftmarch", "Symbiotic Soles", "Synchronized Souls"
+    "Spellslinger's Shoes", "Swiftmarch", "Symbiotic Soles", "Synchronized Souls",
 
   ];
 
