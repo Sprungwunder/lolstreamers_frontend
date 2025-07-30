@@ -9,36 +9,6 @@ import { environment } from '../environments/environment';
 export class VideoService {
   private url = environment.apiUrl + "/streamers";
 
-  async getAllChampions(): Promise<string[]> {
-    const data = await fetch(`${this.url}/champions/`);
-    return await (await data.json()).champion ?? [];
-  };
-
-  async getAllRunes(): Promise<string[]> {
-    const data = await fetch(`${this.url}/runes/`);
-    return await (await data.json()).runes ?? [];
-  };
-
-  async getAllChampionItems(): Promise<string[]> {
-    const data = await fetch(`${this.url}/champion-items/`);
-    return await (await data.json()).champion_items ?? [];
-  };
-
-  async getAllEnemyChampions(): Promise<string[]> {
-    const data = await fetch(`${this.url}/enemy-champions/`);
-    return await (await data.json()).enemy_champion ?? [];
-  };
-
-  async getAllTeamChampions(): Promise<string[]> {
-    const data = await fetch(`${this.url}/team-champions/`);
-    return await (await data.json()).team_champions ?? [];
-  }
-
-  async getAllEnemyTeamChampions(): Promise<string[]> {
-    const data = await fetch(`${this.url}/enemy-team-champions/`);
-    return await (await data.json()).enemy_team_champions ?? [];
-  }
-
   async getAllVideos(): Promise<Video[]> {
     const data = await fetch(this.url + '/ytvideos/?is_active=true');
     return await data.json() ?? [];
@@ -50,19 +20,6 @@ export class VideoService {
       return undefined;
     }
     return await data.json();
-  }
-
-  // Centralized method to fetch and manage all initialization data
-  async fetchInitialData() {
-    return Promise.all([
-      this.getAllChampions(),
-      this.getAllEnemyChampions(),
-      this.getAllRunes(),
-      this.getAllChampionItems(),
-      this.getAllTeamChampions(),
-      this.getAllEnemyTeamChampions(),
-      this.getAllVideos(),
-    ]);
   }
 
   async filterVideos(
