@@ -40,7 +40,6 @@ export abstract class VideoBaseComponent {
   selectedEnemyChampion: string[] = [];
 
   lanesList: string[] = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
-  filteredLanesList: string[] = this.lanesList; // Initially show all lanes
 
 
   // Runes Management
@@ -139,8 +138,6 @@ export abstract class VideoBaseComponent {
 
   constructor(protected videoService: VideoService) {
   }
-
-
 
   // Handle Champion changes from the reusable component
   handleChampionChange(selectedChampions: string[]): void {

@@ -14,6 +14,7 @@ import {
 import {ItemsInputComponent} from "../shared/items-input/items-input.component";
 import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
 import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-champions-input.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @Component({
@@ -27,7 +28,9 @@ import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-c
     EnemyTeamChampionsInputComponent,
     ItemsInputComponent,
     RunesInputComponent,
-    TeamChampionsInputComponent
+    TeamChampionsInputComponent,
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './admin-edit-video.component.html',
   styleUrl: './admin-edit-video.component.css'
@@ -56,6 +59,12 @@ export class AdminEditVideoComponent extends VideoBaseComponent implements OnIni
 
   ngOnInit(): void {
     this.loadVideo();
+    // Subscribe to lane changes
+    this.inputForm.get('lane')?.valueChanges.subscribe(value => {
+      if (this.video && value) {
+        this.video.lane = value;
+      }
+    });
   }
 
   loadVideo(): void {
@@ -70,6 +79,7 @@ export class AdminEditVideoComponent extends VideoBaseComponent implements OnIni
           if (this.video.enemy_champion) {
             this.selectedEnemyChampion = this.video.enemy_champion.split(',');
           }
+          this.inputForm.patchValue({lane: this.video.lane});
           if (this.video.runes) {
             this.selectedRunes = this.video.runes;
           }

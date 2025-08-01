@@ -1,7 +1,7 @@
 <section class="results">
   <section class="search">
     <div *ngIf="video">
-      <form>
+      <form [formGroup]="inputForm" (ngSubmit)="handleSubmit()" (keydown.enter)="$event.preventDefault()">
         <app-champion-name-input
           #championInput
           [championsList]="championsList"
@@ -14,6 +14,21 @@
           [isAdmin]="true"
           (enemyChampionsChange)="handleEnemyChampionChange($event)">
         </app-enemy-champion-name-input>
+        <!-- Lane Search -->
+        <div>
+          <label>Select Lane<span *ngIf="isAdmin">*</span></label>
+          <div class="lane-selection">
+            <div *ngFor="let lane of lanesList" class="lane-option">
+              <input
+                type="radio"
+                id="{{ lane }}"
+                [value]="lane"
+                formControlName="lane"
+              />
+              <label [for]="lane" class="lane-label">{{ lane }}</label>
+            </div>
+          </div>
+        </div>
         <!-- Runes search -->
         <app-runes-input
           #runesInput
