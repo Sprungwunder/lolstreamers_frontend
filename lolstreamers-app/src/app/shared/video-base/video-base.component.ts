@@ -39,8 +39,8 @@ export abstract class VideoBaseComponent {
   enemyChampionsList: string[] = this.championsList;
   selectedEnemyChampion: string[] = [];
 
-  lanesList: string[] = [];
-  filteredLanesList: string[] = []; // Initially show all lanes
+  lanesList: string[] = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
+  filteredLanesList: string[] = this.lanesList; // Initially show all lanes
 
 
   // Runes Management
@@ -140,21 +140,7 @@ export abstract class VideoBaseComponent {
   constructor(protected videoService: VideoService) {
   }
 
-  async initializeData() {
-    try {
-      const videoList = await this.videoService.getAllVideos();
-      /*console.log('Fetched initial data:', {
-        videoList
-      }); */
 
-      this.lanesList = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
-      this.filteredLanesList = this.lanesList;
-      this.videoList = videoList;
-      this.filteredVideoList = [...videoList];
-    } catch (error) {
-      console.error('Failed to initialize data:', error);
-    }
-  }
 
   // Handle Champion changes from the reusable component
   handleChampionChange(selectedChampions: string[]): void {

@@ -45,6 +45,12 @@ export class StreamerHomeComponent extends VideoBaseComponent {
     this.initializeData();
   }
 
+  async initializeData() {
+    const videoList = await this.videoService.getAllVideos();
+    this.videoList = videoList;
+    this.filteredVideoList = [...videoList];
+  }
+
   // Filter videos based on the selected champion and other filters
   filterVideos() {
     const {

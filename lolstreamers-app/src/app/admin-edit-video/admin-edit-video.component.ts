@@ -55,7 +55,6 @@ export class AdminEditVideoComponent extends VideoBaseComponent implements OnIni
   }
 
   ngOnInit(): void {
-    this.initializeData();
     this.loadVideo();
   }
 

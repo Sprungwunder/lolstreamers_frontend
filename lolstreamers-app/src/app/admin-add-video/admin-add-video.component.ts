@@ -43,10 +43,6 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
     super(videoService);
   }
 
-  ngOnInit() {
-    this.initializeData();
-  }
-
   handleSubmit() {
     this.submitForm();
   }
