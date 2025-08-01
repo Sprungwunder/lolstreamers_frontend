@@ -1,5 +1,5 @@
-import {Component, inject, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 import {VideoService} from "../video.service";
 import {Video} from "../video";
 import {VideoCardComponent} from "../video-card/video-card.component";
@@ -7,7 +7,6 @@ import {CommonModule} from "@angular/common";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {ChampionNameInputComponent} from "../shared/champion-name-input/champion-name-input.component";
 import {EnemyChampionNameInputComponent} from "../shared/enemy-champion-name-input/enemy-champion-name-input.component";
-import {VideoBaseComponent} from "../shared/video-base/video-base.component";
 import {
   EnemyTeamChampionsInputComponent
 } from "../shared/enemy-team-champions-input/enemy-team-champions-input.component";
@@ -16,6 +15,7 @@ import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
 import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-champions-input.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
+import {AdminBaseComponent} from "../shared/admin-base/admin-base.component";
 
 
 @Component({
@@ -37,8 +37,7 @@ import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
   templateUrl: './admin-edit-video.component.html',
   styleUrl: './admin-edit-video.component.css'
 })
-export class AdminEditVideoComponent extends VideoBaseComponent implements OnInit {
-  private router = inject(Router);
+export class AdminEditVideoComponent extends AdminBaseComponent implements OnInit {
   video: Video | undefined;
   safeSrc: SafeResourceUrl | undefined;
 
@@ -54,7 +53,7 @@ export class AdminEditVideoComponent extends VideoBaseComponent implements OnIni
   constructor(
     protected override videoService: VideoService,
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    override sanitizer: DomSanitizer
   ) {
     super(videoService);
     this.isAdmin = true;
