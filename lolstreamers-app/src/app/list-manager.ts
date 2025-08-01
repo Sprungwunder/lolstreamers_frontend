@@ -35,7 +35,7 @@ export class ListManager {
     ) {
       this.selectedItems.push(item);
     } else {
-      console.warn('Max champions reached or champion already selected or nothing to select.');
+      console.warn('Max items reached or item already selected or nothing to select.');
     }
   }
 

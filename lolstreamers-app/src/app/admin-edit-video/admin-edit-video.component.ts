@@ -1,14 +1,19 @@
-import {Component, inject, ViewChild, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import {VideoService} from "../video.service";
 import {Video} from "../video";
 import {VideoCardComponent} from "../video-card/video-card.component";
 import {CommonModule} from "@angular/common";
-import {Router} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {ChampionNameInputComponent} from "../shared/champion-name-input/champion-name-input.component";
 import {EnemyChampionNameInputComponent} from "../shared/enemy-champion-name-input/enemy-champion-name-input.component";
 import {VideoBaseComponent} from "../shared/video-base/video-base.component";
+import {
+  EnemyTeamChampionsInputComponent
+} from "../shared/enemy-team-champions-input/enemy-team-champions-input.component";
+import {ItemsInputComponent} from "../shared/items-input/items-input.component";
+import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
+import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-champions-input.component";
 
 
 @Component({
@@ -18,7 +23,11 @@ import {VideoBaseComponent} from "../shared/video-base/video-base.component";
     VideoCardComponent,
     CommonModule,
     ChampionNameInputComponent,
-    EnemyChampionNameInputComponent
+    EnemyChampionNameInputComponent,
+    EnemyTeamChampionsInputComponent,
+    ItemsInputComponent,
+    RunesInputComponent,
+    TeamChampionsInputComponent
   ],
   templateUrl: './admin-edit-video.component.html',
   styleUrl: './admin-edit-video.component.css'
@@ -30,6 +39,11 @@ export class AdminEditVideoComponent extends VideoBaseComponent implements OnIni
 
   @ViewChild('championInput') championInput!: ChampionNameInputComponent;
   @ViewChild('enemyChampionInput') enemyChampionInput!: EnemyChampionNameInputComponent;
+  @ViewChild('runesInput') runesInput!: RunesInputComponent;
+  @ViewChild('itemsInput') itemsInput!: ItemsInputComponent;
+  @ViewChild('teamChampionsInput') teamChampionsInput!: TeamChampionsInputComponent;
+  @ViewChild('enemyTeamChampionsInput') enemyTeamChampionsInput!: EnemyTeamChampionsInputComponent;
+
 
   constructor(
     protected override videoService: VideoService,
@@ -56,6 +70,18 @@ export class AdminEditVideoComponent extends VideoBaseComponent implements OnIni
           }
           if (this.video.enemy_champion) {
             this.selectedEnemyChampion = this.video.enemy_champion.split(',');
+          }
+          if (this.video.runes) {
+            this.selectedRunes = this.video.runes;
+          }
+          if (this.video.champion_items) {
+            this.selectedItems = this.video.champion_items;
+          }
+          if (this.video.team_champions) {
+            this.selectedTeamChampions = this.video.team_champions;
+          }
+          if (this.video.enemy_team_champions) {
+            this.selectedEnemyTeamChampions = this.video.enemy_team_champions;
           }
           this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
             "https://www.youtube.com/embed/" + this.video.ytid + "?start=" + this.video.timestamp
@@ -122,6 +148,34 @@ export class AdminEditVideoComponent extends VideoBaseComponent implements OnIni
       this.enemyChampionInput.initializeItemsList();
       this.enemyChampionInput.selectItem(this.video.enemy_champion);
     }
+    if (this.runesInput && this.video && this.video.runes) {
+      this.runesInput.selectedItems = this.video.runes;
+      this.runesInput.initializeItemsList();
+      for (const rune of this.video.runes) {
+        this.runesInput.selectItem(rune);
+      }
+    }
+    if (this.itemsInput && this.video && this.video.champion_items) {
+      this.itemsInput.selectedItems = this.video.champion_items;
+      this.itemsInput.initializeItemsList();
+      for (const item of this.video.champion_items) {
+        this.itemsInput.selectItem(item);
+      }
+    }
+    if (this.teamChampionsInput && this.video && this.video.team_champions) {
+      this.teamChampionsInput.selectedItems = this.video.team_champions;
+      this.teamChampionsInput.initializeItemsList();
+      for (const teamChampion of this.video.team_champions) {
+        this.teamChampionsInput.selectItem(teamChampion);
+      }
+    }
+    if (this.enemyTeamChampionsInput && this.video && this.video.enemy_team_champions) {
+      this.enemyTeamChampionsInput.selectedItems = this.video.enemy_team_champions;
+      this.enemyTeamChampionsInput.initializeItemsList();
+      for (const enemyTeamChampion of this.video.enemy_team_champions) {
+        this.enemyTeamChampionsInput.selectItem(enemyTeamChampion);
+      }
+    }
   }
 
   override handleChampionChange(selectedChampions: string[]) {
@@ -135,6 +189,35 @@ export class AdminEditVideoComponent extends VideoBaseComponent implements OnIni
     super.handleEnemyChampionChange(selectedChampions);
     if (this.video) {
       this.video.enemy_champion = selectedChampions.join(',');
+    }
+  }
+
+  override handleRunesChange(selectedRunes: string[]) {
+    super.handleRunesChange(selectedRunes);
+    if (this.video) {
+      this.video.runes = [...selectedRunes]
+      ;
+    }
+  }
+
+  override handleItemsChange(selectedItems: string[]) {
+    super.handleItemsChange(selectedItems);
+    if (this.video) {
+      this.video.champion_items = [...selectedItems];
+    }
+  }
+
+  override handleTeamChampionsChange(selectedTeamChampions: string[]) {
+    super.handleTeamChampionsChange(selectedTeamChampions);
+    if (this.video) {
+      this.video.team_champions = [...selectedTeamChampions];
+    }
+  }
+
+  override handleEnemyTeamChampionsChange(selectedTeamChampions: string[]) {
+    super.handleEnemyTeamChampionsChange(selectedTeamChampions);
+    if (this.video) {
+      this.video.enemy_team_champions = [...selectedTeamChampions];
     }
   }
 
