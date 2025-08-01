@@ -1,5 +1,8 @@
 <div>
-  <label for="runes">Runes used</label>
+  <label for="runes">
+    Runes used
+    <i class="check-icon" *ngIf="selectedItems.length === maxItems">✓</i>
+  </label>
 
   <!-- Selected Runes -->
   <div class="selected-items">
@@ -14,21 +17,23 @@
     </span>
   </div>
 
-  <!-- Input Field -->
-  <input
-    id="runes"
-    type="text"
-    [formControl]="itemInput"
-    [placeholder]="placeholder"
-  />
+  <ng-container *ngIf="selectedItems.length < maxItems">
+    <!-- Input Field -->
+    <input
+      id="runes"
+      type="text"
+      [formControl]="itemInput"
+      [placeholder]="placeholder"
+    />
 
-  <!-- Suggestions List -->
-  <ul class="suggestions">
-    <li
-      *ngFor="let rune of itemsSuggestionList"
-      (click)="selectItem(rune)"
-    >
-      {{ rune }}
-    </li>
-  </ul>
+    <!-- Suggestions List -->
+    <ul class="suggestions">
+      <li
+        *ngFor="let rune of itemsSuggestionList"
+        (click)="selectItem(rune)"
+      >
+        {{ rune }}
+      </li>
+    </ul>
+  </ng-container>
 </div>

@@ -1,5 +1,8 @@
 <div>
-  <label for="enemyChampionName">Enemy Champion played<span *ngIf="isAdmin">*</span></label>
+  <label for="enemyChampionName">
+    Enemy Champion played<span *ngIf="isAdmin">*</span>
+    <i class="check-icon" *ngIf="selectedItems.length > 0">✓</i>
+  </label>
 
   <!-- Selected Champions -->
   <div class="selected-items">
@@ -14,21 +17,23 @@
     </span>
   </div>
 
-  <!-- Input Field -->
-  <input
-    id="enemyChampionName"
-    type="text"
-    [formControl]="itemInput"
-    [placeholder]="placeholder"
-  />
+  <ng-container *ngIf="selectedItems.length === 0">
+    <!-- Input Field -->
+    <input
+      id="enemyChampionName"
+      type="text"
+      [formControl]="itemInput"
+      [placeholder]="placeholder"
+    />
 
-  <!-- Suggestions List -->
-  <ul class="suggestions">
-    <li
-      *ngFor="let champion of itemsSuggestionList"
-      (click)="selectItem(champion)"
-    >
-      {{ champion }}
-    </li>
-  </ul>
+    <!-- Suggestions List -->
+    <ul class="suggestions">
+      <li
+        *ngFor="let champion of itemsSuggestionList"
+        (click)="selectItem(champion)"
+      >
+        {{ champion }}
+      </li>
+    </ul>
+  </ng-container>
 </div>

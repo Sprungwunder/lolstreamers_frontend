@@ -1,5 +1,8 @@
 <div>
-  <label for="items">Items used</label>
+  <label for="items">
+    Items used
+    <i class="check-icon" *ngIf="selectedItems.length === maxItems">✓</i>
+  </label>
 
   <!-- Selected Items -->
   <div class="selected-items">
@@ -14,6 +17,7 @@
     </span>
   </div>
 
+  <ng-container *ngIf="selectedItems.length < maxItems">
   <!-- Input Field -->
   <input
     id="items"
@@ -31,4 +35,5 @@
       {{ item }}
     </li>
   </ul>
+  </ng-container>
 </div>
