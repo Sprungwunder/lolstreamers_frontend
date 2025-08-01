@@ -1,0 +1,39 @@
+<div>
+  <label for="lanes">
+    lanes used
+    <i class="check-icon" *ngIf="selectedItems.length === maxItems">✓</i>
+  </label>
+
+  <!-- Selected lanes -->
+  <div class="selected-items">
+    <span
+      class="item-tag"
+      *ngFor="let selectedLane of selectedItems"
+    >
+      {{ selectedLane }}
+      <button type="button" (click)="removeItem(selectedLane)">
+        &times;
+      </button>
+    </span>
+  </div>
+
+  <ng-container *ngIf="selectedItems.length < maxItems">
+    <!-- Input Field -->
+    <input
+      id="lanes"
+      type="text"
+      [formControl]="itemInput"
+      [placeholder]="placeholder"
+    />
+
+    <!-- Suggestions List -->
+    <ul class="suggestions">
+      <li
+        *ngFor="let lane of itemsSuggestionList"
+        (click)="selectItem(lane)"
+      >
+        {{ lane }}
+      </li>
+    </ul>
+  </ng-container>
+</div>

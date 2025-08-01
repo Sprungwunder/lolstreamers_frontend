@@ -14,6 +14,7 @@ import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-c
 import {VideoCardComponent} from "../video-card/video-card.component";
 import {Router} from "@angular/router";
 import {DomSanitizer} from "@angular/platform-browser";
+import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
 
 
 @Component({
@@ -24,6 +25,7 @@ import {DomSanitizer} from "@angular/platform-browser";
     ReactiveFormsModule,
     ChampionNameInputComponent,
     EnemyChampionNameInputComponent,
+    LaneInputComponent,
     EnemyTeamChampionsInputComponent,
     ItemsInputComponent,
     RunesInputComponent,
@@ -50,6 +52,7 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
   isValidateFormData() {
     if (this.selectedChampion.length > 1 ||
       this.selectedEnemyChampion.length > 1 ||
+      this.selectedLane.length > 1 ||
       this.selectedRunes.length > 6 ||
       this.selectedItems.length > 6 ||
       this.selectedTeamChampions.length > 4 ||
@@ -61,6 +64,7 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
     const allInputs = [
       ...this.selectedChampion,
       ...this.selectedEnemyChampion,
+      ...this.selectedLane,
       ...this.selectedRunes,
       ...this.selectedItems,
       ...this.selectedTeamChampions,
@@ -95,7 +99,7 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
   // Submit the form
   submitForm(): void {
     if (this.inputForm.valid && this.isValidateFormData()) {
-      const {youtubeUrl, lane} = this.inputForm.value;
+      const {youtubeUrl} = this.inputForm.value;
 
       /*
       console.log('Submitting:', youtubeUrl);
@@ -113,18 +117,18 @@ export class AdminAddVideoComponent extends VideoBaseComponent {
       // Sanitize all inputs
       const selectedChampions = this.sanitizeInput(this.selectedChampion.join(',') || '');
       const selectedEnemyChampion = this.sanitizeInput(this.selectedEnemyChampion.join(',') || '');
+      const selectedLane = this.sanitizeInput(this.selectedLane.join(',') || '');
       const selectedRunes = this.selectedRunes.map(c => this.sanitizeInput(c));
       const selectedItems = this.selectedItems.map(c => this.sanitizeInput(c));
       const selectedTeamChampions = this.selectedTeamChampions.map(c => this.sanitizeInput(c));
       const selectedEnemyTeamChampions = this.selectedEnemyTeamChampions.map(c => this.sanitizeInput(c));
       const sanitizedUrl = this.sanitizeInput(youtubeUrl || '');
-      const sanitizedLane = this.sanitizeInput(lane || '');
 
       this.videoService.addVideo({
           youtubeUrl: sanitizedUrl,
           selectedChampions: selectedChampions,
           selectedEnemyChampion: selectedEnemyChampion,
-          lane: sanitizedLane,
+          lane: selectedLane,
           selectedRunes: selectedRunes,
           selectedItems: selectedItems,
           selectedTeamChampions: selectedTeamChampions,

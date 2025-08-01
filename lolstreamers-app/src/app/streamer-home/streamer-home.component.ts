@@ -15,6 +15,7 @@ import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-c
 import {
   EnemyTeamChampionsInputComponent
 } from "../shared/enemy-team-champions-input/enemy-team-champions-input.component";
+import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
 
 @Component({
   selector: 'app-streamer-home',
@@ -29,6 +30,7 @@ import {
     ItemsInputComponent,
     TeamChampionsInputComponent,
     EnemyTeamChampionsInputComponent,
+    LaneInputComponent
   ],
   templateUrl: './streamer-home.component.html',
   styleUrl: './streamer-home.component.css'
@@ -53,12 +55,9 @@ export class StreamerHomeComponent extends VideoBaseComponent {
 
   // Filter videos based on the selected champion and other filters
   filterVideos() {
-    const {
-      lane
-    } = this.inputForm.value;
     this.videoService.filterVideos(
       this.selectedChampion.join(',') ?? '',
-      lane ?? '',
+      this.selectedLane.join(',') ?? '',
       this.selectedEnemyChampion.join(',') ?? '',
       this.selectedRunes.join(',') ?? '',
       this.selectedItems.join(',') ?? '',

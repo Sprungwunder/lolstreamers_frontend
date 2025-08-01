@@ -21,7 +21,7 @@ export abstract class VideoBaseComponent {
     'Katarina', 'Kayle', 'Kayn', 'Kennen', 'Kha\'Zix', 'Kindred', 'Kled', 'Kog\'Maw',
     'LeBlanc', 'Lee Sin', 'Leona', 'Lillia', 'Lissandra', 'Lucian', 'Lulu', 'Lux', 'Malphite',
     'Malzahar', 'Maokai', 'Master Yi', 'Mel', 'Milio', 'Miss Fortune', 'Mordekaiser', 'Morgana', 'Naafiri',
-    'Nami', 'Nasus', 'Nautilus', 'Neeko', 'Nidalee', 'Nilah', 'Nocturne', 'Nunu & Willump',
+    'Nami', 'Nasus', 'Nautilus', 'Neeko', 'Nidalee', 'Nilah', 'Nocturne', 'Nunu Willump',
     'Olaf', 'Orianna', 'Ornn', 'Pantheon', 'Poppy', 'Pyke', 'Qiyana', 'Quinn', 'Rakan',
     'Rammus', 'Rek\'Sai', 'Rell', 'Renata Glasc', 'Renekton', 'Rengar', 'Riven', 'Rumble',
     'Ryze', 'Samira', 'Sejuani', 'Senna', 'Seraphine', 'Sett', 'Shaco', 'Shen', 'Shyvana',
@@ -40,6 +40,7 @@ export abstract class VideoBaseComponent {
   selectedEnemyChampion: string[] = [];
 
   lanesList: string[] = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Any'];
+  selectedLane: string[] = [];
 
 
   // Runes Management
@@ -146,6 +147,10 @@ export abstract class VideoBaseComponent {
 
   handleEnemyChampionChange(selectedChampions: string[]): void {
     this.selectedEnemyChampion = selectedChampions;
+  }
+
+  handleLanesChange(selectedLane: string[]): void {
+    this.selectedLane = selectedLane;
   }
 
   handleRunesChange(selectedRunes: string[]): void {

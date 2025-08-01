@@ -15,20 +15,12 @@
           (enemyChampionsChange)="handleEnemyChampionChange($event)">
         </app-enemy-champion-name-input>
         <!-- Lane Search -->
-        <div>
-          <label>Select Lane<span *ngIf="isAdmin">*</span></label>
-          <div class="lane-selection">
-            <div *ngFor="let lane of lanesList" class="lane-option">
-              <input
-                type="radio"
-                id="{{ lane }}"
-                [value]="lane"
-                formControlName="lane"
-              />
-              <label [for]="lane" class="lane-label">{{ lane }}</label>
-            </div>
-          </div>
-        </div>
+        <app-lane-input
+          #laneInput
+          [lanesList]="lanesList"
+          [isAdmin]="isAdmin"
+          (lanesChange)="handleLanesChange($event)">
+        </app-lane-input>
         <!-- Runes search -->
         <app-runes-input
           #runesInput

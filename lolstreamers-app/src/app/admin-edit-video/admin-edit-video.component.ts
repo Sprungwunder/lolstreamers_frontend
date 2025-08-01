@@ -15,6 +15,7 @@ import {ItemsInputComponent} from "../shared/items-input/items-input.component";
 import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
 import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-champions-input.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
 
 
 @Component({
@@ -30,7 +31,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     RunesInputComponent,
     TeamChampionsInputComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LaneInputComponent
   ],
   templateUrl: './admin-edit-video.component.html',
   styleUrl: './admin-edit-video.component.css'
@@ -42,6 +44,7 @@ export class AdminEditVideoComponent extends VideoBaseComponent implements OnIni
 
   @ViewChild('championInput') championInput!: ChampionNameInputComponent;
   @ViewChild('enemyChampionInput') enemyChampionInput!: EnemyChampionNameInputComponent;
+  @ViewChild('laneInput') laneInput!: LaneInputComponent;
   @ViewChild('runesInput') runesInput!: RunesInputComponent;
   @ViewChild('itemsInput') itemsInput!: ItemsInputComponent;
   @ViewChild('teamChampionsInput') teamChampionsInput!: TeamChampionsInputComponent;
@@ -79,7 +82,9 @@ export class AdminEditVideoComponent extends VideoBaseComponent implements OnIni
           if (this.video.enemy_champion) {
             this.selectedEnemyChampion = this.video.enemy_champion.split(',');
           }
-          this.inputForm.patchValue({lane: this.video.lane});
+          if (this.video.lane) {
+            this.selectedLane = this.video.lane.split(',');
+          }
           if (this.video.runes) {
             this.selectedRunes = this.video.runes;
           }
@@ -157,6 +162,11 @@ export class AdminEditVideoComponent extends VideoBaseComponent implements OnIni
       this.enemyChampionInput.initializeItemsList();
       this.enemyChampionInput.selectItem(this.video.enemy_champion);
     }
+    if (this.laneInput && this.video && this.video.lane) {
+      this.laneInput.selectedItems = this.video.lane.split(',');
+      this.laneInput.initializeItemsList();
+      this.laneInput.selectItem(this.video.lane);
+    }
     if (this.runesInput && this.video && this.video.runes) {
       this.runesInput.selectedItems = this.video.runes;
       this.runesInput.initializeItemsList();
@@ -198,6 +208,13 @@ export class AdminEditVideoComponent extends VideoBaseComponent implements OnIni
     super.handleEnemyChampionChange(selectedChampions);
     if (this.video) {
       this.video.enemy_champion = selectedChampions.join(',');
+    }
+  }
+
+  override handleLanesChange(selectedLane: string[]) {
+    super.handleLanesChange(selectedLane);
+    if (this.video) {
+      this.video.lane = selectedLane.join(',');
     }
   }
 
