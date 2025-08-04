@@ -40,6 +40,7 @@ import {AdminBaseComponent} from "../shared/admin-base/admin-base.component";
 export class AdminEditVideoComponent extends AdminBaseComponent implements OnInit {
   video: Video | undefined;
   safeSrc: SafeResourceUrl | undefined;
+  override    buttonText = 'Update';
 
   @ViewChild('championInput') championInput!: ChampionNameInputComponent;
   @ViewChild('enemyChampionInput') enemyChampionInput!: EnemyChampionNameInputComponent;
@@ -134,8 +135,18 @@ export class AdminEditVideoComponent extends AdminBaseComponent implements OnIni
   }
 
   override handleSubmit(): void {
-    // Implementation of the abstract method
-    this.activateVideo();
+
+    if (this.video && this.video.id) {
+      this.videoService.updateVideo(this.video).then(response => {
+        if (response.success) {
+          alert(response.message);
+          this.router.navigate(['/adm']);
+        } else {
+          alert(response.message);
+        }
+      });
+    }
+
   }
 
 

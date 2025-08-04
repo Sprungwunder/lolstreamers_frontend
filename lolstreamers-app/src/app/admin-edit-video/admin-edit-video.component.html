@@ -47,66 +47,15 @@
           [enemyTeamChampionsList]="enemyTeamChampionsList"
           (enemyTeamChampionsChange)="handleEnemyTeamChampionsChange($event)">
         </app-enemy-team-champions-input>
+        <!-- Activate Video Button -->
+        <button type="button" class="primary" (click)="handleSubmit()">{{ buttonText }}</button>
       </form>
     </div>
+
   </section>
 
   <div>
     <app-video-card *ngIf="video" [video]="video"></app-video-card>
-  </div>
-
-  <!-- details -->
-  <div>
-    <table *ngIf="video">
-      <tr>
-        <td>ID</td>
-        <td>{{ video.id }}</td>
-      </tr>
-      <tr>
-        <td>URL</td>
-        <td>{{ video.video_url }}</td>
-      </tr>
-      <tr>
-        <td>Streamer</td>
-        <td>{{ video.streamer }}</td>
-      </tr>
-      <tr>
-        <td>Champion</td>
-        <td>{{ video.champion }}</td>
-      </tr>
-      <tr>
-        <td>Enemy Champion</td>
-        <td>{{ video.enemy_champion }}</td>
-      </tr>
-      <tr>
-        <td>Lane</td>
-        <td>{{ video.lane }}</td>
-      </tr>
-      <tr>
-        <td>Runes</td>
-        <td>{{ video.runes }}</td>
-      </tr>
-      <tr>
-        <td>Items</td>
-        <td>{{ video.champion_items }}</td>
-      </tr>
-      <tr>
-        <td>With</td>
-        <td>{{ video.team_champions }}</td>
-      </tr>
-      <tr>
-        <td>Against</td>
-        <td>{{ video.enemy_team_champions }}</td>
-      </tr>
-      <tr>
-        <td>YT ID</td>
-        <td>{{ video.ytid }}</td>
-      </tr>
-    </table>
-  </div>
-  <!-- YouTube Embedded Video Preview -->
-  <div *ngIf="video && video.ytid && safeSrc" class="youtube-preview">
-    <iframe [src]="safeSrc" width="800" height="450" allowfullscreen></iframe>
   </div>
 
   <!-- Activate Video Button -->

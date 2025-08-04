@@ -125,5 +125,36 @@ export class VideoService {
     }
   }
 
+  async updateVideo(video: Video): Promise<{ success: boolean; message: string }> {
+    if (video.id === undefined) {
+      return {success: false, message: 'Invalid video data submitted'};
+    }
+    try {
+      const response = await fetch(`${this.url}/ytvideos/${video.id}/`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(video),
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        return {success: true, message: 'Video updated successfully'};
+      }
+
+      if (response.status === 400) {
+        return {success: false, message: 'Invalid video data submitted'};
+      } else if (response.status === 500) {
+        return {success: false, message: 'Server error occurred'};
+      } else {
+        return {success: false, message: `HTTP error! status: ${response.status}`};
+      }
+    } catch (error) {
+      console.error('Error adding video:', error);
+      return {success: false, message: 'Network or server error occurred'};
+    }
+  }
+
   constructor() {}
 }
