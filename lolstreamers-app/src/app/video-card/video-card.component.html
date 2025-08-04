@@ -1,5 +1,9 @@
 <div class="video-card">
-  <h3 class="video-title">{{ video.title }}</h3>
+  <h3 class="video-title">
+    {{ video.title }}
+    <a *ngIf="authService.isLoggedIn()" [routerLink]="['/adm/edit', video.id]" class="edit-link">(edit)</a>
+  </h3>
+
   <div class="video-content">
     <a [href]="video.video_url" target="_blank">
       <img
