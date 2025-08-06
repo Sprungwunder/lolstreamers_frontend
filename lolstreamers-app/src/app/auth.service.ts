@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {firstValueFrom, lastValueFrom} from "rxjs";
-import {environment} from "../environments/environment";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom, lastValueFrom, Observable } from "rxjs";
+import { environment } from "../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,7 @@ import {environment} from "../environments/environment";
 export class AuthService {
   private baseUrl: string = environment.apiUrl + "/api/token/";
   private csrfUrl: string = environment.apiUrl + "/api/csrf/";
+  private refreshUrl: string = environment.apiUrl + "/api/token/refresh/";
 
   private loggedInKey: string = 'user_logged_in';
 
@@ -47,4 +48,11 @@ export class AuthService {
     return sessionStorage.getItem(this.loggedInKey) === 'true';
   }
 
+  refreshToken(): Observable<any> {
+    // For HTTP-only cookies, we don't need to manually include the refresh token
+    // The browser will automatically include the cookie with the request
+    return this.http.post(this.refreshUrl, {}, {
+      withCredentials: true
+    });
+  }
 }

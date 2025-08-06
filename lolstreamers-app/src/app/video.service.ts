@@ -1,13 +1,16 @@
-import {Injectable} from '@angular/core';
-import {Video} from "./video";
+import { Injectable } from '@angular/core';
+import { Video } from "./video";
 import { environment } from '../environments/environment';
-
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VideoService {
   private url = environment.apiUrl + "/streamers";
+
+  constructor(private http: HttpClient) {}
 
   async getAllVideos(): Promise<Video[]> {
     const data = await fetch(this.url + '/ytvideos/?is_active=true');
@@ -32,16 +35,6 @@ export class VideoService {
     enemyTeamChampions: string,
   ): Promise<Video[]> {
     let cleanedLane = lane.replace('Any', '');
-    /*
-    console.log(`filterVideos called with -
-    champion: ${champion},
-    lane: ${cleanedLane},
-    enemy_champion: ${enemy_champion},
-    items: ${championItems},
-    runes: ${runes},
-    team_champions: ${teamChampions},
-    enemy_team_champions: ${enemyTeamChampions}`);
-     */
 
     const response = await fetch(
       `${this.url}/ytvideos/?is_active=true&` +
@@ -57,30 +50,33 @@ export class VideoService {
   }
 
   async getInactiveVideos(): Promise<Video[]> {
-    const data = await fetch(`${this.url}/ytvideos/?is_active=false`, {credentials: 'include'});
-    return await data.json() ?? [];
+    // Use HttpClient for automatic token refresh
+    try {
+      const data = await firstValueFrom(
+        this.http.get<Video[]>(`${this.url}/ytvideos/?is_active=false`)
+      );
+      return data ?? [];
+    } catch (error) {
+      console.error('Error getting inactive videos:', error);
+      return [];
+    }
   }
 
   async activateVideoById(videoId: string) {
     console.log(`activateVideoById: ${videoId}`);
     try {
-      const response = await fetch(`${this.url}/ytvideos/activate/${videoId}/`, {
-        method: 'POST',
-        credentials: 'include',
-      });
-
-      if (response.ok) {
-        return { success: true, message: 'Video activated successfully' };
-      } else if (response.status === 401) {
-        console.error('Authentication error: User not authenticated');
-        // You might want to redirect to login or handle this in your component
+      // Use HttpClient for automatic token refresh
+      await firstValueFrom(
+        this.http.post<any>(`${this.url}/ytvideos/activate/${videoId}/`, {})
+      );
+      return { success: true, message: 'Video activated successfully' };
+    } catch (error: any) {
+      console.error('Error activating video:', error);
+      if (error.status === 401) {
         return { success: false, message: 'Authentication required. Please log in again.' };
       } else {
-        return { success: false, message: `Error: ${response.status} - ${response.statusText}` };
+        return { success: false, message: `Error: ${error.status} - ${error.statusText || 'Unknown error'}` };
       }
-    } catch (error) {
-      console.error('Error activating video:', error);
-      return { success: false, message: 'Network or server error occurred' };
     }
   }
 
@@ -95,33 +91,23 @@ export class VideoService {
       team_champions: videoData['selectedTeamChampions'],
       enemy_team_champions: videoData['selectedEnemyTeamChampions'],
       lol_version: '15',
-    }
-    //console.log(JSON.stringify(video));
+    };
 
     try {
-      const response = await fetch(`${this.url}/ytvideos/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(video),
-        credentials: 'include',
-      });
-
-      if (response.ok) {
-        return {success: true, message: 'Video added successfully'};
-      }
-
-      if (response.status === 400) {
+      // Use HttpClient for automatic token refresh
+      await firstValueFrom(
+        this.http.post(`${this.url}/ytvideos/`, video)
+      );
+      return {success: true, message: 'Video added successfully'};
+    } catch (error: any) {
+      console.error('Error adding video:', error);
+      if (error.status === 400) {
         return {success: false, message: 'Invalid video data submitted'};
-      } else if (response.status === 500) {
+      } else if (error.status === 500) {
         return {success: false, message: 'Server error occurred'};
       } else {
-        return {success: false, message: `HTTP error! status: ${response.status}`};
+        return {success: false, message: `HTTP error! status: ${error.status || 'unknown'}`};
       }
-    } catch (error) {
-      console.error('Error adding video:', error);
-      return {success: false, message: 'Network or server error occurred'};
     }
   }
 
@@ -129,32 +115,22 @@ export class VideoService {
     if (video.id === undefined) {
       return {success: false, message: 'Invalid video data submitted'};
     }
+
     try {
-      const response = await fetch(`${this.url}/ytvideos/${video.id}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(video),
-        credentials: 'include',
-      });
-
-      if (response.ok) {
-        return {success: true, message: 'Video updated successfully'};
-      }
-
-      if (response.status === 400) {
+      // Use HttpClient for automatic token refresh via interceptor
+      await firstValueFrom(
+        this.http.put(`${this.url}/ytvideos/${video.id}/`, video)
+      );
+      return {success: true, message: 'Video updated successfully'};
+    } catch (error: any) {
+      console.error('Error updating video:', error);
+      if (error.status === 400) {
         return {success: false, message: 'Invalid video data submitted'};
-      } else if (response.status === 500) {
+      } else if (error.status === 500) {
         return {success: false, message: 'Server error occurred'};
       } else {
-        return {success: false, message: `HTTP error! status: ${response.status}`};
+        return {success: false, message: `HTTP error! status: ${error.status || 'unknown'}`};
       }
-    } catch (error) {
-      console.error('Error adding video:', error);
-      return {success: false, message: 'Network or server error occurred'};
     }
   }
-
-  constructor() {}
 }
