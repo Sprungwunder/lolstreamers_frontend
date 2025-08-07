@@ -5,13 +5,21 @@
   </h3>
 
   <div class="video-content">
-    <a [href]="video.video_url" target="_blank">
-      <img
-        [src]="'https://i.ytimg.com/vi/' + video.ytid + '/mqdefault.jpg'"
-        alt="{{ video.title }}"
-        class="video-thumbnail"
-      />
-    </a>
+    <div>
+      <a [href]="video.video_url" target="_blank">
+        <img
+          [src]="'https://i.ytimg.com/vi/' + video.ytid + '/mqdefault.jpg'"
+          alt="{{ video.title }}"
+          class="video-thumbnail"
+        />
+      </a>
+
+      <div class="video-info">
+        <p><strong>From:</strong> {{ video.published_at | date:'medium' }}</p>
+        <p><strong>Views:</strong> {{video.views}}</p>
+        <p><strong>Likes:</strong> {{video.likes}}</p>
+      </div>
+    </div>
     <div class="video-details">
       <p><strong>Streamer:</strong> {{ video.streamer }}</p>
       <p><strong>Champion:</strong> {{ video.champion }}</p>

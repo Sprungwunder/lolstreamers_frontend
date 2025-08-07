@@ -12,4 +12,7 @@ export interface Video {
   team_champions: string[];
   title: string;
   video_url: string;
+  views: number;
+  likes: number;
+  published_at: string;
 }
