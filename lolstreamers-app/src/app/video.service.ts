@@ -17,6 +17,11 @@ export class VideoService {
     return await data.json() ?? [];
   }
 
+  async getAllStreamers(): Promise<string[]> {
+    const data = await fetch(this.url + '/streamers/');
+    return await (await data.json()).streamer ?? [];
+  }
+
   async getVideoById(id: string): Promise<Video | undefined> {
     const data = await fetch(`${this.url}/ytvideos/${id}/`);
     if (data.status !== 200) {
@@ -33,6 +38,7 @@ export class VideoService {
     championItems: string,
     teamChampions: string,
     enemyTeamChampions: string,
+    streamers: string,
   ): Promise<Video[]> {
     let cleanedLane = lane.replace('Any', '');
 
@@ -44,7 +50,8 @@ export class VideoService {
       `&runes=${encodeURIComponent(runes)}` +
       `&team_champions=${encodeURIComponent(teamChampions)}` +
       `&enemy_team_champions=${encodeURIComponent(enemyTeamChampions)}` +
-      `&champion_items=${encodeURIComponent(championItems)}`
+      `&champion_items=${encodeURIComponent(championItems)}` +
+      `&streamer=${encodeURIComponent(streamers)}`
     );
     return await response.json() ?? [];
   }

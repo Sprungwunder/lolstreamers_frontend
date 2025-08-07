@@ -1,0 +1,38 @@
+
+<div>
+  <label for="streamerName">
+    Streamer
+  </label>
+
+  <!-- Selected Streamer -->
+  <div class="selected-items">
+    <span
+      class="item-tag"
+      *ngFor="let selectedStreamer of selectedItems"
+    >
+      {{ selectedStreamer }}
+      <button type="button" (click)="removeItem(selectedStreamer)">
+        &times;
+      </button>
+    </span>
+  </div>
+
+  <!-- Input Field -->
+  <input
+    id="streamerName"
+    type="text"
+    [formControl]="itemInput"
+    [placeholder]="placeholder"
+  />
+
+  <!-- Suggestions List -->
+  <ul class="suggestions">
+    <li
+      *ngFor="let streamer of itemsSuggestionList"
+      (click)="selectItem(streamer)"
+    >
+      {{ streamer }}
+    </li>
+  </ul>
+
+</div>

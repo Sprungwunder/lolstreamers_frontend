@@ -12,6 +12,7 @@ import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-c
 import {VideoCardComponent} from "../video-card/video-card.component";
 import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
 import {AdminBaseComponent} from "../shared/admin-base/admin-base.component";
+import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.component";
 
 
 @Component({
@@ -27,7 +28,8 @@ import {AdminBaseComponent} from "../shared/admin-base/admin-base.component";
     ItemsInputComponent,
     RunesInputComponent,
     TeamChampionsInputComponent,
-    VideoCardComponent
+    VideoCardComponent,
+    StreamerInputComponent
   ],
   templateUrl: '../streamer-home/streamer-home.component.html',
   styleUrls: ['./admin-add-video.component.css'],

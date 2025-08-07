@@ -16,6 +16,7 @@ import {
   EnemyTeamChampionsInputComponent
 } from "../shared/enemy-team-champions-input/enemy-team-champions-input.component";
 import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
+import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.component";
 
 @Component({
   selector: 'app-streamer-home',
@@ -30,7 +31,8 @@ import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
     ItemsInputComponent,
     TeamChampionsInputComponent,
     EnemyTeamChampionsInputComponent,
-    LaneInputComponent
+    LaneInputComponent,
+    StreamerInputComponent
   ],
   templateUrl: './streamer-home.component.html',
   styleUrl: './streamer-home.component.css'
@@ -48,6 +50,10 @@ export class StreamerHomeComponent extends VideoBaseComponent {
   }
 
   async initializeData() {
+    this.videoService.getAllStreamers().then((streamer: string[]) => {
+      this.streamerList = streamer;
+      this.selectedStreamer = streamer; // Initially, all streamers are in the filtered list
+    });
     const videoList = await this.videoService.getAllVideos();
     this.videoList = videoList;
     this.filteredVideoList = [...videoList];
@@ -63,6 +69,7 @@ export class StreamerHomeComponent extends VideoBaseComponent {
       this.selectedItems.join(',') ?? '',
       this.selectedTeamChampions.join(',') ?? '',
       this.selectedEnemyTeamChampions.join(',') ?? '',
+      this.selectedStreamer.join(',') ?? '',
     ).then((videos: Video[]) => {
       this.filteredVideoList = videos;
     }).catch((error) => {

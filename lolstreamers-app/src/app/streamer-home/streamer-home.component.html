@@ -17,6 +17,14 @@
           Please provide a valid YouTube URL.
         </div>
       </div>
+
+      <div *ngIf="!isAdmin">
+        <app-streamer-input
+          [streamerList]="streamerList"
+          (streamerChange)="handleStreamerChange($event)">
+        </app-streamer-input>
+      </div>
+
       <!-- Champion Name -->
       <app-champion-name-input
         [championsList]="championsList"

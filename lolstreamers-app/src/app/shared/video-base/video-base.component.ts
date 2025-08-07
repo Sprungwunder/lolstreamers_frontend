@@ -9,6 +9,9 @@ export abstract class VideoBaseComponent {
   videoList: Video[] = [];
   filteredVideoList: Video[] = [];
 
+  streamerList: string[] = [];
+  selectedStreamer: string[] = [];
+
   // champions
   championsList: string[] = [
     'Aatrox', 'Ahri', 'Akali', 'Akshan', 'Alistar', 'Ambessa', 'Amumu', 'Anivia', 'Annie', 'Aphelios',
@@ -167,6 +170,10 @@ export abstract class VideoBaseComponent {
 
   handleEnemyTeamChampionsChange(selectedTeamChampions: string[]): void {
     this.selectedEnemyTeamChampions = selectedTeamChampions;
+  }
+
+  handleStreamerChange(selectedStreamers: string[]): void {
+    this.selectedStreamer = selectedStreamers
   }
 
   abstract handleSubmit(): void; // To be implemented by child classes
