@@ -104,7 +104,7 @@ export abstract class VideoBaseComponent {
     "Rylai's Crystal Scepter", "Serylda's Grudge", "Serpent's Fang", "Seraph's Embrace",
     "Shadowflame", "Sheen", "Shurelya's Battlesong", "Solstice Sleigh",
     "Spear of Shojin", "Spirit Visage", "Staff of Flowing Water", "Statikk Shiv", "Sterak's Gage",
-    "Stormrazor", "Stridebreaker", "Sundered Sky", "Sunfire Aegis", "Terminus",
+    "Stormsurge", "Stridebreaker", "Sundered Sky", "Sunfire Aegis", "Terminus",
     "The Collector", "Thornmail", "Titanic Hydra", "Trailblazer", "Trinity Force",
     "Umbral Glaive", "Unending Despair", "Vigilant Wardstone", "Void Staff", "Voltaic Cyclosword",
     "Warmog's Armor", "Winter's Approach", "Wit's End", "Youmuu's Ghostblade", "Yun Tal Wildarrows",
