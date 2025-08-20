@@ -35,6 +35,7 @@ import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.co
   styleUrls: ['./admin-add-video.component.css'],
 })
 export class AdminAddVideoComponent extends AdminBaseComponent {
+  isSearching = false;
 
   handleSubmit() {
     const {youtubeUrl} = this.inputForm.value;

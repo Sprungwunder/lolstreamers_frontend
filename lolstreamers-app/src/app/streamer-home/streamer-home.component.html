@@ -70,7 +70,16 @@
         (enemyTeamChampionsChange)="handleEnemyTeamChampionsChange($event)">
       </app-enemy-team-champions-input>
 
-      <button type="button" class="primary" (click)="handleSubmit()">{{ buttonText }}</button>
+      <button
+        type="button"
+        class="primary"
+        [disabled]="isSearching"
+        [class.loading]="isSearching"
+        (click)="handleSubmit()"
+      >
+        {{ buttonText }}
+        <span *ngIf="isSearching" class="loading-spinner"></span>
+      </button>
     </form>
   </section>
   <section class="results" *ngIf="!isAdmin">

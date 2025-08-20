@@ -40,6 +40,7 @@ import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.co
 export class StreamerHomeComponent extends VideoBaseComponent {
 
   buttonText = "Search"
+  isSearching = false;
 
   constructor(protected override videoService: VideoService) {
     super(videoService);
@@ -61,6 +62,7 @@ export class StreamerHomeComponent extends VideoBaseComponent {
 
   // Filter videos based on the selected champion and other filters
   filterVideos() {
+    this.isSearching = true;
     this.videoService.filterVideos(
       this.selectedChampion.join(',') ?? '',
       this.selectedLane.join(',') ?? '',
@@ -72,12 +74,20 @@ export class StreamerHomeComponent extends VideoBaseComponent {
       this.selectedStreamer.join(',') ?? '',
     ).then((videos: Video[]) => {
       this.filteredVideoList = videos;
+      this.isSearching = false;
+      this.buttonText = "Search";
     }).catch((error) => {
       console.error('Failed to filter videos:', error);
+      this.isSearching = false;
+      this.buttonText = "Search";
+      alert('Failed to filter videos. Please try again later.');
     });
   }
 
   handleSubmit() {
+    if (this.isSearching) {
+      return; // Do nothing if the search is already in progress
+    }
     this.filterVideos();
   }
 }
