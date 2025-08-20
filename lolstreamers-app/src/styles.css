@@ -302,3 +302,6 @@ h1::after, h2::after {
   height: 2px;
   background: linear-gradient(to right, transparent, var(--lol-gold), transparent);
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

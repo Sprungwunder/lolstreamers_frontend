@@ -1,7 +1,20 @@
 <div class="video-card">
   <h3 class="video-title">
     {{ video.title }}
-    <a *ngIf="authService.isLoggedIn()" [routerLink]="['/adm/edit', video.id]" class="edit-link">(edit)</a>
+    <button *ngIf="authService.isLoggedIn()"
+            mat-icon-button
+            [routerLink]="['/adm/edit', video.id]"
+            class="edit-button"
+            matTooltip="Edit video">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button *ngIf="authService.isLoggedIn()"
+            mat-icon-button
+            (click)="deleteVideo()"
+            class="delete-button"
+            matTooltip="Delete video">
+      <mat-icon>delete</mat-icon>
+    </button>
   </h3>
 
   <div class="video-content">

@@ -86,6 +86,7 @@
     <app-video-card
       *ngFor="let video of filteredVideoList"
       [video]="video"
+      (videoDeleted)="onVideoDeleted($event)"
     ></app-video-card>
   </section>
 </section>

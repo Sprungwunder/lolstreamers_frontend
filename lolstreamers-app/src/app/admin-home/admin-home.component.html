@@ -7,9 +7,12 @@
     </div>
     <section class="results">
       <h2>Videos which need validation and activation</h2>
-      <a *ngFor="let video of videoList" [routerLink]="['/adm/edit', video.id]">
-        <app-video-card [video]="video"></app-video-card>
-      </a>
+      <div *ngFor="let video of videoList">
+        <app-video-card
+          [video]="video"
+          (videoDeleted)="onVideoDeleted($event)"
+        ></app-video-card>
+      </div>
     </section>
   </section>
 </div>

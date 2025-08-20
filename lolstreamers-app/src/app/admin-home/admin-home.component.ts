@@ -27,4 +27,8 @@ export class AdminHomeComponent {
       console.error('Failed to get videos:', error);
     });
   }
+
+  onVideoDeleted(_videoId: string) {
+    this.getInactiveVideos();
+  }
 }

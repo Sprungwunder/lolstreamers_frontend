@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Video } from "./video";
 import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import {firstValueFrom, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -140,4 +140,9 @@ export class VideoService {
       }
     }
   }
+
+  deleteVideo(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.url}/ytvideos/${id}/`);
+  }
+
 }
