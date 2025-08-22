@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8081:80"
+      - "127.0.0.1:8081:80"
     networks:
       - web-app-network
     # Optional: add environment variables to configure the API URL
