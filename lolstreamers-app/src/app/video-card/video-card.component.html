@@ -3,6 +3,13 @@
     {{ video.title }}
     <button *ngIf="authService.isLoggedIn()"
             mat-icon-button
+            (click)="activateVideo()"
+            class="activate-button"
+            matTooltip="Activate video">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+    <button *ngIf="authService.isLoggedIn()"
+            mat-icon-button
             [routerLink]="['/adm/edit', video.id]"
             class="edit-button"
             matTooltip="Edit video">

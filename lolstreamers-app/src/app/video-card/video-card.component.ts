@@ -47,4 +47,29 @@ export class VideoCardComponent {
     }
   }
 
+  activateVideo(): void {
+    if (!this.video || !this.video.id) {
+      return;
+    }
+
+    this.videoService.activateVideoById(this.video.id)
+      .then((result) => {
+        if (result.success) {
+          alert('Video activated successfully!');
+          // You might want to emit an event or refresh the parent component
+        } else {
+          console.error('Error activating video:', result.message);
+          if (result.message.includes('Authentication required')) {
+            alert('Your session has expired. Please log in again.');
+          } else {
+            alert(`Failed to activate video: ${result.message}`);
+          }
+        }
+      })
+      .catch((error) => {
+        console.error('Unexpected error activating video:', error);
+        alert('An unexpected error occurred. Please try again later.');
+      });
+  }
+
 }
