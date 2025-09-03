@@ -9,12 +9,34 @@
           type="url"
           formControlName="youtubeUrl"
           placeholder="Enter YouTube Video Link"
+          (blur)="onYoutubeUrlChange($event)"
+          (input)="onYoutubeUrlChange($event)"
         />
         <div
           class="error-message"
           *ngIf="inputForm.get('youtubeUrl')?.invalid && inputForm.get('youtubeUrl')?.touched"
         >
           Please provide a valid YouTube URL.
+        </div>
+
+        <!-- Duplicate warning section -->
+        <div class="duplicate-warning" *ngIf="showDuplicateWarning && duplicateVideos.length > 0">
+          <div class="warning-header">
+            ⚠️ Warning: Similar videos found!
+          </div>
+          <div class="duplicate-videos-list">
+            <div *ngFor="let video of duplicateVideos" class="duplicate-video-item">
+              <div class="video-info">
+                <strong>{{ video.streamer }}</strong> - {{ video.champion }}
+                <span *ngIf="video.lane"> ({{ video.lane }})</span>
+              </div>
+              <div class="video-link">
+                <a [href]="getYouTubeVideoLink(video)" target="_blank" rel="noopener noreferrer">
+                  View on YouTube
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

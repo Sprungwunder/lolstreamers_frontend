@@ -1,39 +1,47 @@
+/* Duplicate warning styles */
+.duplicate-warning {
+  margin-top: 10px;
+  padding: 15px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 5px;
+  color: #856404;
+}
 
-.streamer-home {
+.warning-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.duplicate-videos-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.duplicate-video-item {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.search form {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-/* Make YouTube URL input span full width */
-.search form .form-group {
-  grid-column: 1 / -1;
-}
-
-/* Alternative selector if the above doesn't work */
-.search form div:first-child {
-  grid-column: 1 / -1;
-}
-
-.lane-selection {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.lane-option {
-  display: flex;
+  justify-content: space-between;
   align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
 }
 
-.results {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+.duplicate-video-item:last-child {
+  border-bottom: none;
+}
+
+.video-info {
+  flex: 1;
+  font-size: 13px;
+}
+
+.video-link a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.video-link a:hover {
+  text-decoration: underline;
 }

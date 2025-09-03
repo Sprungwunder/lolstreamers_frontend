@@ -5,6 +5,8 @@ import {VideoService} from "../../video.service";
 
 export abstract class VideoBaseComponent {
   isAdmin = false;
+  duplicateVideos: Video[] = [];
+  showDuplicateWarning = false;
 
   videoList: Video[] = [];
   filteredVideoList: Video[] = [];
@@ -181,6 +183,12 @@ export abstract class VideoBaseComponent {
   onVideoDeleted(_videoId: string): void {};
 
   onVideoActivated(_videoId: string): void {};
+
+  onYoutubeUrlChange(event: any) {}
+
+  getYouTubeVideoLink(video: Video): string {
+    return '#';
+  }
 }
 
 

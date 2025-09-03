@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {ChampionNameInputComponent} from "../shared/champion-name-input/champion-name-input.component";
@@ -34,8 +34,23 @@ import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.co
   templateUrl: '../streamer-home/streamer-home.component.html',
   styleUrls: ['./admin-add-video.component.css'],
 })
-export class AdminAddVideoComponent extends AdminBaseComponent {
+export class AdminAddVideoComponent extends AdminBaseComponent implements OnInit {
   isSearching = false;
+
+  ngOnInit() {
+    // Initialize form value change subscription for YouTube URL
+    this.inputForm.get('youtubeUrl')?.valueChanges.subscribe(value => {
+      if (value && this.inputForm.get('youtubeUrl')?.valid) {
+        // Debounce the duplicate check to avoid too many API calls
+        setTimeout(() => {
+          this.checkForDuplicates(value);
+        }, 500);
+      } else {
+        this.showDuplicateWarning = false;
+        this.duplicateVideos = [];
+      }
+    });
+  }
 
   handleSubmit() {
     const {youtubeUrl} = this.inputForm.value;

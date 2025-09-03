@@ -16,3 +16,9 @@ export interface Video {
   likes: number;
   published_at: string;
 }
+
+export interface DuplicateCheckResponse {
+  hasDuplicates: boolean;
+  message: string;
+  videos: Video[];
+}

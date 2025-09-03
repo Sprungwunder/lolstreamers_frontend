@@ -3,6 +3,7 @@ import { VideoBaseComponent } from '../video-base/video-base.component';
 import { VideoService } from '../../video.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import {Video} from "../../video";
 
 @Component({
   template: '',
@@ -99,6 +100,43 @@ export abstract class AdminBaseComponent extends VideoBaseComponent {
       });
     } else {
       alert('Please fill in all required fields correctly.');
+    }
+  }
+
+  override onYoutubeUrlChange(event: any) {
+    const url = event.target.value;
+    if (url && this.inputForm.get('youtubeUrl')?.valid) {
+      this.checkForDuplicates(url);
+    } else {
+      this.showDuplicateWarning = false;
+      this.duplicateVideos = [];
+    }
+  }
+
+  // Get YouTube video link from URL
+  override getYouTubeVideoLink(video: Video): string {
+    if (video.ytid) {
+      return `https://www.youtube.com/watch?v=${video.ytid}`;
+    }
+    return video.video_url || '#';
+  }
+
+  // Check for duplicate videos when YouTube URL changes
+  async checkForDuplicates(youtubeUrl: string): Promise<void> {
+    if (!youtubeUrl || this.inputForm.get('youtubeUrl')?.invalid) {
+      this.showDuplicateWarning = false;
+      this.duplicateVideos = [];
+      return;
+    }
+
+    try {
+      const result = await this.videoService.checkDuplicateVideo(youtubeUrl);
+      this.duplicateVideos = result.videos;
+      this.showDuplicateWarning = result.hasDuplicates;
+    } catch (error) {
+      console.error('Error checking for duplicates:', error);
+      this.showDuplicateWarning = false;
+      this.duplicateVideos = [];
     }
   }
 

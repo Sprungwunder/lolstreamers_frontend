@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Video } from "./video";
+import { Video, DuplicateCheckResponse } from "./video";
 import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import {firstValueFrom, Observable} from 'rxjs';
@@ -143,6 +143,19 @@ export class VideoService {
 
   deleteVideo(id: string): Observable<void> {
     return this.http.delete<void>(`${this.url}/ytvideos/${id}/`);
+  }
+
+  async checkDuplicateVideo(youtubeUrl: string): Promise<DuplicateCheckResponse> {
+    try {
+      const urlObj = new URL(youtubeUrl);
+      const queryParam = urlObj.searchParams.get('v') || urlObj.pathname.split('/').pop() || '';
+      return await firstValueFrom(
+        this.http.get<DuplicateCheckResponse>(`${this.url}/ytvideos/check-duplicate/${queryParam}/`)
+      );
+    } catch (error) {
+      console.error('Error checking for duplicate videos:', error);
+      return {hasDuplicates: true, videos: [], message: 'Error checking for duplicates'};
+    }
   }
 
 }
