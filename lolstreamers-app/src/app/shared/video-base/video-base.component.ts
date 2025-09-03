@@ -179,6 +179,8 @@ export abstract class VideoBaseComponent {
   abstract handleSubmit(): void; // To be implemented by child classes
 
   onVideoDeleted(_videoId: string): void {};
+
+  onVideoActivated(_videoId: string): void {};
 }
 
 

@@ -31,4 +31,8 @@ export class AdminHomeComponent {
   onVideoDeleted(_videoId: string) {
     this.getInactiveVideos();
   }
+
+  onVideoActivated(_videoId: string) {
+    this.getInactiveVideos();
+  }
 }

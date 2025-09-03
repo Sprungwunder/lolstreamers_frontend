@@ -95,5 +95,8 @@ export class StreamerHomeComponent extends VideoBaseComponent {
     this.filterVideos();
   }
 
+  override onVideoActivated(_videoId: string) {
+    this.filterVideos();
+  }
 }
 

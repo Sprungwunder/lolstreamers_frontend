@@ -24,6 +24,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 export class VideoCardComponent {
  @Input() video!: Video;
  @Output() videoDeleted = new EventEmitter<string>();
+ @Output() videoActivated = new EventEmitter<string>();
 
 
   constructor(
@@ -56,7 +57,7 @@ export class VideoCardComponent {
       .then((result) => {
         if (result.success) {
           alert('Video activated successfully!');
-          // You might want to emit an event or refresh the parent component
+          this.videoActivated.emit(this.video.id);
         } else {
           console.error('Error activating video:', result.message);
           if (result.message.includes('Authentication required')) {
