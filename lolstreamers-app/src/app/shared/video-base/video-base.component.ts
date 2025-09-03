@@ -185,10 +185,6 @@ export abstract class VideoBaseComponent {
   onVideoActivated(_videoId: string): void {};
 
   onYoutubeUrlChange(event: any) {}
-
-  getYouTubeVideoLink(video: Video): string {
-    return '#';
-  }
 }
 
 

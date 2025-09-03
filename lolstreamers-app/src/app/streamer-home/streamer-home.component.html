@@ -31,7 +31,7 @@
                 <span *ngIf="video.lane"> ({{ video.lane }})</span>
               </div>
               <div class="video-link">
-                <a [href]="getYouTubeVideoLink(video)" target="_blank" rel="noopener noreferrer">
+                <a [href]=video.video_url target="_blank" rel="noopener noreferrer">
                   View on YouTube
                 </a>
               </div>

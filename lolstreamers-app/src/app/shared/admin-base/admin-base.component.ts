@@ -3,7 +3,6 @@ import { VideoBaseComponent } from '../video-base/video-base.component';
 import { VideoService } from '../../video.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import {Video} from "../../video";
 
 @Component({
   template: '',
@@ -111,14 +110,6 @@ export abstract class AdminBaseComponent extends VideoBaseComponent {
       this.showDuplicateWarning = false;
       this.duplicateVideos = [];
     }
-  }
-
-  // Get YouTube video link from URL
-  override getYouTubeVideoLink(video: Video): string {
-    if (video.ytid) {
-      return `https://www.youtube.com/watch?v=${video.ytid}`;
-    }
-    return video.video_url || '#';
   }
 
   // Check for duplicate videos when YouTube URL changes
