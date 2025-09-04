@@ -20,6 +20,7 @@ body {
   font-family: 'Beaufort for LOL', 'Spiegel', 'Helvetica Neue', Arial, sans-serif;
   margin: 0;
   padding: 0;
+  min-width: 400px; /* Ensure minimum width */
 }
 
 /* Parent Container (Stream Home) */
@@ -34,7 +35,8 @@ section.streamer-home {
   background-attachment: fixed;
   background-position: center;
   min-height: 100vh;
-  padding: 20px 0;
+  padding: 20px 10px; /* Reduced horizontal padding for mobile */
+  min-width: 400px; /* Ensure minimum width */
 }
 
 /* Search Form Section */
@@ -48,6 +50,7 @@ section.search {
   box-shadow: 0 0 15px rgba(200, 155, 60, 0.5);
   border: 1px solid var(--lol-gold);
   position: relative;
+  box-sizing: border-box; /* Ensure padding is included in width */
 }
 
 section.search::before {
@@ -66,7 +69,7 @@ section.search::before {
 /* Form Layout */
 form {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Reduced minmax for better mobile fit */
   gap: 20px;
   max-width: 1300px;
   margin: 0 auto;
@@ -80,8 +83,9 @@ section.results {
   gap: 30px;
   max-width: 1300px;
   width: 100%;
-  padding: 20px;
+  padding: 20px 10px; /* Reduced horizontal padding for mobile */
   justify-content: center;
+  box-sizing: border-box; /* Ensure padding is included in width */
 }
 
 /* Individual Card Styling */
@@ -98,6 +102,7 @@ section.results {
   flex-direction: column;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box; /* Ensure padding is included in width */
 }
 
 .card::before {
@@ -119,6 +124,99 @@ section.results {
 @media (max-width: 600px) {
   .card {
     margin-bottom: 20px;
+  }
+}
+
+/* Enhanced Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  section.streamer-home {
+    padding: 15px 8px;
+    gap: 15px;
+  }
+
+  section.search {
+    margin: 10px auto;
+    padding: 15px 10px;
+  }
+
+  form {
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: 15px;
+  }
+
+  section.results {
+    padding: 15px 8px;
+    gap: 20px;
+  }
+
+  .card {
+    margin-bottom: 15px; /* Reduced margin */
+    min-width: 260px; /* Further reduced for mobile */
+  }
+}
+
+/* Small Mobile Devices (400px - 480px) */
+@media (max-width: 480px) {
+  body {
+    min-width: 400px;
+  }
+
+  section.streamer-home {
+    padding: 10px 5px;
+    min-width: 400px;
+  }
+
+  section.search {
+    margin: 8px auto;
+    padding: 12px 8px;
+    width: calc(100% - 16px); /* Account for margin */
+  }
+
+  form {
+    gap: 12px;
+  }
+
+  section.results {
+    padding: 12px 5px;
+    gap: 15px;
+  }
+
+  .card {
+    min-width: 380px; /* Ensure it fits within 400px container with padding */
+  }
+
+  /* Adjust form inputs for mobile */
+  input, select {
+    padding: 10px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+
+  button.primary {
+    padding: 14px 20px;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+}
+
+/* Very Small Devices (exactly 400px) */
+@media (max-width: 400px) {
+  body, section.streamer-home {
+    min-width: 400px;
+    max-width: 400px;
+    overflow-x: auto; /* Allow horizontal scrolling if content is too wide */
+  }
+
+  section.search {
+    width: calc(400px - 20px); /* Fixed width minus margins */
+  }
+
+  section.results {
+    width: calc(400px - 10px); /* Fixed width minus padding */
+  }
+
+  .card {
+    min-width: 370px; /* Fit within the container */
+    max-width: 370px;
   }
 }
 
