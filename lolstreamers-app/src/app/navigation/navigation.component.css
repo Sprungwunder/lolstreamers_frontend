@@ -90,8 +90,8 @@ nav a:active {
 
 @media (max-width: 400px) {
   nav {
-    min-width: 400px;
-    max-width: 400px;
+    min-width: 320px; /* Reduced from 400px */
+    max-width: 100vw; /* Use viewport width instead of 400px */
     padding: 10px 5px;
     gap: 6px;
   }
