@@ -47,7 +47,7 @@ section.search {
   background: rgba(10, 20, 40, 0.9);
   border-radius: 0;
   box-shadow: 0 0 15px rgba(200, 155, 60, 0.5);
-  border: 2px solid var(--lol-gold);
+  border: 1px solid var(--lol-gold);
   position: relative;
   box-sizing: border-box;
 }
