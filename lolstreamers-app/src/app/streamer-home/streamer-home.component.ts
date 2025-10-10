@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {ReactiveFormsModule} from '@angular/forms';
 import {VideoCardComponent} from "../video-card/video-card.component";
@@ -17,6 +17,8 @@ import {
 } from "../shared/enemy-team-champions-input/enemy-team-champions-input.component";
 import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
 import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.component";
+import { CookieConsentService } from '../shared/cookie-consent/cookie-consent.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-streamer-home',
@@ -36,20 +38,46 @@ import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.co
     templateUrl: './streamer-home.component.html',
     styleUrl: './streamer-home.component.css'
 })
-export class StreamerHomeComponent extends VideoBaseComponent {
+export class StreamerHomeComponent extends VideoBaseComponent implements OnDestroy {
 
   buttonText = "Search"
   isSearching = false;
+  hasConsent = false;
+  private consentSubscription: Subscription;
 
-  constructor(protected override videoService: VideoService) {
+  constructor(
+    protected override videoService: VideoService,
+    private cookieConsentService: CookieConsentService
+  ) {
     super(videoService);
+    this.consentSubscription = this.cookieConsentService.consent$.subscribe(
+      (hasConsent) => {
+        this.hasConsent = hasConsent;
+        if (hasConsent && this.videoList.length === 0) {
+          this.initializeData();
+        }
+      }
+    );
   }
 
   ngOnInit() {
-    this.initializeData();
+    this.hasConsent = this.cookieConsentService.hasConsent();
+    if (this.hasConsent) {
+      this.initializeData();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.consentSubscription) {
+      this.consentSubscription.unsubscribe();
+    }
   }
 
   async initializeData() {
+    if (!this.hasConsent) {
+      return;
+    }
+
     this.videoService.getAllStreamers().then((streamer: string[]) => {
       this.streamerList = streamer;
       this.selectedStreamer = streamer; // Initially, all streamers are in the filtered list
@@ -61,6 +89,10 @@ export class StreamerHomeComponent extends VideoBaseComponent {
 
   // Filter videos based on the selected champion and other filters
   filterVideos() {
+    if (!this.hasConsent) {
+      return;
+    }
+
     this.isSearching = true;
     this.videoService.filterVideos(
       this.selectedChampion.join(',') ?? '',
@@ -84,18 +116,22 @@ export class StreamerHomeComponent extends VideoBaseComponent {
   }
 
   handleSubmit() {
-    if (this.isSearching) {
-      return; // Do nothing if the search is already in progress
+    if (this.isSearching || !this.hasConsent) {
+      return; // Do nothing if the search is already in progress or no consent
     }
     this.filterVideos();
   }
 
   override onVideoDeleted(_videoId: string) {
-    this.filterVideos();
+    if (this.hasConsent) {
+      this.filterVideos();
+    }
   }
 
   override onVideoActivated(_videoId: string) {
-    this.filterVideos();
+    if (this.hasConsent) {
+      this.filterVideos();
+    }
   }
 }
 

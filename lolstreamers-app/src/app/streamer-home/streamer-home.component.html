@@ -104,13 +104,19 @@
       </button>
     </form>
   </section>
-  <section class="results" *ngIf="!isAdmin">
-    <app-video-card
-      *ngFor="let video of filteredVideoList"
-      [video]="video"
-      (videoDeleted)="onVideoDeleted($event)"
-      (videoActivated)="onVideoActivated($event)"
-    ></app-video-card>
-  </section>
+  <div *ngIf="!hasConsent" class="consent-message">
+    <h2>Cookie Consent Required</h2>
+    <p>Please accept cookies to view video content and use all features of this site.</p>
+  </div>
+  <div *ngIf="hasConsent">
+    <section class="results" *ngIf="!isAdmin">
+      <app-video-card
+        *ngFor="let video of filteredVideoList"
+        [video]="video"
+        (videoDeleted)="onVideoDeleted($event)"
+        (videoActivated)="onVideoActivated($event)"
+      ></app-video-card>
+    </section>
+  </div>
 </section>
 

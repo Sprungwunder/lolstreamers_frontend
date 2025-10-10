@@ -35,6 +35,7 @@ import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.co
 })
 export class AdminAddVideoComponent extends AdminBaseComponent implements OnInit {
   isSearching = false;
+  hasConsent = true;
 
   ngOnInit() {
     // Initialize form value change subscription for YouTube URL

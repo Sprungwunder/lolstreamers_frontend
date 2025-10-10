@@ -1,24 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
+import {CookieConsentService} from "../cookie-consent/cookie-consent.service";
 
 @Component({
   selector: 'app-keks-banner',
-  providers: [CookieService],
   templateUrl: './keks-banner.component.html',
   styleUrl: './keks-banner.component.css',
 })
 export class KeksBannerComponent implements OnInit {
   showBanner = false;
-  cookieName = 'cookie_consent';
 
-  constructor(private cookieService: CookieService) {}
+  constructor(private cookieConsentService: CookieConsentService) {}
 
   ngOnInit(): void {
-    this.showBanner = !this.cookieService.check(this.cookieName);
+    this.showBanner = !this.cookieConsentService.hasConsent();
   }
 
   acceptCookies(): void {
-    this.cookieService.set(this.cookieName, 'accepted', 365);
+    this.cookieConsentService.giveConsent();
     this.showBanner = false;
   }
 }
