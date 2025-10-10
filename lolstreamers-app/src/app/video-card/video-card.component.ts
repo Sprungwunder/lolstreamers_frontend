@@ -9,17 +9,16 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
 
 @Component({
-  selector: 'app-video-card',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule
-  ],
-  templateUrl: './video-card.component.html',
-  styleUrl: './video-card.component.css'
+    selector: 'app-video-card',
+    imports: [
+        CommonModule,
+        RouterModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule
+    ],
+    templateUrl: './video-card.component.html',
+    styleUrl: './video-card.component.css'
 })
 export class VideoCardComponent {
  @Input() video!: Video;

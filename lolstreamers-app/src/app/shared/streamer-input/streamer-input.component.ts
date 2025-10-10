@@ -4,11 +4,10 @@ import {CommonModule} from '@angular/common';
 import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.component";
 
 @Component({
-  selector: 'app-streamer-input',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './streamer-input.component.html',
-  styleUrls: ['./streamer-input.component.css']
+    selector: 'app-streamer-input',
+    imports: [CommonModule, ReactiveFormsModule],
+    templateUrl: './streamer-input.component.html',
+    styleUrls: ['./streamer-input.component.css']
 })
 export class StreamerInputComponent extends TypeAheadInputComponent {
   @Input() placeholder: string = 'Type to filter streamer names...';  // Placeholder for input

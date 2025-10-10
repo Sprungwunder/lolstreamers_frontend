@@ -16,23 +16,22 @@ import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.co
 
 
 @Component({
-  selector: 'app-admin-add-video',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ChampionNameInputComponent,
-    EnemyChampionNameInputComponent,
-    LaneInputComponent,
-    EnemyTeamChampionsInputComponent,
-    ItemsInputComponent,
-    RunesInputComponent,
-    TeamChampionsInputComponent,
-    VideoCardComponent,
-    StreamerInputComponent
-  ],
-  templateUrl: '../streamer-home/streamer-home.component.html',
-  styleUrls: ['./admin-add-video.component.css'],
+    selector: 'app-admin-add-video',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        ChampionNameInputComponent,
+        EnemyChampionNameInputComponent,
+        LaneInputComponent,
+        EnemyTeamChampionsInputComponent,
+        ItemsInputComponent,
+        RunesInputComponent,
+        TeamChampionsInputComponent,
+        VideoCardComponent,
+        StreamerInputComponent
+    ],
+    templateUrl: '../streamer-home/streamer-home.component.html',
+    styleUrls: ['./admin-add-video.component.css']
 })
 export class AdminAddVideoComponent extends AdminBaseComponent implements OnInit {
   isSearching = false;

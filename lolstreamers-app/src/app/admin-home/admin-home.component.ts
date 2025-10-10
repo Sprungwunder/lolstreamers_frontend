@@ -6,11 +6,10 @@ import {NgForOf} from "@angular/common";
 import {VideoCardComponent} from "../video-card/video-card.component";
 
 @Component({
-  selector: 'app-admin-home',
-  standalone: true,
-  imports: [RouterModule, NgForOf, VideoCardComponent],
-  templateUrl: './admin-home.component.html',
-  styleUrl: './admin-home.component.css'
+    selector: 'app-admin-home',
+    imports: [RouterModule, NgForOf, VideoCardComponent],
+    templateUrl: './admin-home.component.html',
+    styleUrl: './admin-home.component.css'
 })
 export class AdminHomeComponent {
   videoService: VideoService = inject(VideoService);

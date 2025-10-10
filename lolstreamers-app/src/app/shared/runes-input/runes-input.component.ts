@@ -4,11 +4,10 @@ import {CommonModule} from '@angular/common';
 import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.component";
 
 @Component({
-  selector: 'app-runes-input',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './runes-input.component.html',
-  styleUrls: ['./runes-input.component.css']
+    selector: 'app-runes-input',
+    imports: [CommonModule, ReactiveFormsModule],
+    templateUrl: './runes-input.component.html',
+    styleUrls: ['./runes-input.component.css']
 })
 export class RunesInputComponent extends TypeAheadInputComponent {
   @Input() placeholder: string = 'Type to filter for runes...';  // Placeholder for input

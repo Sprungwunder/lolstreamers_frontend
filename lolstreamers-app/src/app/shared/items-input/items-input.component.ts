@@ -4,11 +4,10 @@ import {CommonModule} from '@angular/common';
 import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.component";
 
 @Component({
-  selector: 'app-items-input',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './items-input.component.html',
-  styleUrls: ['./items-input.component.css']
+    selector: 'app-items-input',
+    imports: [CommonModule, ReactiveFormsModule],
+    templateUrl: './items-input.component.html',
+    styleUrls: ['./items-input.component.css']
 })
 export class ItemsInputComponent extends TypeAheadInputComponent {
   @Input() placeholder: string = 'Type to filter for legendary items...';  // Placeholder for input

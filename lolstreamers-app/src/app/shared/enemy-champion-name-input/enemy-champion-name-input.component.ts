@@ -4,11 +4,10 @@ import {CommonModule} from '@angular/common';
 import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.component";
 
 @Component({
-  selector: 'app-enemy-champion-name-input',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './enemy-champion-name-input.component.html',
-  styleUrls: ['./enemy-champion-name-input.component.css']
+    selector: 'app-enemy-champion-name-input',
+    imports: [CommonModule, ReactiveFormsModule],
+    templateUrl: './enemy-champion-name-input.component.html',
+    styleUrls: ['./enemy-champion-name-input.component.css']
 })
 export class EnemyChampionNameInputComponent extends TypeAheadInputComponent {
   @Input() placeholder: string = 'Type to filter champion names...';  // Placeholder for input

@@ -5,7 +5,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 @Component({
-  template: '',
+    template: '',
+    standalone: false
 })
 export abstract class AdminBaseComponent extends VideoBaseComponent {
   protected router = inject(Router);

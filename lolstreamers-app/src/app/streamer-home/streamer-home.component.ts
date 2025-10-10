@@ -19,23 +19,22 @@ import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
 import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.component";
 
 @Component({
-  selector: 'app-streamer-home',
-  standalone: true,
-  imports: [
-    CommonModule,
-    VideoCardComponent,
-    ReactiveFormsModule,
-    ChampionNameInputComponent,
-    EnemyChampionNameInputComponent,
-    RunesInputComponent,
-    ItemsInputComponent,
-    TeamChampionsInputComponent,
-    EnemyTeamChampionsInputComponent,
-    LaneInputComponent,
-    StreamerInputComponent
-  ],
-  templateUrl: './streamer-home.component.html',
-  styleUrl: './streamer-home.component.css'
+    selector: 'app-streamer-home',
+    imports: [
+        CommonModule,
+        VideoCardComponent,
+        ReactiveFormsModule,
+        ChampionNameInputComponent,
+        EnemyChampionNameInputComponent,
+        RunesInputComponent,
+        ItemsInputComponent,
+        TeamChampionsInputComponent,
+        EnemyTeamChampionsInputComponent,
+        LaneInputComponent,
+        StreamerInputComponent
+    ],
+    templateUrl: './streamer-home.component.html',
+    styleUrl: './streamer-home.component.css'
 })
 export class StreamerHomeComponent extends VideoBaseComponent {
 

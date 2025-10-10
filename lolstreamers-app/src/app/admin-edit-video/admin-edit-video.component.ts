@@ -19,23 +19,22 @@ import {AdminBaseComponent} from "../shared/admin-base/admin-base.component";
 
 
 @Component({
-  selector: 'app-admin-edit-video',
-  standalone: true,
-  imports: [
-    VideoCardComponent,
-    CommonModule,
-    ChampionNameInputComponent,
-    EnemyChampionNameInputComponent,
-    EnemyTeamChampionsInputComponent,
-    ItemsInputComponent,
-    RunesInputComponent,
-    TeamChampionsInputComponent,
-    FormsModule,
-    ReactiveFormsModule,
-    LaneInputComponent
-  ],
-  templateUrl: './admin-edit-video.component.html',
-  styleUrl: './admin-edit-video.component.css'
+    selector: 'app-admin-edit-video',
+    imports: [
+        VideoCardComponent,
+        CommonModule,
+        ChampionNameInputComponent,
+        EnemyChampionNameInputComponent,
+        EnemyTeamChampionsInputComponent,
+        ItemsInputComponent,
+        RunesInputComponent,
+        TeamChampionsInputComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        LaneInputComponent
+    ],
+    templateUrl: './admin-edit-video.component.html',
+    styleUrl: './admin-edit-video.component.css'
 })
 export class AdminEditVideoComponent extends AdminBaseComponent implements OnInit {
   video: Video | undefined;
