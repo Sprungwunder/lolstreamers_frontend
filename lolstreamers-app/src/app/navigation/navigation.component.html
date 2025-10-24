@@ -3,4 +3,10 @@
   <a [routerLink]="['/contact']">Contact</a>
   <a [routerLink]="['/adm']" *ngIf="authService.isLoggedIn()">Admin</a>
   <a href="#" (click)="logout()" *ngIf="authService.isLoggedIn()">Logout</a>
+  <a href="https://www.buymeacoffee.com/searchtherift"
+     target="_blank"
+     rel="noopener noreferrer"
+     class="coffee-link">
+    ☕ Support
+  </a>
 </nav>
