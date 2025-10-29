@@ -65,6 +65,13 @@
         (championsChange)="handleChampionChange($event)">
       </app-champion-name-input>
 
+      <app-lane-input
+        #laneInput
+        [lanesList]="lanesList"
+        [isAdmin]="isAdmin"
+        (lanesChange)="handleLanesChange($event)">
+      </app-lane-input>
+
       <!-- Enemy Champion Name -->
       <app-enemy-champion-name-input
         #enemyChampionInput
@@ -72,13 +79,6 @@
         [isAdmin]="isAdmin"
         (enemyChampionsChange)="handleEnemyChampionChange($event)">
       </app-enemy-champion-name-input>
-
-      <app-lane-input
-        #laneInput
-        [lanesList]="lanesList"
-        [isAdmin]="isAdmin"
-        (lanesChange)="handleLanesChange($event)">
-      </app-lane-input>
 
       <!-- Runes search -->
       <app-runes-input
