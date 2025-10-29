@@ -40,6 +40,7 @@ export class StreamerHomeComponent extends VideoBaseComponent implements OnDestr
 
   buttonText = "Search"
   isSearching = false;
+  showMoreFilters = false; // Add this property
   hasConsent = false;
   private consentSubscription: Subscription;
 
@@ -130,6 +131,10 @@ export class StreamerHomeComponent extends VideoBaseComponent implements OnDestr
     if (this.hasConsent) {
       this.filterVideos();
     }
+  }
+
+  toggleMoreFilters() {
+    this.showMoreFilters = !this.showMoreFilters;
   }
 }
 

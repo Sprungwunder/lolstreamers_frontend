@@ -39,6 +39,7 @@ import {VideoService} from "../video.service";
 export class AdminAddVideoComponent extends AdminBaseComponent implements OnInit {
   isSearching = false;
   hasConsent = true;
+  showMoreFilters = true;
 
   @ViewChild('championInput') championInput!: ChampionNameInputComponent;
   @ViewChild('laneInput') laneInput!: LaneInputComponent;
@@ -169,4 +170,6 @@ export class AdminAddVideoComponent extends AdminBaseComponent implements OnInit
     const {youtubeUrl} = this.inputForm.value;
     this.submitVideoToApi(youtubeUrl || '');
   }
+
+  toggleMoreFilters() {}
 }

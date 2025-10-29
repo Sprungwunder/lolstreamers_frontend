@@ -1,139 +1,156 @@
 <section class="streamer-home">
   <section class="search">
     <form [formGroup]="inputForm" (ngSubmit)="handleSubmit()" (keydown.enter)="$event.preventDefault()">
-      @if (isAdmin) {
-        <div class="form-group">
-          <label for="youtubeUrl">YouTube URL*</label>
-          <div class="selected-items"></div>
-          <input
-            id="youtubeUrl"
-            type="url"
-            formControlName="youtubeUrl"
-            placeholder="Enter YouTube Video Link"
-            (blur)="onYoutubeUrlChange($event)"
-            (input)="onYoutubeUrlChange($event)"
-            />
-          @if (inputForm.get('youtubeUrl')?.invalid && inputForm.get('youtubeUrl')?.touched) {
-            <div
-              class="error-message"
-              >
-              Please provide a valid YouTube URL.
-            </div>
-          }
-          <!-- Duplicate warning section -->
-          @if (showDuplicateWarning && duplicateVideos.length > 0) {
-            <div class="duplicate-warning">
-              <div class="warning-header">
-                ⚠️ Warning: Similar videos found!
-              </div>
-              <div class="duplicate-videos-list">
-                @for (video of duplicateVideos; track video) {
-                  <div class="duplicate-video-item">
-                    <div class="video-info">
-                      <strong>{{ video.streamer }}</strong> - {{ video.champion }}
-                      @if (video.lane) {
-                        <span> ({{ video.lane }})</span>
-                      }
-                    </div>
-                    <div class="video-link">
-                      <a [href]=video.video_url target="_blank" rel="noopener noreferrer">
-                        View on YouTube
-                      </a>
-                    </div>
-                  </div>
-                }
-              </div>
-            </div>
-          }
-        </div>
-      }
-
-      @if (!isAdmin) {
-        <div>
-          <app-streamer-input
-            [streamerList]="streamerList"
-            (streamerChange)="handleStreamerChange($event)">
-          </app-streamer-input>
-        </div>
-      }
-
-      <!-- Champion Name -->
-      <app-champion-name-input
-        #championInput
-        [championsList]="championsList"
-        [isAdmin]="isAdmin"
-        (championsChange)="handleChampionChange($event)">
-      </app-champion-name-input>
-
-      <app-lane-input
-        #laneInput
-        [lanesList]="lanesList"
-        [isAdmin]="isAdmin"
-        (lanesChange)="handleLanesChange($event)">
-      </app-lane-input>
-
-      <!-- Enemy Champion Name -->
-      <app-enemy-champion-name-input
-        #enemyChampionInput
-        [enemyChampionsList]="enemyChampionsList"
-        [isAdmin]="isAdmin"
-        (enemyChampionsChange)="handleEnemyChampionChange($event)">
-      </app-enemy-champion-name-input>
-
-      <!-- Runes search -->
-      <app-runes-input
-        #runesInput
-        [runesList]="runesList"
-        (runesChange)="handleRunesChange($event)">
-      </app-runes-input>
-
-
-      <!-- Champion Items -->
-      <app-items-input
-        #itemsInput
-        [itemsList]="itemsList"
-        (itemsChange)="handleItemsChange($event)">
-      </app-items-input>
-
-      <!-- Team Champions -->
-      <app-team-champions-input
-        #teamChampionsInput
-        [teamChampionsList]="teamChampionsList"
-        (teamChampionsChange)="handleTeamChampionsChange($event)">
-      </app-team-champions-input>
-
-      <!-- enemy Champions -->
-      <app-enemy-team-champions-input
-        #enemyTeamChampionsInput
-        [enemyTeamChampionsList]="enemyTeamChampionsList"
-        (enemyTeamChampionsChange)="handleEnemyTeamChampionsChange($event)">
-      </app-enemy-team-champions-input>
-
-      @if (isAdmin) {
-      <div class="form-actions">
-        <div class="checkbox-group">
-          <label class="checkbox-label">
+      <div class="main-filters">
+        @if (isAdmin) {
+          <div class="form-group">
+            <label for="youtubeUrl">YouTube URL*</label>
+            <div class="selected-items"></div>
             <input
-              type="checkbox"
-              [(ngModel)]="addAnotherVideo"
-              [ngModelOptions]="{standalone: true}"
-              name="addAnotherVideo">
-            <span class="checkbox-text">Add another video</span>
-          </label>
-        </div>
-        <button
-          type="button"
-          class="primary"
-          [disabled]="isSearching"
-          [class.loading]="isSearching"
-          (click)="handleSubmit()"
-        >
-          {{ buttonText }}
-          @if (isSearching) {
-            <span class="loading-spinner"></span>
-          }
-        </button>
+              id="youtubeUrl"
+              type="url"
+              formControlName="youtubeUrl"
+              placeholder="Enter YouTube Video Link"
+              (blur)="onYoutubeUrlChange($event)"
+              (input)="onYoutubeUrlChange($event)"
+            />
+            @if (inputForm.get('youtubeUrl')?.invalid && inputForm.get('youtubeUrl')?.touched) {
+              <div
+                class="error-message"
+              >
+                Please provide a valid YouTube URL.
+              </div>
+            }
+            <!-- Duplicate warning section -->
+            @if (showDuplicateWarning && duplicateVideos.length > 0) {
+              <div class="duplicate-warning">
+                <div class="warning-header">
+                  ⚠️ Warning: Similar videos found!
+                </div>
+                <div class="duplicate-videos-list">
+                  @for (video of duplicateVideos; track video) {
+                    <div class="duplicate-video-item">
+                      <div class="video-info">
+                        <strong>{{ video.streamer }}</strong> - {{ video.champion }}
+                        @if (video.lane) {
+                          <span> ({{ video.lane }})</span>
+                        }
+                      </div>
+                      <div class="video-link">
+                        <a [href]=video.video_url target="_blank" rel="noopener noreferrer">
+                          View on YouTube
+                        </a>
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        @if (!isAdmin) {
+          <div>
+            <app-streamer-input
+              [streamerList]="streamerList"
+              (streamerChange)="handleStreamerChange($event)">
+            </app-streamer-input>
+          </div>
+        }
+
+        <!-- Champion Name -->
+        <app-champion-name-input
+          #championInput
+          [championsList]="championsList"
+          [isAdmin]="isAdmin"
+          (championsChange)="handleChampionChange($event)">
+        </app-champion-name-input>
+
+        <app-lane-input
+          #laneInput
+          [lanesList]="lanesList"
+          [isAdmin]="isAdmin"
+          (lanesChange)="handleLanesChange($event)">
+        </app-lane-input>
+
+        @if (!isAdmin) {
+          <!-- More Filters Toggle Button -->
+          <div class="more-filters-toggle">
+            <button
+              type="button"
+              class="toggle-filters-btn"
+              (click)="toggleMoreFilters()">
+              {{ showMoreFilters ? 'Hide Additional Filters' : 'More Filters' }}
+              <span class="toggle-icon" [class.expanded]="showMoreFilters">▼</span>
+            </button>
+          </div>
+        }
       </div>
+      <!-- Additional filters - collapsible -->
+      <div class="additional-filters" [class.expanded]="showMoreFilters">
+        <!-- Enemy Champion Name -->
+        <app-enemy-champion-name-input
+          #enemyChampionInput
+          [enemyChampionsList]="enemyChampionsList"
+          [isAdmin]="isAdmin"
+          (enemyChampionsChange)="handleEnemyChampionChange($event)">
+        </app-enemy-champion-name-input>
+
+        <!-- Runes search -->
+        <app-runes-input
+          #runesInput
+          [runesList]="runesList"
+          (runesChange)="handleRunesChange($event)">
+        </app-runes-input>
+
+
+        <!-- Champion Items -->
+        <app-items-input
+          #itemsInput
+          [itemsList]="itemsList"
+          (itemsChange)="handleItemsChange($event)">
+        </app-items-input>
+
+        <!-- Team Champions -->
+        <app-team-champions-input
+          #teamChampionsInput
+          [teamChampionsList]="teamChampionsList"
+          (teamChampionsChange)="handleTeamChampionsChange($event)">
+        </app-team-champions-input>
+
+        <!-- enemy Champions -->
+        <app-enemy-team-champions-input
+          #enemyTeamChampionsInput
+          [enemyTeamChampionsList]="enemyTeamChampionsList"
+          (enemyTeamChampionsChange)="handleEnemyTeamChampionsChange($event)">
+        </app-enemy-team-champions-input>
+      </div>
+
+      @if (isAdmin) {
+        <div class="form-actions">
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input
+                type="checkbox"
+                [(ngModel)]="addAnotherVideo"
+                [ngModelOptions]="{standalone: true}"
+                name="addAnotherVideo">
+              <span class="checkbox-text">Add another video</span>
+            </label>
+          </div>
+          <button
+            type="button"
+            class="primary"
+            [disabled]="isSearching"
+            [class.loading]="isSearching"
+            (click)="handleSubmit()"
+          >
+            {{ buttonText }}
+            @if (isSearching) {
+              <span class="loading-spinner"></span>
+            }
+          </button>
+        </div>
       }
       @if (!isAdmin) {
         <button
@@ -161,7 +178,7 @@
     <div>
       @if (!isAdmin) {
         <section class="results">
-          @for (video of filteredVideoList; track video) {
+          @for (video of filteredVideoList; track video.id) {
             <app-video-card
               [video]="video"
               (videoDeleted)="onVideoDeleted($event)"
