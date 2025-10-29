@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {RouterModule} from "@angular/router";
 import {Video} from "../video";
 import {VideoService} from "../video.service";
@@ -11,7 +11,7 @@ import {VideoCardComponent} from "../video-card/video-card.component";
     templateUrl: './admin-home.component.html',
     styleUrl: './admin-home.component.css'
 })
-export class AdminHomeComponent {
+export class AdminHomeComponent implements OnInit{
   videoService: VideoService = inject(VideoService);
   videoList: Video[] = [];
 
@@ -27,11 +27,11 @@ export class AdminHomeComponent {
     });
   }
 
-  onVideoDeleted(_videoId: string) {
-    this.getInactiveVideos();
+  onVideoDeleted(videoId: string) {
+    this.videoList = this.videoList.filter(video => video.id !== videoId);
   }
 
-  onVideoActivated(_videoId: string) {
-    this.getInactiveVideos();
+  onVideoActivated(videoId: string) {
+    this.videoList = this.videoList.filter(video => video.id !== videoId);
   }
 }
