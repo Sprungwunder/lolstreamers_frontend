@@ -68,7 +68,7 @@ section.search::before {
 /* Form Layout */
 form {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); /* Reduced minmax for better mobile fit */
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); /* Reduced minmax for better mobile fit */
   gap: 20px;
   max-width: 1300px;
   margin: 0 auto;
@@ -429,7 +429,7 @@ button.primary:active {
 .main-filters {
   grid-column: 1 / -1; /* Span full width of the grid */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
   gap: 20px;
   margin-bottom: 0;
 }
@@ -438,7 +438,7 @@ button.primary:active {
 .additional-filters {
   grid-column: 1 / -1; /* Span full width of the grid */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
   gap: 20px;
   overflow: hidden;
   transition: all 0.3s ease;
