@@ -2,12 +2,12 @@ import {Component, inject} from '@angular/core';
 import {RouterModule} from "@angular/router";
 import {Video} from "../video";
 import {VideoService} from "../video.service";
-import {NgForOf} from "@angular/common";
+
 import {VideoCardComponent} from "../video-card/video-card.component";
 
 @Component({
     selector: 'app-admin-home',
-    imports: [RouterModule, NgForOf, VideoCardComponent],
+    imports: [RouterModule, VideoCardComponent],
     templateUrl: './admin-home.component.html',
     styleUrl: './admin-home.component.css'
 })

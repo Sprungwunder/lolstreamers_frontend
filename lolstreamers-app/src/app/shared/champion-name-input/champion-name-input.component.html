@@ -1,39 +1,44 @@
 <div>
   <label for="championName">
-    Champion played<span *ngIf="isAdmin">*</span>
-    <i class="check-icon" *ngIf="selectedItems.length > 0">✓</i>
-  </label>
+    Champion played@if (isAdmin) {
+    <span>*</span>
+  }
+  @if (selectedItems.length > 0) {
+    <i class="check-icon">✓</i>
+  }
+</label>
 
-  <!-- Selected Champions -->
-  <div class="selected-items">
+<!-- Selected Champions -->
+<div class="selected-items">
+  @for (selectedChampion of selectedItems; track selectedChampion) {
     <span
       class="item-tag"
-      *ngFor="let selectedChampion of selectedItems"
-    >
+      >
       {{ selectedChampion }}
       <button type="button" (click)="removeItem(selectedChampion)">
         &times;
       </button>
     </span>
-  </div>
+  }
+</div>
 
-  <!-- Input Field -->
-  <ng-container *ngIf="selectedItems.length === 0">
-    <input
-      id="championName"
-      type="text"
-      [formControl]="itemInput"
-      [placeholder]="placeholder"
+<!-- Input Field -->
+@if (selectedItems.length === 0) {
+  <input
+    id="championName"
+    type="text"
+    [formControl]="itemInput"
+    [placeholder]="placeholder"
     />
-
-    <!-- Suggestions List -->
-    <ul class="suggestions">
+  <!-- Suggestions List -->
+  <ul class="suggestions">
+    @for (champion of itemsSuggestionList; track champion) {
       <li
-        *ngFor="let champion of itemsSuggestionList"
         (click)="selectItem(champion)"
-      >
+        >
         {{ champion }}
       </li>
-    </ul>
-  </ng-container>
+    }
+  </ul>
+}
 </div>

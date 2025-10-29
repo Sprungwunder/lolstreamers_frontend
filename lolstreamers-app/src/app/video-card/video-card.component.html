@@ -1,27 +1,33 @@
 <div class="video-card">
   <h3 class="video-title">
     {{ video.title }}
-    <button *ngIf="authService.isLoggedIn()"
-            mat-icon-button
-            (click)="activateVideo()"
-            class="activate-button"
-            matTooltip="Activate video">
-      <mat-icon>play_arrow</mat-icon>
-    </button>
-    <button *ngIf="authService.isLoggedIn()"
-            mat-icon-button
-            [routerLink]="['/adm/edit', video.id]"
-            class="edit-button"
-            matTooltip="Edit video">
-      <mat-icon>edit</mat-icon>
-    </button>
-    <button *ngIf="authService.isLoggedIn()"
-            mat-icon-button
-            (click)="deleteVideo()"
-            class="delete-button"
-            matTooltip="Delete video">
-      <mat-icon>delete</mat-icon>
-    </button>
+    @if (authService.isLoggedIn()) {
+      <button
+        mat-icon-button
+        (click)="activateVideo()"
+        class="activate-button"
+        matTooltip="Activate video">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+    }
+    @if (authService.isLoggedIn()) {
+      <button
+        mat-icon-button
+        [routerLink]="['/adm/edit', video.id]"
+        class="edit-button"
+        matTooltip="Edit video">
+        <mat-icon>edit</mat-icon>
+      </button>
+    }
+    @if (authService.isLoggedIn()) {
+      <button
+        mat-icon-button
+        (click)="deleteVideo()"
+        class="delete-button"
+        matTooltip="Delete video">
+        <mat-icon>delete</mat-icon>
+      </button>
+    }
   </h3>
 
   <div class="video-content">
@@ -31,7 +37,7 @@
           [src]="'https://i.ytimg.com/vi/' + video.ytid + '/mqdefault.jpg'"
           alt="{{ video.title }}"
           class="video-thumbnail"
-        />
+          />
       </a>
 
       <div class="video-info">

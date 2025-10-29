@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {CommonModule} from "@angular/common";
+
 import {ReactiveFormsModule} from '@angular/forms';
 import {VideoCardComponent} from "../video-card/video-card.component";
 import {Video} from "../video";
@@ -23,18 +23,17 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-streamer-home',
     imports: [
-        CommonModule,
-        VideoCardComponent,
-        ReactiveFormsModule,
-        ChampionNameInputComponent,
-        EnemyChampionNameInputComponent,
-        RunesInputComponent,
-        ItemsInputComponent,
-        TeamChampionsInputComponent,
-        EnemyTeamChampionsInputComponent,
-        LaneInputComponent,
-        StreamerInputComponent
-    ],
+    VideoCardComponent,
+    ReactiveFormsModule,
+    ChampionNameInputComponent,
+    EnemyChampionNameInputComponent,
+    RunesInputComponent,
+    ItemsInputComponent,
+    TeamChampionsInputComponent,
+    EnemyTeamChampionsInputComponent,
+    LaneInputComponent,
+    StreamerInputComponent
+],
     templateUrl: './streamer-home.component.html',
     styleUrl: './streamer-home.component.css'
 })

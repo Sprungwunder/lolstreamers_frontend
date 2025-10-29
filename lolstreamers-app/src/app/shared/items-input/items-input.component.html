@@ -1,39 +1,42 @@
 <div>
   <label for="items">
     Items used
-    <i class="check-icon" *ngIf="selectedItems.length === maxItems">✓</i>
+    @if (selectedItems.length === maxItems) {
+      <i class="check-icon">✓</i>
+    }
   </label>
 
   <!-- Selected Items -->
   <div class="selected-items">
-    <span
-      class="item-tag"
-      *ngFor="let selectedItem of selectedItems"
-    >
-      {{ selectedItem }}
-      <button type="button" (click)="removeItem(selectedItem)">
-        &times;
-      </button>
-    </span>
+    @for (selectedItem of selectedItems; track selectedItem) {
+      <span
+        class="item-tag"
+        >
+        {{ selectedItem }}
+        <button type="button" (click)="removeItem(selectedItem)">
+          &times;
+        </button>
+      </span>
+    }
   </div>
 
-  <ng-container *ngIf="selectedItems.length < maxItems">
-  <!-- Input Field -->
-  <input
-    id="items"
-    type="text"
-    [formControl]="itemInput"
-    [placeholder]="placeholder"
-  />
-
-  <!-- Suggestions List -->
-  <ul class="suggestions">
-    <li
-      *ngFor="let item of itemsSuggestionList"
-      (click)="selectItem(item)"
-    >
-      {{ item }}
-    </li>
-  </ul>
-  </ng-container>
+  @if (selectedItems.length < maxItems) {
+    <!-- Input Field -->
+    <input
+      id="items"
+      type="text"
+      [formControl]="itemInput"
+      [placeholder]="placeholder"
+      />
+    <!-- Suggestions List -->
+    <ul class="suggestions">
+      @for (item of itemsSuggestionList; track item) {
+        <li
+          (click)="selectItem(item)"
+          >
+          {{ item }}
+        </li>
+      }
+    </ul>
+  }
 </div>

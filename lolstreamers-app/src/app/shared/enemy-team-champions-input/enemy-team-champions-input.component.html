@@ -1,39 +1,42 @@
 <div>
   <label for="enemyChampions">
     Enemy Team champions
-    <i class="check-icon" *ngIf="selectedItems.length === maxItems">✓</i>
+    @if (selectedItems.length === maxItems) {
+      <i class="check-icon">✓</i>
+    }
   </label>
 
   <!-- Selected Champions -->
   <div class="selected-items">
-    <span
-      class="item-tag"
-      *ngFor="let selectedRune of selectedItems"
-    >
-      {{ selectedRune }}
-      <button type="button" (click)="removeItem(selectedRune)">
-        &times;
-      </button>
-    </span>
+    @for (selectedRune of selectedItems; track selectedRune) {
+      <span
+        class="item-tag"
+        >
+        {{ selectedRune }}
+        <button type="button" (click)="removeItem(selectedRune)">
+          &times;
+        </button>
+      </span>
+    }
   </div>
 
-  <ng-container *ngIf="selectedItems.length < maxItems">
+  @if (selectedItems.length < maxItems) {
     <!-- Input Field -->
     <input
       id="enemyChampions"
       type="text"
       [formControl]="itemInput"
       [placeholder]="placeholder"
-    />
-
+      />
     <!-- Suggestions List -->
     <ul class="suggestions">
-      <li
-        *ngFor="let champion of itemsSuggestionList"
-        (click)="selectItem(champion)"
-      >
-        {{ champion }}
-      </li>
+      @for (champion of itemsSuggestionList; track champion) {
+        <li
+          (click)="selectItem(champion)"
+          >
+          {{ champion }}
+        </li>
+      }
     </ul>
-  </ng-container>
+  }
 </div>

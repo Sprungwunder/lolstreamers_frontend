@@ -1,72 +1,76 @@
 <section class="results">
   <section class="search">
-    <div *ngIf="video">
-      <form [formGroup]="inputForm" (ngSubmit)="handleSubmit()" (keydown.enter)="$event.preventDefault()">
-        <app-champion-name-input
-          #championInput
-          [championsList]="championsList"
-          [isAdmin]="true"
-          (championsChange)="handleChampionChange($event)">
-        </app-champion-name-input>
-        <app-enemy-champion-name-input
-          #enemyChampionInput
-          [enemyChampionsList]="enemyChampionsList"
-          [isAdmin]="true"
-          (enemyChampionsChange)="handleEnemyChampionChange($event)">
-        </app-enemy-champion-name-input>
-        <!-- Lane Search -->
-        <app-lane-input
-          #laneInput
-          [lanesList]="lanesList"
-          [isAdmin]="isAdmin"
-          (lanesChange)="handleLanesChange($event)">
-        </app-lane-input>
-        <!-- Runes search -->
-        <app-runes-input
-          #runesInput
-          [runesList]="runesList"
-          (runesChange)="handleRunesChange($event)">
-        </app-runes-input>
-        <!-- Champion Items -->
-        <app-items-input
-          #itemsInput
-          [itemsList]="itemsList"
-          (itemsChange)="handleItemsChange($event)">
-        </app-items-input>
+    @if (video) {
+      <div>
+        <form [formGroup]="inputForm" (ngSubmit)="handleSubmit()" (keydown.enter)="$event.preventDefault()">
+          <app-champion-name-input
+            #championInput
+            [championsList]="championsList"
+            [isAdmin]="true"
+            (championsChange)="handleChampionChange($event)">
+          </app-champion-name-input>
+          <app-enemy-champion-name-input
+            #enemyChampionInput
+            [enemyChampionsList]="enemyChampionsList"
+            [isAdmin]="true"
+            (enemyChampionsChange)="handleEnemyChampionChange($event)">
+          </app-enemy-champion-name-input>
+          <!-- Lane Search -->
+          <app-lane-input
+            #laneInput
+            [lanesList]="lanesList"
+            [isAdmin]="isAdmin"
+            (lanesChange)="handleLanesChange($event)">
+          </app-lane-input>
+          <!-- Runes search -->
+          <app-runes-input
+            #runesInput
+            [runesList]="runesList"
+            (runesChange)="handleRunesChange($event)">
+          </app-runes-input>
+          <!-- Champion Items -->
+          <app-items-input
+            #itemsInput
+            [itemsList]="itemsList"
+            (itemsChange)="handleItemsChange($event)">
+          </app-items-input>
 
-        <!-- Team Champions -->
-        <app-team-champions-input
-          #teamChampionsInput
-          [teamChampionsList]="teamChampionsList"
-          (teamChampionsChange)="handleTeamChampionsChange($event)">
-        </app-team-champions-input>
+          <!-- Team Champions -->
+          <app-team-champions-input
+            #teamChampionsInput
+            [teamChampionsList]="teamChampionsList"
+            (teamChampionsChange)="handleTeamChampionsChange($event)">
+          </app-team-champions-input>
 
-        <!-- enemy Champions -->
-        <app-enemy-team-champions-input
-          #enemyTeamChampionsInput
-          [enemyTeamChampionsList]="enemyTeamChampionsList"
-          (enemyTeamChampionsChange)="handleEnemyTeamChampionsChange($event)">
-        </app-enemy-team-champions-input>
-        <!-- Activate Video Button -->
-        <button type="button" class="primary" (click)="handleSubmit()">{{ buttonText }}</button>
-      </form>
-    </div>
-
+          <!-- enemy Champions -->
+          <app-enemy-team-champions-input
+            #enemyTeamChampionsInput
+            [enemyTeamChampionsList]="enemyTeamChampionsList"
+            (enemyTeamChampionsChange)="handleEnemyTeamChampionsChange($event)">
+          </app-enemy-team-champions-input>
+          <!-- Activate Video Button -->
+          <button type="button" class="primary" (click)="handleSubmit()">{{ buttonText }}</button>
+        </form>
+      </div>
+    }
   </section>
 
   <div>
-    <app-video-card *ngIf="video" [video]="video"></app-video-card>
+    @if (video) {
+      <app-video-card [video]="video"></app-video-card>
+    }
   </div>
 
   <!-- Activate Video Button -->
   <div>
-    <button
-      *ngIf="video"
-      (click)="activateVideo()"
-      class="primary"
-    >
-      Activate Video
-    </button>
+    @if (video) {
+      <button
+        (click)="activateVideo()"
+        class="primary"
+      >
+        Activate Video
+      </button>
+    }
   </div>
 
 </section>

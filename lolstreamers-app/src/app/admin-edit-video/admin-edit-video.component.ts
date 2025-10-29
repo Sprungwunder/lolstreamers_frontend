@@ -3,7 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {VideoService} from "../video.service";
 import {Video} from "../video";
 import {VideoCardComponent} from "../video-card/video-card.component";
-import {CommonModule} from "@angular/common";
+
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {ChampionNameInputComponent} from "../shared/champion-name-input/champion-name-input.component";
 import {EnemyChampionNameInputComponent} from "../shared/enemy-champion-name-input/enemy-champion-name-input.component";
@@ -21,18 +21,17 @@ import {AdminBaseComponent} from "../shared/admin-base/admin-base.component";
 @Component({
     selector: 'app-admin-edit-video',
     imports: [
-        VideoCardComponent,
-        CommonModule,
-        ChampionNameInputComponent,
-        EnemyChampionNameInputComponent,
-        EnemyTeamChampionsInputComponent,
-        ItemsInputComponent,
-        RunesInputComponent,
-        TeamChampionsInputComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        LaneInputComponent
-    ],
+    VideoCardComponent,
+    ChampionNameInputComponent,
+    EnemyChampionNameInputComponent,
+    EnemyTeamChampionsInputComponent,
+    ItemsInputComponent,
+    RunesInputComponent,
+    TeamChampionsInputComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    LaneInputComponent
+],
     templateUrl: './admin-edit-video.component.html',
     styleUrl: './admin-edit-video.component.css'
 })

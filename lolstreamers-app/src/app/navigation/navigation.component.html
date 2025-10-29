@@ -1,8 +1,12 @@
 <nav>
   <a [routerLink]="['/']">Home</a>
   <a [routerLink]="['/contact']">Contact</a>
-  <a [routerLink]="['/adm']" *ngIf="authService.isLoggedIn()">Admin</a>
-  <a href="#" (click)="logout()" *ngIf="authService.isLoggedIn()">Logout</a>
+  @if (authService.isLoggedIn()) {
+    <a [routerLink]="['/adm']">Admin</a>
+  }
+  @if (authService.isLoggedIn()) {
+    <a href="#" (click)="logout()">Logout</a>
+  }
   <a href="https://www.buymeacoffee.com/searchtherift"
      target="_blank"
      rel="noopener noreferrer"

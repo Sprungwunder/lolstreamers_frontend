@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
+
 import {TypeAheadInputComponent} from "../type-ahead-input/type-ahead-input.component";
 
 @Component({
     selector: 'app-enemy-champion-name-input',
-    imports: [CommonModule, ReactiveFormsModule],
+    imports: [ReactiveFormsModule],
     templateUrl: './enemy-champion-name-input.component.html',
     styleUrls: ['./enemy-champion-name-input.component.css']
 })

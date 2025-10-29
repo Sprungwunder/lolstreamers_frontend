@@ -7,13 +7,15 @@
     </div>
     <section class="results">
       <h2>Videos which need validation and activation</h2>
-      <div *ngFor="let video of videoList">
-        <app-video-card
-          [video]="video"
-          (videoDeleted)="onVideoDeleted($event)"
-          (videoActivated)="onVideoActivated($event)"
-        ></app-video-card>
-      </div>
+      @for (video of videoList; track video) {
+        <div>
+          <app-video-card
+            [video]="video"
+            (videoDeleted)="onVideoDeleted($event)"
+            (videoActivated)="onVideoActivated($event)"
+          ></app-video-card>
+        </div>
+      }
     </section>
   </section>
 </div>
