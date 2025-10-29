@@ -35,4 +35,14 @@ export abstract class TypeAheadInputComponent {
     this.selectedItems = this.itemsListManager.selectedItems;
     this.emitEvent();
   }
+
+  reinitializeWithExclusions(): void {
+    const currentValue = this.itemInput.value || '';
+    this.itemsListManager = new ListManager(this.getList(), this.maxItems);
+    // Restore selected items
+    this.selectedItems.forEach(item => {
+      this.itemsListManager.addItem(item, '');
+    });
+    this.itemsSuggestionList = this.itemsListManager.updateList(currentValue);
+  }
 }

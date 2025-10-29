@@ -17,6 +17,7 @@ import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
 import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.component";
 import {CookieConsentService} from '../shared/cookie-consent/cookie-consent.service';
 import {Subscription} from 'rxjs';
+import {ChampionService} from "../shared/champion-service/champion-service.service";
 
 @Component({
   selector: 'app-streamer-home',
@@ -46,7 +47,8 @@ export class StreamerHomeComponent extends VideoBaseComponent implements OnDestr
 
   constructor(
     protected override videoService: VideoService,
-    private cookieConsentService: CookieConsentService
+    private cookieConsentService: CookieConsentService,
+    private sharedChampionService: ChampionService
   ) {
     super(videoService);
     this.consentSubscription = this.cookieConsentService.consent$.subscribe(
@@ -64,12 +66,16 @@ export class StreamerHomeComponent extends VideoBaseComponent implements OnDestr
     if (this.hasConsent) {
       this.initializeData();
     }
+    // Reset champion selections when component initializes
+    this.sharedChampionService.resetSelections();
   }
 
   ngOnDestroy() {
     if (this.consentSubscription) {
       this.consentSubscription.unsubscribe();
     }
+    // Reset champion selections when component is destroyed
+    this.sharedChampionService.resetSelections();
   }
 
   async initializeData() {
