@@ -1,14 +1,12 @@
 import {Component, OnDestroy} from '@angular/core';
 
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {VideoCardComponent} from "../video-card/video-card.component";
 import {Video} from "../video";
 import {VideoBaseComponent} from "../shared/video-base/video-base.component";
 import {VideoService} from "../video.service";
 import {ChampionNameInputComponent} from "../shared/champion-name-input/champion-name-input.component";
-import {
-  EnemyChampionNameInputComponent
-} from "../shared/enemy-champion-name-input/enemy-champion-name-input.component";
+import {EnemyChampionNameInputComponent} from "../shared/enemy-champion-name-input/enemy-champion-name-input.component";
 import {RunesInputComponent} from "../shared/runes-input/runes-input.component";
 import {ItemsInputComponent} from "../shared/items-input/items-input.component";
 import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-champions-input.component";
@@ -17,12 +15,13 @@ import {
 } from "../shared/enemy-team-champions-input/enemy-team-champions-input.component";
 import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
 import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.component";
-import { CookieConsentService } from '../shared/cookie-consent/cookie-consent.service';
-import { Subscription } from 'rxjs';
+import {CookieConsentService} from '../shared/cookie-consent/cookie-consent.service';
+import {Subscription} from 'rxjs';
 
 @Component({
-    selector: 'app-streamer-home',
-    imports: [
+  selector: 'app-streamer-home',
+  imports: [
+    FormsModule,
     VideoCardComponent,
     ReactiveFormsModule,
     ChampionNameInputComponent,
@@ -33,9 +32,9 @@ import { Subscription } from 'rxjs';
     EnemyTeamChampionsInputComponent,
     LaneInputComponent,
     StreamerInputComponent
-],
-    templateUrl: './streamer-home.component.html',
-    styleUrl: './streamer-home.component.css'
+  ],
+  templateUrl: './streamer-home.component.html',
+  styleUrl: './streamer-home.component.css'
 })
 export class StreamerHomeComponent extends VideoBaseComponent implements OnDestroy {
 

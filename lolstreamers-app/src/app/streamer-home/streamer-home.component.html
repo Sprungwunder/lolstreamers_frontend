@@ -59,6 +59,7 @@
 
       <!-- Champion Name -->
       <app-champion-name-input
+        #championInput
         [championsList]="championsList"
         [isAdmin]="isAdmin"
         (championsChange)="handleChampionChange($event)">
@@ -66,12 +67,14 @@
 
       <!-- Enemy Champion Name -->
       <app-enemy-champion-name-input
+        #enemyChampionInput
         [enemyChampionsList]="enemyChampionsList"
         [isAdmin]="isAdmin"
         (enemyChampionsChange)="handleEnemyChampionChange($event)">
       </app-enemy-champion-name-input>
 
       <app-lane-input
+        #laneInput
         [lanesList]="lanesList"
         [isAdmin]="isAdmin"
         (lanesChange)="handleLanesChange($event)">
@@ -79,6 +82,7 @@
 
       <!-- Runes search -->
       <app-runes-input
+        #runesInput
         [runesList]="runesList"
         (runesChange)="handleRunesChange($event)">
       </app-runes-input>
@@ -86,34 +90,52 @@
 
       <!-- Champion Items -->
       <app-items-input
+        #itemsInput
         [itemsList]="itemsList"
         (itemsChange)="handleItemsChange($event)">
       </app-items-input>
 
       <!-- Team Champions -->
       <app-team-champions-input
+        #teamChampionsInput
         [teamChampionsList]="teamChampionsList"
         (teamChampionsChange)="handleTeamChampionsChange($event)">
       </app-team-champions-input>
 
       <!-- enemy Champions -->
       <app-enemy-team-champions-input
+        #enemyTeamChampionsInput
         [enemyTeamChampionsList]="enemyTeamChampionsList"
         (enemyTeamChampionsChange)="handleEnemyTeamChampionsChange($event)">
       </app-enemy-team-champions-input>
 
-      <button
-        type="button"
-        class="primary"
-        [disabled]="isSearching"
-        [class.loading]="isSearching"
-        (click)="handleSubmit()"
-        >
-        {{ buttonText }}
-        @if (isSearching) {
-          <span class="loading-spinner"></span>
+
+      <div class="form-actions">
+        @if (isAdmin) {
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input
+                type="checkbox"
+                [(ngModel)]="addAnotherVideo"
+                [ngModelOptions]="{standalone: true}"
+                name="addAnotherVideo">
+              <span class="checkbox-text">Add another video</span>
+            </label>
+          </div>
         }
-      </button>
+        <button
+          type="button"
+          class="primary"
+          [disabled]="isSearching"
+          [class.loading]="isSearching"
+          (click)="handleSubmit()"
+        >
+          {{ buttonText }}
+          @if (isSearching) {
+            <span class="loading-spinner"></span>
+          }
+        </button>
+      </div>
     </form>
   </section>
   @if (!hasConsent) {
@@ -138,4 +160,3 @@
     </div>
   }
 </section>
-

@@ -7,6 +7,7 @@ export abstract class VideoBaseComponent {
   isAdmin = false;
   duplicateVideos: Video[] = [];
   showDuplicateWarning = false;
+  addAnotherVideo = false;
 
   videoList: Video[] = [];
   filteredVideoList: Video[] = [];
