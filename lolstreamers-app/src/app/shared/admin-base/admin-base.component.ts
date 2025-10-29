@@ -71,6 +71,12 @@ export abstract class AdminBaseComponent extends VideoBaseComponent {
   // Common functionality for submitting video data to API
   protected submitVideoToApi(youtubeUrl: string): void {
     if (this.inputForm.valid && this.isValidateFormData()) {
+      // Store current selections for "add another" functionality
+      const championForNext = [...this.selectedChampion];
+      const runesForNext = [...this.selectedRunes];
+      const laneForNext = [...this.selectedLane];
+      const shouldAddAnother = this.addAnotherVideo;
+
       // Sanitize all inputs
       const selectedChampions = this.sanitizeInput(this.selectedChampion.join(',') || '');
       const selectedEnemyChampion = this.sanitizeInput(this.selectedEnemyChampion.join(',') || '');
@@ -93,7 +99,18 @@ export abstract class AdminBaseComponent extends VideoBaseComponent {
       }).then(response => {
         if (response.success) {
           alert(response.message);
-          this.router.navigate(['/adm']);
+          if (shouldAddAnother) {
+            // Navigate to add video with prefilled data
+            this.router.navigate(['/adm/add'], {
+              queryParams: {
+                champion: championForNext.join(','),
+                runes: runesForNext.join(','),
+                lane: laneForNext.join(',')
+              }
+            });
+          } else {
+            this.router.navigate(['/adm']);
+          }
         } else {
           alert(response.message);
         }

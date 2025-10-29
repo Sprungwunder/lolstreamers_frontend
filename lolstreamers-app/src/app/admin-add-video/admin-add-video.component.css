@@ -45,3 +45,39 @@
 .video-link a:hover {
   text-decoration: underline;
 }
+
+.checkbox-group {
+  margin: 15px 0;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.checkbox-text {
+  user-select: none;
+}
+
+/* Align checkbox and submit button horizontally */
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.form-actions .checkbox-group {
+  margin: 0;
+}
+
+.form-actions .primary {
+  margin-left: auto;
+}
