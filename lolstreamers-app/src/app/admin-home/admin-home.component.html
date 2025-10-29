@@ -7,7 +7,7 @@
     </div>
     <section class="results">
       <h2>Videos which need validation and activation</h2>
-      @for (video of videoList; track video) {
+      @for (video of videoList; track video.id) {
         <div>
           <app-video-card
             [video]="video"
