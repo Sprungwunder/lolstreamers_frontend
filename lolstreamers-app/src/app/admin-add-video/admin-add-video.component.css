@@ -81,3 +81,52 @@
 .form-actions .primary {
   margin-left: auto;
 }
+
+
+/* Full-screen, click-through backdrop behind the popup */
+.league-match-popup-backdrop {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  pointer-events: none; /* only popup itself gets pointer events */
+}
+
+/* Centered popup card */
+.league-match-popup {
+  pointer-events: auto;
+  background: rgba(9, 20, 40, 0.98);
+  border: 1px solid var(--lol-gold);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  padding: 16px 20px;
+  max-width: 320px;
+  width: 90%;
+  color: var(--lol-gold-light);
+  font-size: 0.9rem;
+}
+
+/* Inner content styling */
+.league-match-popup-content h4 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  color: var(--lol-gold);
+  text-align: center;
+}
+
+.league-match-popup-content p {
+  margin: 4px 0;
+}
+
+.league-match-popup-content button {
+  margin-top: 10px;
+  display: inline-block;
+  background: var(--lol-gold);
+  color: #111;
+  border: none;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}

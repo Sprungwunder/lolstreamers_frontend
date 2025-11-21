@@ -22,3 +22,29 @@ export interface DuplicateCheckResponse {
   message: string;
   videos: Video[];
 }
+export interface teamMember {
+  championName: string;
+  lane: string;
+  individualPosition: string;
+  teamId: number
+}
+
+export interface participants {
+  teamMembers: teamMember[];
+  enemyTeamMembers: teamMember[];
+  opponent: teamMember[];
+}
+
+export interface LeagueMatchSummary {
+  championName: string;
+  individualPosition: string;
+  item0: string;
+  item1: string;
+  item2: string;
+  item3: string;
+  item4: string;
+  item5: string;
+  primary_runes: string[];
+  secondary_runes: string[];
+  participants: participants;
+}

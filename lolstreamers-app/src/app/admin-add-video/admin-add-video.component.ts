@@ -80,6 +80,7 @@ export class AdminAddVideoComponent extends AdminBaseComponent implements OnInit
         // Debounce the duplicate check to avoid too many API calls
         setTimeout(() => {
           this.checkForDuplicates(value);
+          this.getVideoDetails(value);
         }, 500);
       } else {
         this.showDuplicateWarning = false;

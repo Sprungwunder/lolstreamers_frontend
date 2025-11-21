@@ -1,17 +1,22 @@
-import { Component, inject, SecurityContext } from '@angular/core';
-import { VideoBaseComponent } from '../video-base/video-base.component';
-import { VideoService } from '../../video.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import {Component, inject, SecurityContext} from '@angular/core';
+import {VideoBaseComponent} from '../video-base/video-base.component';
+import {VideoService} from '../../video.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import {Router} from '@angular/router';
+import {LeagueMatchSummary} from "../../video";
 
 @Component({
-    template: '',
-    standalone: false
+  template: '',
+  standalone: false
 })
 export abstract class AdminBaseComponent extends VideoBaseComponent {
   protected router = inject(Router);
   protected sanitizer = inject(DomSanitizer);
   buttonText = 'Submit';
+
+  // Popup state for league match summary
+  leagueMatchSummary: LeagueMatchSummary | null = null;
+  showLeagueMatchPopup = false;
 
   constructor(
     protected override videoService: VideoService
@@ -146,6 +151,130 @@ export abstract class AdminBaseComponent extends VideoBaseComponent {
       console.error('Error checking for duplicates:', error);
       this.showDuplicateWarning = false;
       this.duplicateVideos = [];
+    }
+  }
+
+  /*
+    response from api:
+    {
+      "riotIdGameName": "Chamkin",
+      "riotIdTagline": "EUW",
+      "championName": "Nocturne",
+      "lane": "JUNGLE",
+      "individualPosition": "JUNGLE",
+      "item0": "Experimental Hexplate",
+      "item1": "Stridebreaker",
+      "item2": "Armored Advance",
+      "item3": "Sterak's Gage",
+      "item4": "Caulfield's Warhammer",
+      "item5": null,
+      "primary_runes": [
+        "Conqueror",
+        "Triumph",
+        "Legend: Alacrity",
+        "Last Stand"
+      ],
+      "secondary_runes": [
+        "Grisly Mementos",
+        "Ultimate Hunter"
+      ],
+      "participants": {
+        "teamMembers": [
+          {
+            "championName": "Darius",
+            "lane": "TOP",
+            "individualPosition": "TOP",
+            "teamId": 100
+          },
+          {
+            "championName": "Malzahar",
+            "lane": "MIDDLE",
+            "individualPosition": "MIDDLE",
+            "teamId": 100
+          },
+          {
+            "championName": "Taric",
+            "lane": "BOTTOM",
+            "individualPosition": "BOTTOM",
+            "teamId": 100
+          },
+          {
+            "championName": "Braum",
+            "lane": "BOTTOM",
+            "individualPosition": "UTILITY",
+            "teamId": 100
+          }
+        ],
+        "enemyTeamMembers": [
+          {
+            "championName": "Zaahen",
+            "lane": "JUNGLE",
+            "individualPosition": "TOP",
+            "teamId": 200
+          },
+          {
+            "championName": "Veigar",
+            "lane": "MIDDLE",
+            "individualPosition": "MIDDLE",
+            "teamId": 200
+          },
+          {
+            "championName": "Kaisa",
+            "lane": "BOTTOM",
+            "individualPosition": "BOTTOM",
+            "teamId": 200
+          },
+          {
+            "championName": "Bard",
+            "lane": "BOTTOM",
+            "individualPosition": "UTILITY",
+            "teamId": 200
+          }
+        ],
+        "opponent": [
+          {
+            "championName": "FiddleSticks",
+            "lane": "JUNGLE",
+            "individualPosition": "JUNGLE",
+            "teamId": 200
+          }
+        ]
+      }
+    }
+
+
+   */
+  async getVideoDetails(youtubeUrl: string): Promise<any> {
+    if (!youtubeUrl) {
+      return null;
+    }
+
+    try {
+      const details = await this.videoService.getVideoDetails(youtubeUrl);
+
+      if (!details) {
+        console.log('No league match details available for this video.');
+        // Hide popup if there is no data
+        this.showLeagueMatchPopup = false;
+        this.leagueMatchSummary = null;
+        return null;
+      }
+
+      console.log('League match details for video:', details);
+
+      // Extract the summary fields for the popup
+      this.leagueMatchSummary = details;
+
+      // Show the popup
+      console.log('Showing league match summary popup for video:', youtubeUrl);
+      this.showLeagueMatchPopup = true;
+
+      return details;
+    } catch (error) {
+      console.error('Error in getVideoDetails:', error);
+      this.showLeagueMatchPopup = false;
+      this.leagueMatchSummary = null;
+      return null;
     }
   }
 

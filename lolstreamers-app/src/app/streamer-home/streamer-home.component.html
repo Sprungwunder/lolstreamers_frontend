@@ -190,3 +190,35 @@
     </div>
   }
 </section>
+
+@if (showLeagueMatchPopup && leagueMatchSummary) {
+  <div class="league-match-popup-backdrop">
+    <div class="league-match-popup">
+      <div class="league-match-popup-content">
+        <h4>Detected Match Summary</h4>
+        <p><strong>Champion:</strong> {{ leagueMatchSummary.championName }}</p>
+        <p><strong>Position:</strong> {{ leagueMatchSummary.individualPosition }}</p>
+        <p><strong>Item 0:</strong> {{ leagueMatchSummary.item0 || 'N/A' }}</p>
+        <p><strong>Item 1:</strong> {{ leagueMatchSummary.item1 || 'N/A' }}</p>
+        <p><strong>Item 2:</strong> {{ leagueMatchSummary.item2 || 'N/A' }}</p>
+        <p><strong>Item 3:</strong> {{ leagueMatchSummary.item3 || 'N/A' }}</p>
+        <p><strong>Item 4:</strong> {{ leagueMatchSummary.item4 || 'N/A' }}</p>
+        <p><strong>Item 5:</strong> {{ leagueMatchSummary.item5 || 'N/A' }}</p>
+        <p><strong>Primary Runes:</strong> {{ leagueMatchSummary.primary_runes || 'N/A' }}</p>
+        <p><strong>Secondary Runes:</strong> {{ leagueMatchSummary.secondary_runes || 'N/A' }}</p>
+        <p><strong>Enemy Champion</strong> {{ leagueMatchSummary.participants.opponent[0].championName || 'N/A' }}</p>
+        <p><strong>Team Champion 1</strong> {{ leagueMatchSummary.participants.teamMembers[0].championName || 'N/A' }}</p>
+        <p><strong>Team Champion 2</strong> {{ leagueMatchSummary.participants.teamMembers[1].championName || 'N/A' }}</p>
+        <p><strong>Team Champion 3</strong> {{ leagueMatchSummary.participants.teamMembers[2].championName || 'N/A' }}</p>
+        <p><strong>Team Champion 4</strong> {{ leagueMatchSummary.participants.teamMembers[3].championName || 'N/A' }}</p>
+        <p><strong>Enemy Team Champion 1</strong> {{ leagueMatchSummary.participants.enemyTeamMembers[0].championName || 'N/A' }}</p>
+        <p><strong>Enemy Team Champion 2</strong> {{ leagueMatchSummary.participants.enemyTeamMembers[1].championName || 'N/A' }}</p>
+        <p><strong>Enemy Team Champion 3</strong> {{ leagueMatchSummary.participants.enemyTeamMembers[2].championName || 'N/A' }}</p>
+        <p><strong>Enemy Team Champion 4</strong> {{ leagueMatchSummary.participants.enemyTeamMembers[3].championName || 'N/A' }}</p>
+        <button type="button" (click)="showLeagueMatchPopup = false">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+}

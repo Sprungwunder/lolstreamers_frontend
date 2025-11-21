@@ -2,7 +2,7 @@ import {Component, OnDestroy} from '@angular/core';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {VideoCardComponent} from "../video-card/video-card.component";
-import {Video} from "../video";
+import {LeagueMatchSummary, Video} from "../video";
 import {VideoBaseComponent} from "../shared/video-base/video-base.component";
 import {VideoService} from "../video.service";
 import {ChampionNameInputComponent} from "../shared/champion-name-input/champion-name-input.component";
@@ -41,9 +41,11 @@ export class StreamerHomeComponent extends VideoBaseComponent implements OnDestr
 
   buttonText = "Search"
   isSearching = false;
-  showMoreFilters = false; // Add this property
+  showMoreFilters = false;
   hasConsent = false;
   private consentSubscription: Subscription;
+  showLeagueMatchPopup: boolean = false;
+  leagueMatchSummary: LeagueMatchSummary = {} as LeagueMatchSummary;
 
   constructor(
     protected override videoService: VideoService,

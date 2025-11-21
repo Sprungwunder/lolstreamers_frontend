@@ -158,4 +158,24 @@ export class VideoService {
     }
   }
 
+  async getVideoDetails(youtubeUrl: string): Promise<any> {
+    try {
+      // Backend expects the full YouTube URL in the body as yt_url
+      const body = { yt_url: youtubeUrl };
+
+      return await firstValueFrom(
+        this.http.post<any>(`${this.url}/ytvideos/league-match/yt/`, body)
+      );
+    } catch (error: any) {
+      if (error?.status === 404) {
+        console.warn('No league match information found for this video (404).');
+        return null;
+      }
+
+      console.error('Error fetching league match details:', error);
+      return null;
+    }
+  }
+
+
 }
