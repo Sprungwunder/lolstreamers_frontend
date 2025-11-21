@@ -15,8 +15,8 @@ export abstract class AdminBaseComponent extends VideoBaseComponent {
   buttonText = 'Submit';
 
   // Popup state for league match summary
-  leagueMatchSummary: LeagueMatchSummary | null = null;
   showLeagueMatchPopup = false;
+  leagueMatchSummary: LeagueMatchSummary | null = null;
 
   constructor(
     protected override videoService: VideoService
@@ -254,7 +254,6 @@ export abstract class AdminBaseComponent extends VideoBaseComponent {
 
       if (!details) {
         console.log('No league match details available for this video.');
-        // Hide popup if there is no data
         this.showLeagueMatchPopup = false;
         this.leagueMatchSummary = null;
         return null;
@@ -262,11 +261,8 @@ export abstract class AdminBaseComponent extends VideoBaseComponent {
 
       console.log('League match details for video:', details);
 
-      // Extract the summary fields for the popup
-      this.leagueMatchSummary = details;
-
-      // Show the popup
-      console.log('Showing league match summary popup for video:', youtubeUrl);
+      // Store the full summary for use in the popup and accept logic
+      this.leagueMatchSummary = details as LeagueMatchSummary;
       this.showLeagueMatchPopup = true;
 
       return details;

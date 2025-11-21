@@ -144,5 +144,7 @@ export class StreamerHomeComponent extends VideoBaseComponent implements OnDestr
   toggleMoreFilters() {
     this.showMoreFilters = !this.showMoreFilters;
   }
+
+  onAcceptLeagueMatch() {};
 }
 

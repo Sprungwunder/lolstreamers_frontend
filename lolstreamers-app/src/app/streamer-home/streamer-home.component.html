@@ -28,7 +28,7 @@
                   ⚠️ Warning: Similar videos found!
                 </div>
                 <div class="duplicate-videos-list">
-                  @for (video of duplicateVideos; track video) {
+                  @for (video of duplicateVideos; track video.id) {
                     <div class="duplicate-video-item">
                       <div class="video-info">
                         <strong>{{ video.streamer }}</strong> - {{ video.champion }}
@@ -215,9 +215,14 @@
         <p><strong>Enemy Team Champion 2</strong> {{ leagueMatchSummary.participants.enemyTeamMembers[1].championName || 'N/A' }}</p>
         <p><strong>Enemy Team Champion 3</strong> {{ leagueMatchSummary.participants.enemyTeamMembers[2].championName || 'N/A' }}</p>
         <p><strong>Enemy Team Champion 4</strong> {{ leagueMatchSummary.participants.enemyTeamMembers[3].championName || 'N/A' }}</p>
-        <button type="button" (click)="showLeagueMatchPopup = false">
-          Close
-        </button>
+        <div class="league-match-popup-actions">
+          <button type="button" (click)="onAcceptLeagueMatch()">
+            Accept
+          </button>
+          <button type="button" (click)="showLeagueMatchPopup = false">
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>

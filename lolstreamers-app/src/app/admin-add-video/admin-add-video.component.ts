@@ -15,6 +15,7 @@ import {AdminBaseComponent} from "../shared/admin-base/admin-base.component";
 import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.component";
 import {ActivatedRoute} from "@angular/router";
 import {VideoService} from "../video.service";
+import {TypeAheadInputComponent} from "../shared/type-ahead-input/type-ahead-input.component"; // <== import
 
 
 @Component({
@@ -173,4 +174,222 @@ export class AdminAddVideoComponent extends AdminBaseComponent implements OnInit
   }
 
   toggleMoreFilters() {}
+
+  /**
+   * Generic helper to apply a single selection to a TypeAheadInputComponent,
+   * with validation against its itemsSuggestionList.
+   */
+  private _applySingleSelectionToInput(
+    inputComponent: TypeAheadInputComponent | undefined,
+    value: string | undefined | null,
+    context: string,
+    updateSelectedArray: (val: string[]) => void
+  ): void {
+    if (!inputComponent || !value) {
+      return;
+    }
+
+    // Ensure suggestions are initialized
+    inputComponent.initializeItemsList();
+
+    const suggestionList = inputComponent.itemsSuggestionList ?? [];
+    if (!suggestionList.includes(value)) {
+      console.error(
+        `${context}: value "${value}" is not present in itemsSuggestionList.`,
+        { value, suggestionList }
+      );
+      return;
+    }
+
+    // Clear any existing selection
+    inputComponent.selectedItems = [];
+
+    // Update parent/base selection array
+    updateSelectedArray([value]);
+
+    // Select in the UI and emit
+    inputComponent.selectItem(value);
+    inputComponent.emitEvent();
+  }
+
+  /**
+   * Generic helper to apply multiple selections to a TypeAheadInputComponent,
+   * with validation against its itemsSuggestionList.
+   */
+  private _applyMultipleSelectionsToInput(
+    inputComponent: TypeAheadInputComponent | undefined,
+    values: string[] | undefined | null,
+    context: string,
+    updateSelectedArray: (val: string[]) => void
+  ): void {
+    if (!inputComponent || !values || values.length === 0) {
+      return;
+    }
+
+    inputComponent.initializeItemsList();
+    const suggestionList = inputComponent.itemsSuggestionList ?? [];
+
+    const validValues: string[] = [];
+    const invalidValues: string[] = [];
+
+    for (const value of values) {
+      if (suggestionList.includes(value)) {
+        validValues.push(value);
+      } else {
+        invalidValues.push(value);
+      }
+    }
+
+    if (inputComponent != this.itemsInput && invalidValues.length > 0) {
+      console.error(
+        `${context}: some values are not present in itemsSuggestionList.`,
+        { invalidValues, suggestionList }
+      );
+    }
+
+    if (validValues.length === 0) {
+      return;
+    }
+
+    // Clear any existing selection
+    inputComponent.selectedItems = [];
+
+    // Update base selection
+    updateSelectedArray(validValues);
+
+    // Select all valid values in the UI
+    for (const value of validValues) {
+      inputComponent.selectItem(value);
+      // selectItem already updates selectedItems & emits, but we keep
+      // updateSelectedArray in sync via the final array above.
+    }
+
+    inputComponent.emitEvent();
+  }
+
+  _updateChampion() {
+    const championName = this.leagueMatchSummary?.championName;
+    this._applySingleSelectionToInput(
+      this.championInput,
+      championName,
+      'LeagueMatchSummary championName',
+      (val) => this.selectedChampion = val
+    );
+  }
+
+  _updateLane() {
+    const lane = this.leagueMatchSummary?.individualPosition;
+    this._applySingleSelectionToInput(
+      this.laneInput,
+      lane,
+      'LeagueMatchSummary individualPosition',
+      (val) => this.selectedLane = val
+    );
+  }
+
+  _updateEnemyChampion() {
+    const opponentList = this.leagueMatchSummary?.participants?.opponent;
+    const enemyChampionName = opponentList && opponentList.length > 0
+      ? opponentList[0].championName
+      : undefined;
+
+    this._applySingleSelectionToInput(
+      this.enemyChampionInput,
+      enemyChampionName,
+      'LeagueMatchSummary opponent[0].championName',
+      (val) => this.selectedEnemyChampion = val
+    );
+  }
+
+  _updateRunes() {
+    const primary = this.leagueMatchSummary?.primary_runes ?? [];
+    const secondary = this.leagueMatchSummary?.secondary_runes ?? [];
+    const allRunes = [...primary, ...secondary];
+
+    this._applyMultipleSelectionsToInput(
+      this.runesInput,
+      allRunes,
+      'LeagueMatchSummary primary_runes/secondary_runes',
+      (val) => this.selectedRunes = val
+    );
+  }
+
+  _updateTeamChampions() {
+    const teamMembers = this.leagueMatchSummary?.participants?.teamMembers ?? [];
+    if (teamMembers.length === 0) {
+      return;
+    }
+
+    // Take up to 4 champions from indices 0..3
+    const teamChampionNames = teamMembers
+      .slice(0, 4)
+      .map(m => m.championName)
+      .filter(name => !!name);
+
+    this._applyMultipleSelectionsToInput(
+      this.teamChampionsInput,
+      teamChampionNames,
+      'LeagueMatchSummary teamMembers[0..3].championName',
+      (val) => this.selectedTeamChampions = val
+    );
+  }
+
+  _updateEnemyTeamChampions() {
+    const teamMembers = this.leagueMatchSummary?.participants?.enemyTeamMembers ?? [];
+    if (teamMembers.length === 0) {
+      return;
+    }
+
+    // Take up to 4 champions from indices 0..3
+    const teamChampionNames = teamMembers
+      .slice(0, 4)
+      .map(m => m.championName)
+      .filter(name => !!name);
+
+    this._applyMultipleSelectionsToInput(
+      this.enemyTeamChampionsInput,
+      teamChampionNames,
+      'LeagueMatchSummary enemyTeamMembers[0..3].championName',
+      (val) => this.selectedEnemyTeamChampions = val
+    );
+  }
+
+  _updateItems() {
+    if (!this.leagueMatchSummary) {
+      return;
+    }
+
+    const {
+      item0,
+      item1,
+      item2,
+      item3,
+      item4,
+      item5
+    } = this.leagueMatchSummary;
+
+    const items = [item0, item1, item2, item3, item4, item5]
+      .filter((i): i is string => !!i);
+
+    this._applyMultipleSelectionsToInput(
+      this.itemsInput,
+      items,
+      'LeagueMatchSummary item0..item5',
+      (val) => this.selectedItems = val
+    );
+  }
+
+  /**
+   * Called when the user clicks "Accept" in the league match popup.
+   */
+  onAcceptLeagueMatch(): void {
+    this._updateChampion();
+    this._updateLane();
+    this._updateEnemyChampion();
+    this._updateRunes();
+    this._updateTeamChampions();
+    this._updateEnemyTeamChampions();
+    this._updateItems();
+    this.showLeagueMatchPopup = false;
+  }
 }
