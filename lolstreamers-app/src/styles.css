@@ -482,15 +482,5 @@ button.primary:active {
   display: inline-block;
 }
 
-h1::after, h2::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(to right, transparent, var(--lol-gold), transparent);
-}
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
