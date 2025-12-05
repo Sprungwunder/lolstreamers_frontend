@@ -39,6 +39,7 @@ export class VideoService {
     teamChampions: string,
     enemyTeamChampions: string,
     streamers: string,
+    season: string
   ): Promise<Video[]> {
     let cleanedLane = lane.replace('Any', '');
 
@@ -51,7 +52,8 @@ export class VideoService {
       `&team_champions=${encodeURIComponent(teamChampions)}` +
       `&enemy_team_champions=${encodeURIComponent(enemyTeamChampions)}` +
       `&champion_items=${encodeURIComponent(championItems)}` +
-      `&streamer=${encodeURIComponent(streamers)}`
+      `&streamer=${encodeURIComponent(streamers)}` +
+      `&lol_version=${encodeURIComponent(season)}`
     );
     return await response.json() ?? [];
   }
@@ -97,9 +99,9 @@ export class VideoService {
       champion_items: videoData['selectedItems'],
       team_champions: videoData['selectedTeamChampions'],
       enemy_team_champions: videoData['selectedEnemyTeamChampions'],
-      lol_version: '15',
+      lol_version: videoData['selectedSeason'],
     };
-
+    console.log(video);
     try {
       // Use HttpClient for automatic token refresh
       await firstValueFrom(

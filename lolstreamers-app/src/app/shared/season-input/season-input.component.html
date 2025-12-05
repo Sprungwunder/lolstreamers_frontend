@@ -1,0 +1,42 @@
+<div>
+  <label for="season">
+    season
+    @if (selectedItems.length === maxItems) {
+      <i class="check-icon">✓</i>
+    }
+  </label>
+
+  <!-- Selected season -->
+  <div class="selected-items">
+    @for (selectedLane of selectedItems; track selectedLane) {
+      <span
+        class="item-tag"
+        >
+        {{ selectedLane }}
+        <button type="button" (click)="removeItem(selectedLane)">
+          &times;
+        </button>
+      </span>
+    }
+  </div>
+
+  @if (selectedItems.length < maxItems) {
+    <!-- Input Field -->
+    <input
+      id="season"
+      type="text"
+      [formControl]="itemInput"
+      [placeholder]="placeholder"
+      />
+    <!-- Suggestions List -->
+    <ul class="suggestions">
+      @for (season of itemsSuggestionList; track season) {
+        <li
+          (click)="selectItem(season)"
+          >
+          {{ season }}
+        </li>
+      }
+    </ul>
+  }
+</div>

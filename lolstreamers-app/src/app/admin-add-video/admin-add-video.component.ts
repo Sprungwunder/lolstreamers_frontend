@@ -15,7 +15,8 @@ import {AdminBaseComponent} from "../shared/admin-base/admin-base.component";
 import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.component";
 import {ActivatedRoute} from "@angular/router";
 import {VideoService} from "../video.service";
-import {TypeAheadInputComponent} from "../shared/type-ahead-input/type-ahead-input.component"; // <== import
+import {TypeAheadInputComponent} from "../shared/type-ahead-input/type-ahead-input.component";
+import {SeasonInputComponent} from "../shared/season-input/season-input.component"; // <== import
 
 
 @Component({
@@ -32,7 +33,8 @@ import {TypeAheadInputComponent} from "../shared/type-ahead-input/type-ahead-inp
         RunesInputComponent,
         TeamChampionsInputComponent,
         VideoCardComponent,
-        StreamerInputComponent
+        StreamerInputComponent,
+        SeasonInputComponent
     ],
     templateUrl: '../streamer-home/streamer-home.component.html',
     styleUrls: ['./admin-add-video.component.css']

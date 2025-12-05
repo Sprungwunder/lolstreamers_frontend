@@ -15,6 +15,9 @@ export abstract class VideoBaseComponent {
   streamerList: string[] = [];
   selectedStreamer: string[] = [];
 
+  seasonList: string[] = ['15', '16'];
+  selectedSeason: string[] = [];
+
   // champions
   championsList: string[] = [
     'Aatrox', 'Ahri', 'Akali', 'Akshan', 'Alistar', 'Ambessa', 'Amumu', 'Anivia', 'Annie', 'Aphelios',
@@ -176,7 +179,11 @@ export abstract class VideoBaseComponent {
   }
 
   handleStreamerChange(selectedStreamers: string[]): void {
-    this.selectedStreamer = selectedStreamers
+    this.selectedStreamer = selectedStreamers;
+  }
+
+  handleSeasonChange(selectedSeason: string[]): void {
+    this.selectedSeason = selectedSeason;
   }
 
   abstract handleSubmit(): void; // To be implemented by child classes

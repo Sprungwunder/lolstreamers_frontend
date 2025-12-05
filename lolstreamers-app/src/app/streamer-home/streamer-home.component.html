@@ -124,6 +124,13 @@
           [enemyTeamChampionsList]="enemyTeamChampionsList"
           (enemyTeamChampionsChange)="handleEnemyTeamChampionsChange($event)">
         </app-enemy-team-champions-input>
+
+        <!-- current season -->
+        <app-season-input
+          #seasonInput
+          [seasonList]="seasonList"
+          (seasonChange)="handleSeasonChange($event)">
+        </app-season-input>
       </div>
 
       @if (isAdmin) {

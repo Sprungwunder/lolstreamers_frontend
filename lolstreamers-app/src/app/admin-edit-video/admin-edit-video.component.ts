@@ -16,6 +16,7 @@ import {TeamChampionsInputComponent} from "../shared/team-champions-input/team-c
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LaneInputComponent} from "../shared/lane-input/lane-input.component";
 import {AdminBaseComponent} from "../shared/admin-base/admin-base.component";
+import {SeasonInputComponent} from "../shared/season-input/season-input.component";
 
 
 @Component({
@@ -30,7 +31,8 @@ import {AdminBaseComponent} from "../shared/admin-base/admin-base.component";
     TeamChampionsInputComponent,
     FormsModule,
     ReactiveFormsModule,
-    LaneInputComponent
+    LaneInputComponent,
+    SeasonInputComponent
 ],
     templateUrl: './admin-edit-video.component.html',
     styleUrl: './admin-edit-video.component.css'
@@ -47,6 +49,7 @@ export class AdminEditVideoComponent extends AdminBaseComponent implements OnIni
   @ViewChild('itemsInput') itemsInput!: ItemsInputComponent;
   @ViewChild('teamChampionsInput') teamChampionsInput!: TeamChampionsInputComponent;
   @ViewChild('enemyTeamChampionsInput') enemyTeamChampionsInput!: EnemyTeamChampionsInputComponent;
+  @ViewChild('seasonInput') seasonInput!: SeasonInputComponent;
 
 
   constructor(
@@ -73,6 +76,7 @@ export class AdminEditVideoComponent extends AdminBaseComponent implements OnIni
     if (videoId) {
       this.videoService.getVideoById(videoId).then(video => {
         this.video = video;
+        console.log(this.video);
         if (this.video) {
           if (this.video.champion) {
             this.selectedChampion = this.video.champion.split(',');
@@ -94,6 +98,10 @@ export class AdminEditVideoComponent extends AdminBaseComponent implements OnIni
           }
           if (this.video.enemy_team_champions) {
             this.selectedEnemyTeamChampions = this.video.enemy_team_champions;
+          }
+          if (this.video.lol_version) {
+            console.log(this.video.lol_version);
+            this.selectedSeason = this.video.lol_version.split(',');
           }
           this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
             "https://www.youtube.com/embed/" + this.video.ytid + "?start=" + this.video.timestamp
@@ -203,6 +211,11 @@ export class AdminEditVideoComponent extends AdminBaseComponent implements OnIni
         this.enemyTeamChampionsInput.selectItem(enemyTeamChampion);
       }
     }
+    if (this.seasonInput && this.video && this.video.lol_version) {
+      this.seasonInput.selectedItems = this.video.lol_version.split(',');
+      this.seasonInput.initializeItemsList();
+      this.seasonInput.selectItem(this.video.lol_version);
+    }
   }
 
   override handleChampionChange(selectedChampions: string[]) {
@@ -252,6 +265,13 @@ export class AdminEditVideoComponent extends AdminBaseComponent implements OnIni
     super.handleEnemyTeamChampionsChange(selectedTeamChampions);
     if (this.video) {
       this.video.enemy_team_champions = [...selectedTeamChampions];
+    }
+  }
+
+  override handleSeasonChange(selectedSeason: string[]) {
+    super.handleSeasonChange(selectedSeason);
+    if (this.video) {
+      this.video.lol_version = selectedSeason.join(',');
     }
   }
 

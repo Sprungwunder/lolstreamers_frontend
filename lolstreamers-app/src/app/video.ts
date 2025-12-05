@@ -15,6 +15,7 @@ export interface Video {
   views: number;
   likes: number;
   published_at: string;
+  lol_version: string;
 }
 
 export interface DuplicateCheckResponse {

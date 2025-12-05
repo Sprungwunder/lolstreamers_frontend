@@ -90,6 +90,7 @@ export abstract class AdminBaseComponent extends VideoBaseComponent {
       const selectedItems = this.selectedItems.map(c => this.sanitizeInput(c));
       const selectedTeamChampions = this.selectedTeamChampions.map(c => this.sanitizeInput(c));
       const selectedEnemyTeamChampions = this.selectedEnemyTeamChampions.map(c => this.sanitizeInput(c));
+      const selectedSeason = this.sanitizeInput(this.selectedSeason.join(',') || '');
       const sanitizedUrl = this.sanitizeInput(youtubeUrl || '');
 
       this.videoService.addVideo({
@@ -100,7 +101,8 @@ export abstract class AdminBaseComponent extends VideoBaseComponent {
         selectedRunes: selectedRunes,
         selectedItems: selectedItems,
         selectedTeamChampions: selectedTeamChampions,
-        selectedEnemyTeamChampions: selectedEnemyTeamChampions
+        selectedEnemyTeamChampions: selectedEnemyTeamChampions,
+        selectedSeason: selectedSeason
       }).then(response => {
         if (response.success) {
           alert(response.message);

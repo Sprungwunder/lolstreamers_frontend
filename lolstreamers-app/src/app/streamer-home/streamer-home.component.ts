@@ -18,6 +18,7 @@ import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.co
 import {CookieConsentService} from '../shared/cookie-consent/cookie-consent.service';
 import {Subscription} from 'rxjs';
 import {ChampionService} from "../shared/champion-service/champion-service.service";
+import {SeasonInputComponent} from "../shared/season-input/season-input.component";
 
 @Component({
   selector: 'app-streamer-home',
@@ -32,7 +33,8 @@ import {ChampionService} from "../shared/champion-service/champion-service.servi
     TeamChampionsInputComponent,
     EnemyTeamChampionsInputComponent,
     LaneInputComponent,
-    StreamerInputComponent
+    StreamerInputComponent,
+    SeasonInputComponent
   ],
   templateUrl: './streamer-home.component.html',
   styleUrl: './streamer-home.component.css'
@@ -110,6 +112,7 @@ export class StreamerHomeComponent extends VideoBaseComponent implements OnDestr
       this.selectedTeamChampions.join(',') ?? '',
       this.selectedEnemyTeamChampions.join(',') ?? '',
       this.selectedStreamer.join(',') ?? '',
+      this.selectedSeason.join(',') ?? '',
     ).then((videos: Video[]) => {
       this.filteredVideoList = videos;
       this.isSearching = false;
