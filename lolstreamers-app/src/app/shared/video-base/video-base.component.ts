@@ -115,9 +115,14 @@ export abstract class VideoBaseComponent {
     "Umbral Glaive", "Unending Despair", "Vigilant Wardstone", "Void Staff", "Voltaic Cyclosword",
     "Warmog's Armor", "Winter's Approach", "Wit's End", "Youmuu's Ghostblade", "Yun Tal Wildarrows",
     "Zaz'Zak's Realmspike", "Zeke's Convergence", "Zhonya's Hourglass",
+    // new items 16
+    "Mananomicon",
+    "Actualizer", "Bandlepipes", "Bastionbreaker", "Diadem of Songs", "Dusk and Dawn", "Endless Hunger",
+    "Fiendhunter Bolts", "Hexoptics C44", "Hextech Gunblade", "Protoplasm Harness", "Stormrazor",
+    "Whispering Circlet",
 
     // boots
-    "Armored Advance", "Berserker's Greaves", "Boots", "Boots of Swiftness",
+    "Armored Advance", "Berserker's Greaves", "Boots of Swiftness",
     "Chainlaced Crushers", "Crimson Lucidity", "Forever Forward", "Gunmetal Greaves",
     "Ionian Boots of Lucidity", "Mercury's Treads", "Plated Steelcaps", "Sorcerer's Shoes",
     "Spellslinger's Shoes", "Swiftmarch", "Symbiotic Soles", "Synchronized Souls",
