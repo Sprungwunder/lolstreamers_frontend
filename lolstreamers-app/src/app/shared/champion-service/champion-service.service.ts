@@ -45,6 +45,17 @@ export class ChampionService {
     return allSelections;
   }
 
+  resetSomeSelections(components: (keyof ChampionSelections)[]): void {
+    const updatedSelections = { ...this.championSelections };
+
+    components.forEach(component => {
+      updatedSelections[component] = [];
+    });
+
+    this.championSelections = updatedSelections;
+    this.championSelectionsSubject.next(this.championSelections);
+  }
+
   resetSelections(): void {
     this.championSelections = {
       champion: [],

@@ -16,8 +16,8 @@ import {StreamerInputComponent} from "../shared/streamer-input/streamer-input.co
 import {ActivatedRoute} from "@angular/router";
 import {VideoService} from "../video.service";
 import {TypeAheadInputComponent} from "../shared/type-ahead-input/type-ahead-input.component";
-import {SeasonInputComponent} from "../shared/season-input/season-input.component"; // <== import
-
+import {SeasonInputComponent} from "../shared/season-input/season-input.component";
+import {ChampionService} from "../shared/champion-service/champion-service.service";
 
 @Component({
     selector: 'app-admin-add-video',
@@ -52,18 +52,12 @@ export class AdminAddVideoComponent extends AdminBaseComponent implements OnInit
   @ViewChild('teamChampionsInput') teamChampionsInput!: TeamChampionsInputComponent;
   @ViewChild('enemyTeamChampionsInput') enemyTeamChampionsInput!: EnemyTeamChampionsInputComponent;
 
-
   constructor(
     private route: ActivatedRoute,
-    protected override videoService: VideoService
+    protected override videoService: VideoService,
+    private sharedChampionService: ChampionService
   ) {
     super(videoService);
-  }
-  ngAfterViewInit() {
-    // Additional initialization after view is ready
-    setTimeout(() => {
-      this.initializeInputsWithQueryParams();
-    }, 500);
   }
 
   async ngOnInit() {
@@ -93,6 +87,13 @@ export class AdminAddVideoComponent extends AdminBaseComponent implements OnInit
   }
 
   private resetFormValue() {
+    // Clear only exclusion-based champion selections that should not persist
+    this.sharedChampionService.resetSomeSelections([
+      'enemyChampion',
+      'teamChampions',
+      'enemyTeamChampions'
+    ]);
+
     // Clear all selections except the ones that will be prefilled
     this.selectedEnemyChampion = [];
     this.selectedItems = [];
