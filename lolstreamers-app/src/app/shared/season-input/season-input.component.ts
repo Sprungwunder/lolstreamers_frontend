@@ -31,6 +31,11 @@ export class SeasonInputComponent extends TypeAheadInputComponent {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['seasonList'] && changes['seasonList'].currentValue?.length > 0) {
       this.initializeItemsList();
+      this.applyAdminDefaultSeason();
+    }
+
+    if (changes['isAdmin']) {
+      this.applyAdminDefaultSeason();
     }
   }
 
@@ -42,4 +47,21 @@ export class SeasonInputComponent extends TypeAheadInputComponent {
     this.seasonChange.emit(this.selectedItems);
   }
 
+  private applyAdminDefaultSeason(): void {
+    if (!this.isAdmin) {
+      return;
+    }
+
+    if (this.selectedItems.length > 0) {
+      return;
+    }
+
+    if (!this.seasonList.includes('16')) {
+      return;
+    }
+
+    this.selectedItems = ['16'];
+    this.initializeItemsList();
+    this.emitEvent();
+  }
 }

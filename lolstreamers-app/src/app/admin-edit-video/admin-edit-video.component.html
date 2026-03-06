@@ -49,15 +49,16 @@
             (enemyTeamChampionsChange)="handleEnemyTeamChampionsChange($event)">
           </app-enemy-team-champions-input>
 
-          <!-- current season -->
-          <app-season-input
-            #seasonInput
-            [seasonList]="seasonList"
-            (seasonChange)="handleSeasonChange($event)">
-          </app-season-input>
-          <!-- Activate Video Button -->
-          <button type="button" class="primary" (click)="handleSubmit()">{{ buttonText }}</button>
-        </form>
+              <!-- current season -->
+              <app-season-input
+                #seasonInput
+                [seasonList]="seasonList"
+                [isAdmin]="isAdmin"
+                (seasonChange)="handleSeasonChange($event)">
+              </app-season-input>
+              <!-- Activate Video Button -->
+              <button type="button" class="primary" (click)="handleSubmit()">{{ buttonText }}</button>
+            </form>
       </div>
     }
   </section>
