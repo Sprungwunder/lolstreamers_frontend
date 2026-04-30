@@ -67,7 +67,7 @@ export abstract class VideoBaseComponent {
     'Treasure Hunter', 'Relentless Hunter', 'Ultimate Hunter',
 
     // Sorcery
-    'Summon Aery', 'Arcane Comet', 'Phase Rush',
+    'Summon Aery', 'Arcane Comet', 'Phase Rush', 'Deathfire Touch', 'Stormraider\'s Surge',
     'Axiom Arcanist', 'Manaflow Band', 'Nimbus Cloak',
     'Transcendence', 'Celerity', 'Absolute Focus',
     'Scorch', 'Waterwalking', 'Gathering Storm',
@@ -125,7 +125,7 @@ export abstract class VideoBaseComponent {
     "Armored Advance", "Berserker's Greaves", "Boots of Swiftness",
     "Chainlaced Crushers", "Crimson Lucidity", "Forever Forward", "Gunmetal Greaves",
     "Ionian Boots of Lucidity", "Mercury's Treads", "Plated Steelcaps", "Sorcerer's Shoes",
-    "Spellslinger's Shoes", "Swiftmarch", "Symbiotic Soles", "Synchronized Souls",
+    "Spellslinger's Shoes", "Swiftmarch", "Symbiotic Soles", "Synchronized Souls", "Gluttonous Greaves"
 
   ];
 
