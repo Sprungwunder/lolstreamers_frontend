@@ -125,7 +125,7 @@ export abstract class VideoBaseComponent {
     "Armored Advance", "Berserker's Greaves", "Boots of Swiftness",
     "Chainlaced Crushers", "Crimson Lucidity", "Forever Forward", "Gunmetal Greaves",
     "Ionian Boots of Lucidity", "Mercury's Treads", "Plated Steelcaps", "Sorcerer's Shoes",
-    "Spellslinger's Shoes", "Swiftmarch", "Symbiotic Soles", "Synchronized Souls", "Gluttonous Greaves"
+    "Spellslinger's Shoes", "Swiftmarch", "Symbiotic Soles", "Synchronized Souls", "Gluttonous Greaves", "Immortal Path"
 
   ];
 
